@@ -26,11 +26,24 @@ public class UserAccessActivityGenerator extends AbstractGenerator implements Ac
 
     @Override
     public Activity generate(int currentLogCount, int finalLogCount) {
-        if (toPopFromStack(currentLogCount, finalLogCount)) {
+        int difference = finalLogCount - currentLogCount;
+        if (difference == complementActivities.size()) {
             return complementActivities.pop();
-        } else {
+        } else if (difference > complementActivities.size()) {
             int choice = choose();
-            return choices.get(choice).get();
+            Activity chosenActivity = choices.get(choice).get();
+            if (choice == 0) {
+                if (chosenActivity.hasComplement()) {
+                    int newDifference = finalLogCount - (currentLogCount + 1);
+                    if (newDifference < complementActivities.size()) {
+                        undoChoice();
+                        return generate(currentLogCount, finalLogCount);
+                    }
+                }
+            }
+            return chosenActivity;
+        } else {
+            throw new AssertionError();
         }
     }
 
@@ -38,15 +51,17 @@ public class UserAccessActivityGenerator extends AbstractGenerator implements Ac
         return rng.nextInt(CHOICE_COUNT);
     }
 
-    private boolean toPopFromStack(int currentLogCount, int finalLogCount) {
+    private boolean areComplementActivitiesEnough(int currentLogCount, int finalLogCount) {
         return finalLogCount - currentLogCount == complementActivities.size();
     }
 
     private Activity chooseActivity() {
         int randomIndex = rng.nextInt(activities.size());
         Activity chosenActivity = activities.get(randomIndex);
-        Activity complementActivity = chosenActivity.complement();
-        complementActivities.push(complementActivity);
+        if (chosenActivity.hasComplement()) {
+            Activity complementActivity = chosenActivity.getComplement();
+            complementActivities.push(complementActivity);
+        }
         return chosenActivity;
     }
 
@@ -55,5 +70,9 @@ public class UserAccessActivityGenerator extends AbstractGenerator implements Ac
             return chooseActivity();
         }
         return complementActivities.pop();
+    }
+
+    private void undoChoice() {
+        complementActivities.pop();
     }
 }

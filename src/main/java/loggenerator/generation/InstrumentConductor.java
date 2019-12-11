@@ -31,7 +31,7 @@ public class InstrumentConductor {
         LocalDateTime dateTime = timeGenerator.generate();
         Activity activity = activityGenerator.generate(currentLogCount, finalLogCount);
         String subject = subjectGenerator.generate();
-        Log log = new Log(dateTime, activity, subject, 0, "");
+        Log log = new Log(dateTime, activity, subject);
         currentLogCount++;
         return log;
     }

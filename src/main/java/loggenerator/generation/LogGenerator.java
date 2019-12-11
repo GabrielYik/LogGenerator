@@ -9,7 +9,7 @@ import loggenerator.generation.instruments.subject.SubjectGeneratorFactory;
 import loggenerator.generation.instruments.time.TimeGenerator;
 import loggenerator.generation.instruments.time.TimeGeneratorFactory;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 public class LogGenerator {
@@ -32,7 +32,7 @@ public class LogGenerator {
     }
 
     private List<Log> generateRandomLogs() {
-        List<Log> logs = new ArrayList<>();
+        List<Log> logs = new LinkedList<>();
         boolean isSatisfied = false;
         while (!isSatisfied) {
             Log log = conductor.orchestrate();

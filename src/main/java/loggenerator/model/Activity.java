@@ -6,15 +6,11 @@ import java.util.List;
 public class Activity {
     private String name;
     private String type;
-    private String complement;
+    private String remarks;
+    private Activity complement;
 
     public Activity() {
 
-    }
-
-    public Activity(String name, String type) {
-        this.name = name;
-        this.type = type;
     }
 
     public String getName() {
@@ -33,23 +29,36 @@ public class Activity {
         this.type = type;
     }
 
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
+    public Activity getComplement() {
+        return complement;
+    }
+
+    public void setComplement(Activity complement) {
+        this.complement = complement;
+    }
+
+    public boolean hasComplement() {
+        return complement.exists();
+    }
+
+    private boolean exists() {
+        return name != null;
+    }
+
     public List<String> toCollection() {
         List<String> array = new ArrayList<>();
         array.add(name);
         array.add(type);
+        array.add(remarks);
         return array;
-    }
-
-    public String getComplement() {
-        return complement;
-    }
-
-    public void setComplement(String complement) {
-        this.complement = complement;
-    }
-
-    public Activity complement() {
-        return new Activity(complement, type);
     }
 
     @Override

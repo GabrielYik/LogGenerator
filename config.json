@@ -1,17 +1,29 @@
 {
   "logCount": "10",
   "headers": [
-    "date", "time", "activity", "severity"
+    "time", "activity description", "activity type", "subject", "remarks"
   ],
   "activities": [
     {
       "name": "login",
       "type": "user access",
-      "complement": "logout"
+      "remarks": "success",
+      "complement": {
+        "name": "logout",
+        "type": "user access",
+        "remarks": "success",
+        "complement": {}
+      }
+    },
+    {
+      "name": "login",
+      "type": "user access",
+      "remarks": "failure",
+      "complement": {}
     }
   ],
   "subjects": [
-    "user", "admin"
+    "user"
   ],
   "timeGeneratorType": "simple",
   "activityGeneratorType": "user access",
