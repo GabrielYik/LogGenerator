@@ -1,6 +1,6 @@
 package loggenerator.generation.instruments.activity;
 
-import loggenerator.generation.instruments.AbstractGenerator;
+import loggenerator.generation.instruments.RandomMachine;
 import loggenerator.model.Activity;
 
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Stack;
 import java.util.function.Supplier;
 
-public class UserAccessActivityGenerator extends AbstractGenerator implements ActivityGenerator {
+public class UserAccessActivityGenerator extends RandomMachine implements ActivityGenerator {
     private static final int CHOICE_COUNT = 2;
 
     private Stack<Activity> complementActivities;

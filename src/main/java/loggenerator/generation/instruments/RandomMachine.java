@@ -2,10 +2,10 @@ package loggenerator.generation.instruments;
 
 import java.util.Random;
 
-public abstract class AbstractGenerator {
+public class RandomMachine {
     protected Random rng;
 
-    public AbstractGenerator() {
+    public RandomMachine() {
         rng = new Random(System.currentTimeMillis());
     }
 }

@@ -27,5 +27,8 @@
   ],
   "timeGeneratorType": "simple",
   "activityGeneratorType": "user access",
-  "subjectGeneratorType": "simple"
+  "subjectGeneratorType": "simple",
+  "troubles": [
+    "high volume"
+  ]
 }

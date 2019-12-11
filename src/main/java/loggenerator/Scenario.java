@@ -15,6 +15,8 @@ public class Scenario {
     private String activityGeneratorType;
     private String subjectGeneratorType;
 
+    private List<String> troubles;
+
     public int getLogCount() {
         return logCount;
     }
@@ -69,5 +71,13 @@ public class Scenario {
 
     public void setSubjectGeneratorType(String subjectGeneratorType) {
         this.subjectGeneratorType = subjectGeneratorType;
+    }
+
+    public List<String> getTroubles() {
+        return troubles;
+    }
+
+    public void setTroubles(List<String> troubles) {
+        this.troubles = troubles;
     }
 }

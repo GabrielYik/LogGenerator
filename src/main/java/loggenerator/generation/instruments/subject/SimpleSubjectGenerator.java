@@ -1,10 +1,10 @@
 package loggenerator.generation.instruments.subject;
 
-import loggenerator.generation.instruments.AbstractGenerator;
+import loggenerator.generation.instruments.RandomMachine;
 
 import java.util.List;
 
-public class SimpleSubjectGenerator extends AbstractGenerator implements SubjectGenerator {
+public class SimpleSubjectGenerator extends RandomMachine implements SubjectGenerator {
     private List<String> subjects;
 
     public SimpleSubjectGenerator(List<String> subjects) {
