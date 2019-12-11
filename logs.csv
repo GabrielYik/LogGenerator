@@ -1,0 +1,11 @@
+date,time,activity,severity
+2019-12-11T17:18:24.007,login,user access,0,admin,
+2019-12-11T17:18:24.008,login,user access,0,user,
+2019-12-11T17:18:24.008,login,user access,0,admin,
+2019-12-11T17:18:24.008,logout,user access,0,user,
+2019-12-11T17:18:24.008,logout,user access,0,admin,
+2019-12-11T17:18:24.008,login,user access,0,user,
+2019-12-11T17:18:24.008,logout,user access,0,admin,
+2019-12-11T17:18:24.008,logout,user access,0,user,
+2019-12-11T17:18:24.008,login,user access,0,user,
+2019-12-11T17:18:24.008,logout,user access,0,user,

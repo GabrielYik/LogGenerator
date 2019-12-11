@@ -1,0 +1,19 @@
+{
+  "logCount": "10",
+  "headers": [
+    "date", "time", "activity", "severity"
+  ],
+  "activities": [
+    {
+      "name": "login",
+      "type": "user access",
+      "complement": "logout"
+    }
+  ],
+  "subjects": [
+    "user", "admin"
+  ],
+  "timeGeneratorType": "simple",
+  "activityGeneratorType": "user access",
+  "subjectGeneratorType": "simple"
+}
