@@ -1,9 +1,9 @@
 {
   "logCount": "10",
   "headers": [
-    "time", "activity description", "activity type", "subject", "remarks"
+    "time", "description", "type", "subject", "remarks"
   ],
-  "activities": [
+  "normalActivities": [
     {
       "name": "login",
       "type": "user access",
@@ -22,12 +22,17 @@
       "complement": {}
     }
   ],
-  "subjects": [
-    "user"
+  "suspiciousActivities": [
+    {
+      "name": "login",
+      "type": "user access",
+      "remarks": "failure",
+      "complement": {}
+    }
   ],
-  "timeGeneratorType": "simple",
-  "activityGeneratorType": "user access",
-  "subjectGeneratorType": "simple",
+  "subjects": [
+    "A", "B"
+  ],
   "troubles": [
     "high volume"
   ]

@@ -8,7 +8,8 @@ public class Scenario {
     private int logCount;
     private List<String> headers;
 
-    private List<Activity> activities;
+    private List<Activity> normalActivities;
+    private List<Activity> suspiciousActivities;
     private List<String> subjects;
 
     private String timeGeneratorType;
@@ -33,12 +34,20 @@ public class Scenario {
         this.headers = headers;
     }
 
-    public List<Activity> getActivities() {
-        return activities;
+    public List<Activity> getNormalActivities() {
+        return normalActivities;
     }
 
-    public void setActivities(List<Activity> activities) {
-        this.activities = activities;
+    public void setNormalActivities(List<Activity> normalActivities) {
+        this.normalActivities = normalActivities;
+    }
+
+    public List<Activity> getSuspiciousActivities() {
+        return suspiciousActivities;
+    }
+
+    public void setSuspiciousActivities(List<Activity> suspiciousActivities) {
+        this.suspiciousActivities = suspiciousActivities;
     }
 
     public List<String> getSubjects() {

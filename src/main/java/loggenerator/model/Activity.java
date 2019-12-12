@@ -46,11 +46,7 @@ public class Activity {
     }
 
     public boolean hasComplement() {
-        return complement.exists();
-    }
-
-    private boolean exists() {
-        return name != null;
+        return complement.name != null && complement.type != null & complement.remarks != null;
     }
 
     public List<String> toCollection() {

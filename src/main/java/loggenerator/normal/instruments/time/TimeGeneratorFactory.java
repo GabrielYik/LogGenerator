@@ -1,4 +1,4 @@
-package loggenerator.generation.instruments.time;
+package loggenerator.normal.instruments.time;
 
 public class TimeGeneratorFactory {
     public static TimeGenerator getTimeGenerator(String type) {

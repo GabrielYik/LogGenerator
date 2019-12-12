@@ -1,7 +1,6 @@
 package loggenerator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import loggenerator.generation.LogGenerator;
 import loggenerator.model.Log;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class App {
-    public static final String SCENARIO_FILE_PATH = "." + File.separator + "config.json";
+    public static final String SCENARIO_FILE_PATH = "." + File.separator + "many_failed_login_attempts.json";
     public static final String CSV_FILE_PATH = "." + File.separator + "logs.csv";
 
     public static void main(String[] args) throws IOException {
