@@ -1,4 +1,4 @@
-package loggenerator.normal.instruments.time;
+package loggenerator.normal.instruments;
 
 import java.time.LocalDateTime;
 

@@ -1,11 +1,14 @@
 package loggenerator.model;
 
+import com.sun.media.jfxmedia.events.BufferListener;
+
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Log {
-    private LocalDateTime time;
+public class Log implements Cloneable {
+    private LocalTime time;
     private Activity activity;
     private String subject;
 
@@ -13,7 +16,7 @@ public class Log {
 
     }
 
-    public Log(LocalDateTime time, Activity activity, String subject) {
+    public Log(LocalTime time, Activity activity, String subject) {
         this.time = time;
         this.activity = activity;
         this.subject = subject;
@@ -34,18 +37,27 @@ public class Log {
                 + "Subject: " + subject + "\n";
     }
 
+    @Override
+    public Object clone() {
+        Log clone = new Log();
+        clone.time = LocalTime.now();
+        clone.activity = activity;
+        clone.subject = subject;
+        return clone;
+    }
+
     public static Builder builder() {
         return new Builder();
     }
 
-    public static class Builder {
+    public static class Builder implements Cloneable {
         private Log log;
 
         public Builder() {
-            this.log = new Log();
+            log = new Log();
         }
 
-        public Builder withTime(LocalDateTime time) {
+        public Builder withTime(LocalTime time) {
             log.time = time;
             return this;
         }
@@ -68,8 +80,19 @@ public class Log {
             return !hasComplement();
         }
 
+        @Override
+        public Object clone() {
+            Builder clone = new Builder();
+            clone.log = (Log) log.clone();
+            return clone;
+        }
+
         public Log build() {
             return log;
+        }
+
+        public LocalTime getTime() {
+            return log.time;
         }
     }
 }

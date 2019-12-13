@@ -1,5 +1,5 @@
 {
-  "logCount": "10",
+  "logCount": "4",
   "headers": [
     "time", "description", "type", "subject", "remarks"
   ],
