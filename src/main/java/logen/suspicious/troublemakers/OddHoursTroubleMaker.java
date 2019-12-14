@@ -1,19 +1,19 @@
 package logen.suspicious.troublemakers;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import logen.TransitionContext;
 import logen.model.Activity;
 import logen.model.Log;
 import logen.normal.InstrumentConductor;
+import logen.suspicious.Trouble;
 
 public class OddHoursTroubleMaker implements TroubleMaker {
-    private static int COPY_COUNT = 4;
-
+    private Trouble trouble;
     private InstrumentConductor conductor;
 
-    public OddHoursTroubleMaker(List<Activity> suspiciousActivities, List<String> subjects) {
+    public OddHoursTroubleMaker(Trouble trouble, List<Activity> suspiciousActivities, List<String> subjects) {
+        this.trouble = trouble;
         conductor = new InstrumentConductor(suspiciousActivities, subjects);
     }
 
@@ -22,15 +22,14 @@ public class OddHoursTroubleMaker implements TroubleMaker {
         List<Log.Builder> generatedLogs = generateLogs();
         List<Log.Builder> partialLogs = context.getPartialLogs();
         partialLogs.addAll(generatedLogs);
-        int last = generatedLogs.size() - 1;
-        return new TransitionContext(partialLogs, LocalTime.MIDNIGHT.plusHours(7));
+        return new TransitionContext(partialLogs, trouble.getNextTime());
     }
 
     private List<Log.Builder> generateLogs() {
         int currentCount = 0;
-        TransitionContext context = new TransitionContext(new ArrayList<>(), LocalTime.MIDNIGHT.plusHours(2));
-        for (int i = 0; i < COPY_COUNT; i++) {
-            context = conductor.orchestrate(context, currentCount, COPY_COUNT);
+        TransitionContext context = new TransitionContext(new ArrayList<>(), trouble.getTime());
+        for (int i = 0; i < trouble.getCount(); i++) {
+            context = conductor.orchestrate(context, currentCount, trouble.getCount());
             currentCount++;
         }
         return context.getPartialLogs();

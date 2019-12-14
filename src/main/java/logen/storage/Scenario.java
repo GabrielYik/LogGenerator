@@ -1,6 +1,7 @@
 package logen.storage;
 
 import logen.model.Activity;
+import logen.suspicious.Trouble;
 
 import java.util.List;
 
@@ -12,11 +13,7 @@ public class Scenario {
     private List<Activity> suspiciousActivities;
     private List<String> subjects;
 
-    private String timeGeneratorType;
-    private String activityGeneratorType;
-    private String subjectGeneratorType;
-
-    private List<String> troubles;
+    private List<Trouble> troubles;
 
     public int getLogCount() {
         return logCount;
@@ -58,35 +55,11 @@ public class Scenario {
         this.subjects = subjects;
     }
 
-    public String getTimeGeneratorType() {
-        return timeGeneratorType;
-    }
-
-    public void setTimeGeneratorType(String timeGeneratorType) {
-        this.timeGeneratorType = timeGeneratorType;
-    }
-
-    public String getActivityGeneratorType() {
-        return activityGeneratorType;
-    }
-
-    public void setActivityGeneratorType(String activityGeneratorType) {
-        this.activityGeneratorType = activityGeneratorType;
-    }
-
-    public String getSubjectGeneratorType() {
-        return subjectGeneratorType;
-    }
-
-    public void setSubjectGeneratorType(String subjectGeneratorType) {
-        this.subjectGeneratorType = subjectGeneratorType;
-    }
-
-    public List<String> getTroubles() {
+    public List<Trouble> getTroubles() {
         return troubles;
     }
 
-    public void setTroubles(List<String> troubles) {
+    public void setTroubles(List<Trouble> troubles) {
         this.troubles = troubles;
     }
 }

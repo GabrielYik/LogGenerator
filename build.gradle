@@ -23,6 +23,7 @@ checkstyle {
 
 dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.+'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.+'
     compile group: 'org.apache.commons', name: 'commons-csv', version: '1.+'
     testCompile group: 'junit', name: 'junit', version: '5.+'
 }

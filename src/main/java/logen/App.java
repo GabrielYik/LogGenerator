@@ -20,6 +20,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -46,13 +47,13 @@ public class App {
     }
 
     private static void displayScenarioChoices(List<String> scenariosFileNames) {
-        int currentListing = 1;
-        for (int i = currentListing; i <= scenariosFileNames.size(); i++) {
+        Collections.sort(scenariosFileNames);
+        for (int listing = 1; listing <= scenariosFileNames.size(); listing++) {
             System.out.println(
                 "Scenario "
-                    + i
+                    + listing
                     + ": "
-                    + scenariosFileNames.get(currentListing - 1));
+                    + scenariosFileNames.get(listing - 1));
         }
     }
 

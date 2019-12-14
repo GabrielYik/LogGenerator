@@ -1,5 +1,5 @@
 {
-  "logCount": "200",
+  "logCount": "10",
   "headers": [
     "time", "description", "type", "subject", "remarks"
   ],
@@ -45,6 +45,11 @@
     "A", "B"
   ],
   "troubles": [
-    "odd hours"
+    {
+      "type": "odd hours",
+      "time": "02:00:00",
+      "nextTime": "08:30:00",
+      "count": "4"
+    }
   ]
 }

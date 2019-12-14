@@ -1,5 +1,5 @@
 {
-  "logCount": "4",
+  "logCount": "10",
   "headers": [
     "time", "description", "type", "subject", "remarks"
   ],
@@ -34,6 +34,9 @@
     "A", "B"
   ],
   "troubles": [
-    "high volume"
+    {
+      "type": "high volume",
+      "count": "4"
+    }
   ]
 }

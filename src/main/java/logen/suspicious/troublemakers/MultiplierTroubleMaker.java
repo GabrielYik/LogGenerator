@@ -4,17 +4,19 @@ import logen.TransitionContext;
 import logen.model.Activity;
 import logen.model.Log;
 import logen.normal.instruments.ArbitraryTimeGenerator;
+import logen.suspicious.Trouble;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultiplierTroubleMaker implements TroubleMaker {
-    private static final int COPY_COUNT = 10;
+    private Trouble trouble;
 
     private Log.Builder suspiciousLog;
 
-    public MultiplierTroubleMaker(Activity suspiciousActivity, String subject) {
+    public MultiplierTroubleMaker(Trouble trouble, Activity suspiciousActivity, String subject) {
+        this.trouble = trouble;
         suspiciousLog = Log.builder()
             .withActivity(suspiciousActivity)
             .withSubject(subject);
@@ -35,7 +37,7 @@ public class MultiplierTroubleMaker implements TroubleMaker {
     private List<Log.Builder> generateCopies(Log.Builder suspiciousLog, LocalTime previousTime) {
         List<Log.Builder> copies = new ArrayList<>();
         LocalTime base = previousTime;
-        for (int i = 0; i < COPY_COUNT; i++) {
+        for (int i = 0; i < trouble.getCount(); i++) {
             Log.Builder copy = (Log.Builder) suspiciousLog.clone();
             base = ArbitraryTimeGenerator.generateFrom(base);
             copy.withTime(base);
