@@ -1,15 +1,24 @@
 plugins {
     id 'java'
     id 'application'
+    id 'checkstyle'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 
-sourceCompatibility = 1.8
+java {
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
+}
 
 repositories {
     mavenCentral()
+}
+
+checkstyle {
+    toolVersion = '8.1'
 }
 
 dependencies {
@@ -18,6 +27,10 @@ dependencies {
     testCompile group: 'junit', name: 'junit', version: '5.+'
 }
 
+shadowJar {
+    archiveFileName = 'logen.jar'
+}
+
 application {
-    mainClassName = 'App'
+    mainClassName = 'logen/App'
 }
