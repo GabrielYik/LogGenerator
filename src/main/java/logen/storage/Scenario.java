@@ -1,7 +1,7 @@
 package logen.storage;
 
-import logen.model.Activity;
-import logen.suspicious.Trouble;
+import logen.log.Activity;
+import logen.generation.suspicious.Trouble;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package logen.suspicious;
+package logen.generation.suspicious;
 
 import java.time.LocalTime;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;

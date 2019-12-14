@@ -1,7 +1,5 @@
 package logen.util;
 
-import logen.normal.instruments.RandomChooser;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;

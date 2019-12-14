@@ -1,4 +1,4 @@
-package logen.normal.instruments;
+package logen.util;
 
 import java.util.List;
 import java.util.Random;

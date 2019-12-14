@@ -9,7 +9,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
-import logen.model.Log;
+import logen.generation.LogGenerator;
+import logen.log.Log;
 import logen.storage.Scenario;
 import logen.util.PathUtil;
 

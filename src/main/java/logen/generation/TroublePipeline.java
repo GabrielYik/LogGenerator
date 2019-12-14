@@ -1,8 +1,11 @@
-package logen.suspicious;
+package logen.generation;
 
-import logen.TransitionContext;
-import logen.model.Activity;
-import logen.suspicious.troublemakers.TroubleMaker;
+import logen.generation.TransitionContext;
+import logen.generation.suspicious.Trouble;
+import logen.generation.suspicious.TroubleMakerFactory;
+import logen.generation.suspicious.TroubleMakingContext;
+import logen.log.Activity;
+import logen.generation.suspicious.troublemakers.TroubleMaker;
 
 import java.util.ArrayList;
 import java.util.Iterator;

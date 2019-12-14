@@ -1,6 +1,6 @@
-package logen.suspicious.troublemakers;
+package logen.generation.suspicious.troublemakers;
 
-import logen.TransitionContext;
+import logen.generation.TransitionContext;
 
 public interface TroubleMaker {
     TransitionContext makeTrouble(TransitionContext context);

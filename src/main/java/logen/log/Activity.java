@@ -1,4 +1,4 @@
-package logen.model;
+package logen.log;
 
 import java.util.ArrayList;
 import java.util.List;

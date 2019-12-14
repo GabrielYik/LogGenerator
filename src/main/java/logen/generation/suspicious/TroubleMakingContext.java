@@ -1,7 +1,7 @@
-package logen.suspicious;
+package logen.generation.suspicious;
 
 import java.util.List;
-import logen.model.Activity;
+import logen.log.Activity;
 
 public class TroubleMakingContext {
     private Trouble trouble;

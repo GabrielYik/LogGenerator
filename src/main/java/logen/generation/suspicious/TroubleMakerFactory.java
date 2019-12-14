@@ -1,8 +1,8 @@
-package logen.suspicious;
+package logen.generation.suspicious;
 
-import logen.suspicious.troublemakers.MultiplierTroubleMaker;
-import logen.suspicious.troublemakers.OddHoursTroubleMaker;
-import logen.suspicious.troublemakers.TroubleMaker;
+import logen.generation.suspicious.troublemakers.MultiplierTroubleMaker;
+import logen.generation.suspicious.troublemakers.OddHoursTroubleMaker;
+import logen.generation.suspicious.troublemakers.TroubleMaker;
 
 public class TroubleMakerFactory {
     public static TroubleMaker getTroubleMaker(TroubleMakingContext context) {

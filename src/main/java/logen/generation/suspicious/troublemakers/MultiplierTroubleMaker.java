@@ -1,10 +1,10 @@
-package logen.suspicious.troublemakers;
+package logen.generation.suspicious.troublemakers;
 
-import logen.TransitionContext;
-import logen.model.Activity;
-import logen.model.Log;
-import logen.normal.instruments.ArbitraryTimeGenerator;
-import logen.suspicious.Trouble;
+import logen.generation.TransitionContext;
+import logen.log.Activity;
+import logen.log.Log;
+import logen.util.TimeGenerator;
+import logen.generation.suspicious.Trouble;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -39,7 +39,7 @@ public class MultiplierTroubleMaker implements TroubleMaker {
         LocalTime base = previousTime;
         for (int i = 0; i < trouble.getCount(); i++) {
             Log.Builder copy = (Log.Builder) suspiciousLog.clone();
-            base = ArbitraryTimeGenerator.generateFrom(base);
+            base = TimeGenerator.generateFrom(base);
             copy.withTime(base);
             copies.add(copy);
         }

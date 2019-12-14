@@ -1,12 +1,12 @@
-package logen.suspicious.troublemakers;
+package logen.generation.suspicious.troublemakers;
 
 import java.util.ArrayList;
 import java.util.List;
-import logen.TransitionContext;
-import logen.model.Activity;
-import logen.model.Log;
-import logen.normal.InstrumentConductor;
-import logen.suspicious.Trouble;
+import logen.generation.TransitionContext;
+import logen.log.Activity;
+import logen.log.Log;
+import logen.generation.InstrumentConductor;
+import logen.generation.suspicious.Trouble;
 
 public class OddHoursTroubleMaker implements TroubleMaker {
     private Trouble trouble;

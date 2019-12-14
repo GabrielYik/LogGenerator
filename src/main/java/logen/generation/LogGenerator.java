@@ -1,9 +1,7 @@
-package logen;
+package logen.generation;
 
-import logen.model.Log;
-import logen.normal.InstrumentConductor;
+import logen.log.Log;
 import logen.storage.Scenario;
-import logen.suspicious.TroublePipeline;
 import logen.util.BreakpointChooser;
 
 import java.time.LocalTime;

@@ -1,12 +1,9 @@
-package logen.model;
+package logen.log;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- */
 public class Log implements Cloneable {
     private LocalTime time;
     private Activity activity;
@@ -22,10 +19,6 @@ public class Log implements Cloneable {
         this.subject = subject;
     }
 
-    /**
-     *
-     * @return
-     */
     public Object[] toArray() {
         List<String> array = new ArrayList<>();
         array.add(time.toString());
@@ -49,11 +42,7 @@ public class Log implements Cloneable {
         clone.subject = subject;
         return clone;
     }
-
-    /**
-     *
-     * @return
-     */
+    
     public static Builder builder() {
         return new Builder();
     }

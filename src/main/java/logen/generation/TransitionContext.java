@@ -1,8 +1,8 @@
-package logen;
+package logen.generation;
 
 import java.time.LocalTime;
 import java.util.List;
-import logen.model.Log;
+import logen.log.Log;
 
 public class TransitionContext {
     private List<Log.Builder> partialLogs;

@@ -1,17 +1,12 @@
-package logen.normal.instruments;
+package logen.util;
 
-import java.time.Duration;
-import java.time.Instant;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class ArbitraryTimeGenerator {
-
-    private ArbitraryTimeGenerator() {
+public class TimeGenerator {
+    private TimeGenerator() {
 
     }
-
 
     public static LocalTime generateFrom(LocalTime otherBase) {
         long seconds = generateRandomSeconds();
@@ -24,5 +19,4 @@ public class ArbitraryTimeGenerator {
             .current()
             .nextLong(10, 100);
     }
-
 }

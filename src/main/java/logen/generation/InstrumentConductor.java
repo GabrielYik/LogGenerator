@@ -1,10 +1,9 @@
-package logen.normal;
+package logen.generation;
 
-import logen.TransitionContext;
-import logen.model.Activity;
-import logen.model.Log;
-import logen.normal.instruments.RandomChooser;
-import logen.normal.instruments.ArbitraryTimeGenerator;
+import logen.log.Activity;
+import logen.log.Log;
+import logen.util.RandomChooser;
+import logen.util.TimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -43,7 +42,7 @@ public class InstrumentConductor {
     private Log.Builder generatePartialLog(int currentLogCount, int finalLogCount, LocalTime previousTime) {
         int difference = finalLogCount - currentLogCount;
         if (difference == complementPartialLogs.size()) {
-            return complementPartialLogs.pop().withTime(ArbitraryTimeGenerator.generateFrom(previousTime));
+            return complementPartialLogs.pop().withTime(TimeGenerator.generateFrom(previousTime));
         } else if (difference > complementPartialLogs.size()) {
             int choice = RandomChooser.chooseFrom(choiceCount);
             Log.Builder partialLog = choices.get(choice).apply(previousTime);
@@ -61,7 +60,7 @@ public class InstrumentConductor {
     }
 
     private Log.Builder generateNewPartialLog(LocalTime previousTime) {
-        LocalTime time = ArbitraryTimeGenerator.generateFrom(previousTime);
+        LocalTime time = TimeGenerator.generateFrom(previousTime);
         Activity chosenActivity = RandomChooser.chooseFrom(activities);
         String subject = RandomChooser.chooseFrom(subjects);
         Log.Builder partialLog = Log.builder()
@@ -83,7 +82,7 @@ public class InstrumentConductor {
             return generateNewPartialLog(previousTime);
         }
         Log.Builder complementPartialLog = complementPartialLogs.pop();
-        return complementPartialLog.withTime(ArbitraryTimeGenerator.generateFrom(previousTime));
+        return complementPartialLog.withTime(TimeGenerator.generateFrom(previousTime));
     }
 
     private void undoChoice() {
