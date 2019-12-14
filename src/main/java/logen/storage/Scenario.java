@@ -1,6 +1,6 @@
-package loggenerator;
+package logen.storage;
 
-import loggenerator.model.Activity;
+import logen.model.Activity;
 
 import java.util.List;
 

@@ -1,0 +1,50 @@
+{
+  "logCount": "200",
+  "headers": [
+    "time", "description", "type", "subject", "remarks"
+  ],
+  "normalActivities": [
+    {
+      "name": "login",
+      "type": "user access",
+      "remarks": "success",
+      "complement": {
+        "name": "logout",
+        "type": "user access",
+        "remarks": "success",
+        "complement": {}
+      }
+    },
+    {
+      "name": "login",
+      "type": "user access",
+      "remarks": "failure",
+      "complement": {}
+    }
+  ],
+  "suspiciousActivities": [
+    {
+      "name": "login",
+      "type": "user access",
+      "remarks": "success",
+      "complement": {
+        "name": "logout",
+        "type": "user access",
+        "remarks": "success",
+        "complement": {}
+      }
+    },
+    {
+      "name": "login",
+      "type": "user access",
+      "remarks": "failure",
+      "complement": {}
+    }
+  ],
+  "subjects": [
+    "A", "B"
+  ],
+  "troubles": [
+    "odd hours"
+  ]
+}

@@ -1,8 +1,10 @@
-package loggenerator.suspicious;
+package logen.suspicious;
 
-import loggenerator.model.Activity;
-import loggenerator.model.Log;
-import loggenerator.normal.instruments.RandomChooser;
+import logen.TransitionContext;
+import logen.model.Activity;
+import logen.model.Log;
+import logen.normal.instruments.RandomChooser;
+import logen.suspicious.troublemakers.TroubleMaker;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -14,19 +16,16 @@ public class TroublePipeline {
 
     public TroublePipeline(List<Activity> suspiciousActivities, List<String> troubles, List<String> subjects) {
         troubleMakers = new ArrayList<>();
-        for (int i = 0; i < suspiciousActivities.size(); i++) {
-            Log.Builder suspiciousLog = Log.builder()
-                    .withActivity(suspiciousActivities.get(i))
-                    .withSubject(subjects.get(i));
-            TroubleMakingContext context = new TroubleMakingContext(troubles.get(i), suspiciousLog, RandomChooser.chooseFrom((subjects)));
+        for (int i = 0; i < troubles.size(); i++) {
+            TroubleMakingContext context = new TroubleMakingContext(troubles.get(i), suspiciousActivities, subjects);
             TroubleMaker troubleMaker = TroubleMakerFactory.getTroubleMaker(context);
             troubleMakers.add(troubleMaker);
         }
         troubleMakersIterator = troubleMakers.iterator();
     }
 
-    public List<Log.Builder> runNext(List<Log.Builder> logs) {
-        return troubleMakersIterator.next().makeTrouble(logs);
+    public TransitionContext runNext(TransitionContext context) {
+        return troubleMakersIterator.next().makeTrouble(context);
     }
 
     public int getTroubleMakerCount() {

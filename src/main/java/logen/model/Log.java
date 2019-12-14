@@ -1,12 +1,12 @@
-package loggenerator.model;
+package logen.model;
 
-import com.sun.media.jfxmedia.events.BufferListener;
-
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class Log implements Cloneable {
     private LocalTime time;
     private Activity activity;
@@ -22,6 +22,10 @@ public class Log implements Cloneable {
         this.subject = subject;
     }
 
+    /**
+     *
+     * @return
+     */
     public Object[] toArray() {
         List<String> array = new ArrayList<>();
         array.add(time.toString());
@@ -46,6 +50,10 @@ public class Log implements Cloneable {
         return clone;
     }
 
+    /**
+     *
+     * @return
+     */
     public static Builder builder() {
         return new Builder();
     }

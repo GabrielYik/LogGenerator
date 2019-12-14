@@ -1,4 +1,4 @@
-package loggenerator.model;
+package logen.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -59,9 +59,11 @@ public class Activity {
 
     @Override
     public String toString() {
-        return "loggenerator.model.Activity{" +
-                "name='" + name + '\'' +
-                ", type='" + type + '\'' +
-                '}';
+        return "Activity{"
+            + "name='" + name + '\''
+            + ", type='" + type + '\''
+            + ", remarks='" + remarks + '\''
+            + ", complement=" + complement
+            + '}';
     }
 }

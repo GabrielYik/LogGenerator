@@ -1,63 +1,57 @@
-package loggenerator.normal;
+package logen.normal;
 
-import loggenerator.normal.instruments.RandomChooser;
-import loggenerator.model.Log;
-import loggenerator.model.Activity;
-import loggenerator.normal.instruments.SimpleTimeGenerator;
+import logen.TransitionContext;
+import logen.model.Activity;
+import logen.model.Log;
+import logen.normal.instruments.RandomChooser;
+import logen.normal.instruments.ArbitraryTimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Stack;
-import java.util.function.Supplier;
-import java.util.logging.Logger;
+import java.util.function.Function;
 
 public class InstrumentConductor {
-    private static final int CHOICE_COUNT = 2;
-
     private List<Activity> activities;
     private List<String> subjects;
-    private List<Log.Builder> partialLogs;
+
     private Stack<Log.Builder> complementPartialLogs;
-    private List<Supplier<Log.Builder>> choices;
+
+    private List<Function<LocalTime, Log.Builder>> choices;
+    private int choiceCount;
 
     public InstrumentConductor(List<Activity> activities, List<String> subjects) {
         this.activities = activities;
         this.subjects = subjects;
 
-        partialLogs = new LinkedList<>();
         complementPartialLogs = new Stack<>();
+
         choices = new ArrayList<>();
-        choices.add(this::createFreshPartialLog);
+        choices.add(this::generateNewPartialLog);
         choices.add(this::chooseComplementPartialLog);
+        choiceCount = choices.size();
     }
 
-    public List<Log.Builder> getPartialLogsSoFar() {
-        return partialLogs;
-    }
-
-    public void orchestrate(int currentLogCount, int finalLogCount) {
-        Log.Builder partialLog = generatePartialLog(currentLogCount, finalLogCount);
+    public TransitionContext orchestrate(TransitionContext context, int currentLogCount, int finalLogCount) {
+        List<Log.Builder> partialLogs = context.getPartialLogs();
+        Log.Builder partialLog = generatePartialLog(currentLogCount, finalLogCount, context.getPreviousTime());
         partialLogs.add(partialLog);
+        return new TransitionContext(partialLogs, partialLog.getTime());
     }
 
-    public void resume(List<Log.Builder> newPartialLogs) {
-        partialLogs = newPartialLogs;
-    }
-
-    private Log.Builder generatePartialLog(int currentLogCount, int finalLogCount) {
+    private Log.Builder generatePartialLog(int currentLogCount, int finalLogCount, LocalTime previousTime) {
         int difference = finalLogCount - currentLogCount;
         if (difference == complementPartialLogs.size()) {
-            return complementPartialLogs.pop().withTime(SimpleTimeGenerator.generate());
+            return complementPartialLogs.pop().withTime(ArbitraryTimeGenerator.generateFrom(previousTime));
         } else if (difference > complementPartialLogs.size()) {
-            int choice = RandomChooser.chooseFrom(CHOICE_COUNT);
-            Log.Builder partialLog = choices.get(choice).get();
+            int choice = RandomChooser.chooseFrom(choiceCount);
+            Log.Builder partialLog = choices.get(choice).apply(previousTime);
             if (choice == 0 && partialLog.hasComplement()) {
                 int newDifference = finalLogCount - (currentLogCount + 1);
                 if (newDifference < complementPartialLogs.size()) {
                     undoChoice();
-                    return generatePartialLog(currentLogCount, finalLogCount);
+                    return generatePartialLog(currentLogCount, finalLogCount, previousTime);
                 }
             }
             return partialLog;
@@ -66,30 +60,30 @@ public class InstrumentConductor {
         }
     }
 
-    private Log.Builder createFreshPartialLog() {
-        LocalTime time = SimpleTimeGenerator.generate();
+    private Log.Builder generateNewPartialLog(LocalTime previousTime) {
+        LocalTime time = ArbitraryTimeGenerator.generateFrom(previousTime);
         Activity chosenActivity = RandomChooser.chooseFrom(activities);
         String subject = RandomChooser.chooseFrom(subjects);
         Log.Builder partialLog = Log.builder()
-                .withTime(time)
-                .withActivity(chosenActivity)
-                .withSubject(subject);
+            .withTime(time)
+            .withActivity(chosenActivity)
+            .withSubject(subject);
         if (chosenActivity.hasComplement()) {
             Activity complementActivity = chosenActivity.getComplement();
             Log.Builder complementPartialLog = Log.builder()
-                    .withActivity(complementActivity)
-                    .withSubject(subject);
+                .withActivity(complementActivity)
+                .withSubject(subject);
             complementPartialLogs.push(complementPartialLog);
         }
         return partialLog;
     }
 
-    private Log.Builder chooseComplementPartialLog() {
+    private Log.Builder chooseComplementPartialLog(LocalTime previousTime) {
         if (complementPartialLogs.isEmpty()) {
-            return createFreshPartialLog();
+            return generateNewPartialLog(previousTime);
         }
         Log.Builder complementPartialLog = complementPartialLogs.pop();
-        return complementPartialLog.withTime(SimpleTimeGenerator.generate());
+        return complementPartialLog.withTime(ArbitraryTimeGenerator.generateFrom(previousTime));
     }
 
     private void undoChoice() {

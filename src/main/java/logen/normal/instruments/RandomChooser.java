@@ -1,4 +1,4 @@
-package loggenerator.normal.instruments;
+package logen.normal.instruments;
 
 import java.util.List;
 import java.util.Random;

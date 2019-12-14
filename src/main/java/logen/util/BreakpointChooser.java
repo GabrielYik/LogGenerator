@@ -1,9 +1,8 @@
-package loggenerator;
+package logen.util;
 
-import loggenerator.normal.instruments.RandomChooser;
+import logen.normal.instruments.RandomChooser;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
@@ -17,7 +16,7 @@ public class BreakpointChooser {
         this.troubleMakerCount = troubleMakerCount;
     }
 
-    public List<Integer> generateBreakPoints() {
+    public ListIterator<Integer> generateBreakpoints() {
         List<Unit> units = generateUnits(logCount);
         ListIterator<Unit> unitIterator = units.listIterator();
         List<Integer> breakpoints = new ArrayList<>();
@@ -31,7 +30,7 @@ public class BreakpointChooser {
                 unitIterator.previous();
             }
         }
-        return breakpoints;
+        return breakpoints.listIterator();
     }
 
     private List<Unit> generateUnits(int unitsSize) {

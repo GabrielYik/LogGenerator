@@ -1,4 +1,4 @@
-package loggenerator.normal.instruments;
+package logen.normal.instruments;
 
 import java.time.Duration;
 import java.time.Instant;
