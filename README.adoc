@@ -1,0 +1,10 @@
+= LogGenerator
+
+== Overview
+The Log Generator is to be employed as part of the Assessment phase of the 5-step
+process. Given a JSON file representing a scenario, it generates a set of sample
+logs in CSV format.
+
+== Documentation
+There are two pieces of documentation: the link:docs/UserGuide.adoc[user guide]
+and the link:docs/DeveloperGuide.adoc[developer guide].

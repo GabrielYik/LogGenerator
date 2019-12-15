@@ -1,0 +1,3 @@
+= Log Generator - Developer Guide
+:toc: left
+:sectnums:

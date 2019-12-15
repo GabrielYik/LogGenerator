@@ -1,0 +1,25 @@
+= Log Generator - User Guide
+:toc: left
+:sectnums:
+
+:appName: Log Generator
+:scenarioDir: scenarios
+:logsDir: logs
+
+== Introduction
+The user guide is aimed towards users of `{appName}`.
+
+== Process
+There are several built in scenario files in the app, which are stored in the
+`{scenarioDir}` folder. When the app starts up, a message appears and prompts you
+to choose a scenario file. If the desired scenario is not represented by any of
+the scenario files, a new one can be added to the `{scenarioDir}` folder.
+
+[NOTE]
+The scenario file has to be of a standard format, which can be found below.
+
+Once the scenario file is chosen, `{appName}` will use the information specified
+in the file to generate the set of sample logs. These logs will be put into a
+CSV file in the `{logsDir}` folder.
+
+== Scenario File Format
