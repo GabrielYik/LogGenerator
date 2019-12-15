@@ -1,6 +1,5 @@
 package logen.generation;
 
-import logen.generation.TransitionContext;
 import logen.generation.suspicious.Trouble;
 import logen.generation.suspicious.TroubleMakerFactory;
 import logen.generation.suspicious.TroubleMakingContext;
