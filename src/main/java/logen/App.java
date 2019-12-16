@@ -88,6 +88,7 @@ public class App {
 
     private static void displayScenarioChoices(List<String> scenariosFileNames) {
         Collections.sort(scenariosFileNames);
+        System.out.println();
         System.out.println("Scenarios Available");
         for (int listing = 1; listing <= scenariosFileNames.size(); listing++) {
             System.out.println(
@@ -103,8 +104,11 @@ public class App {
         System.out.println("Options");
         System.out.println("- select a scenario file to use by entering its number");
         System.out.println("- exit the program by entering \"exit\"");
+
+        System.out.println();
         System.out.print("Enter input: ");
         System.out.flush();
+
         Scanner scanner = new Scanner(System.in);
         return scanner.next();
     }
