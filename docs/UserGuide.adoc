@@ -10,6 +10,9 @@
 == Introduction
 The user guide is aimed towards users of `{appName}`.
 
+== Prerequisites
+. Java SE 8 installed.
+
 == Set Up
 . Download the JAR of `{appName}`(`logen.jar`) and the zip folder
   (`scenarios.zip`) from the {repoUrl}[`releases` tab of the GitHub repository].
