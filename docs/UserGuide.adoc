@@ -11,15 +11,16 @@
 The user guide is aimed towards users of `{appName}`.
 
 == Set Up
-. Download the JAR of `{appName}` and the folder containing the built-in
-  scenario files from the {repoUrl}[`releases` tab of the GitHub repository].
-. Put both the JAR and folder into an empty folder to give `{appName}` its own
-  environment.
+. Download the JAR of `{appName}`(`logen.jar`) and the zip folder
+  (`scenarios.zip`) from the {repoUrl}[`releases` tab of the GitHub repository].
+  The latter contains pre-configured scenario files.
+. Unzip `scenarios.zip`, and put both the JAR and unzipped folder into an empty
+  folder to give `{appName}` its own environment.
 . Using a command line interface (CLI), navigate to the folder created above. To run
   `{appName}`, enter `java -jar logen.jar` into the CLI.
 
 == Process
-There are several built in scenario files in the app, which are stored in the
+There are several pre-configured scenario files, which are stored in the
 `{scenarioDir}` folder. When the app starts up, a message appears and prompts you
 to choose a scenario file. If the desired scenario is not represented by any of
 the scenario files, a new one can be added to the `{scenarioDir}` folder.
