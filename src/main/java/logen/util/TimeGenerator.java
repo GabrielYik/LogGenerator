@@ -17,6 +17,6 @@ public class TimeGenerator {
     private static long generateRandomSeconds() {
         return ThreadLocalRandom
             .current()
-            .nextLong(10, 100);
+            .nextLong(30, 600);
     }
 }
