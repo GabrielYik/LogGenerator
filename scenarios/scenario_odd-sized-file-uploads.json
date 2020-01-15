@@ -1,34 +1,35 @@
 {
   "logCount": "10",
   "headers": [
-    "time", "description", "type", "subject", "remarks"
+    "time", "description", "type", "user", "size"
   ],
   "normalActivities": [
     {
-      "name": "real-time report",
+      "description": "new chart uploaded",
       "type": "file upload",
-      "remarks": "10Mb",
-      "complement": {}
+      "remarks": "10Mb"
     },
     {
-      "name": "product update",
+      "description": "new data file uploaded",
       "type": "file upload",
-      "remarks": "11Mb",
-      "complement": {}
+      "remarks": "11Mb"
     },
     {
-      "name": "manager report",
+      "description": "chart requested",
       "type": "file download",
-      "remarks": "10Mb",
-      "complement": {}
+      "remarks": "10Mb"
     }
   ],
   "suspiciousActivities": [
     {
-      "name": "real-time report",
+      "description": "new chart uploaded",
       "type": "file upload",
-      "remarks": "10MB",
-      "complement": {}
+      "remarks": "10MB"
+    },
+    {
+      "description": "chart requested",
+      "type": "file download",
+      "remarks": "100Mb"
     }
   ],
   "subjects": [
@@ -36,10 +37,7 @@
   ],
   "troubles": [
     {
-      "type": "empty",
-      "time": "",
-      "nextTime": "",
-      "count": ""
+      "type": "empty"
     }
   ]
 }

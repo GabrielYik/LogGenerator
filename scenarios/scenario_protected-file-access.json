@@ -5,29 +5,42 @@
   ],
   "normalActivities": [
     {
-      "name": "escalate privilege for process",
+      "description": "superuser privileges invocation attempt",
       "type": "permission modification",
-      "remarks": "success",
-      "complement": {
-        "name": "accessing file",
-        "type": "file access",
-        "remarks": "success",
-        "complement": {}
-      }
+      "subject": "Jason",
+      "remarks": "failure"
     },
     {
-      "name": "restoring previous privilege for process",
+      "description": "superuser privileges invocation attempt",
       "type": "permission modification",
-      "remarks": "",
-      "complement": {}
+      "subject": "Kara",
+      "remarks": "success"
+    },
+    {
+      "description": "superuser privileges invocation attempt",
+      "type": "permission modification",
+      "subject": "Kara",
+      "remarks": "success",
+      "complement": {
+        "description": "sensitive file accessed",
+        "type": "file access",
+        "subject": "Kara",
+        "remarks": "success"
+      }
     }
   ],
   "suspiciousActivities": [
     {
-      "name": "escalate privilege for process",
+      "description": "superuser privileges invocation attempt",
       "type": "permission modification",
-      "remarks": "success",
-      "complement": {}
+      "subject": "Jas0n",
+      "remarks": "failure"
+    },
+    {
+      "description": "superuser privileges invocation attempt",
+      "type": "permission modification",
+      "subject": "Jas0n",
+      "remarks": "success"
     }
   ],
   "subjects": [
@@ -35,10 +48,7 @@
   ],
   "troubles": [
     {
-      "type": "empty",
-      "time": "",
-      "nextTime": "",
-      "count": ""
+      "type": "empty"
     }
   ]
 }

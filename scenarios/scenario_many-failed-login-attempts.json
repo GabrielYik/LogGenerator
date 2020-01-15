@@ -1,33 +1,30 @@
 {
   "logCount": "10",
   "headers": [
-    "time", "description", "type", "subject", "remarks"
+    "time", "description", "type", "user", "remarks"
   ],
   "normalActivities": [
     {
-      "name": "login",
+      "description": "login",
       "type": "user access",
       "remarks": "success",
       "complement": {
-        "name": "logout",
+        "description": "logout",
         "type": "user access",
-        "remarks": "success",
-        "complement": {}
+        "remarks": "success"
       }
     },
     {
-      "name": "login",
+      "description": "login",
       "type": "user access",
-      "remarks": "failure",
-      "complement": {}
+      "remarks": "failure"
     }
   ],
   "suspiciousActivities": [
     {
-      "name": "login",
+      "description": "login",
       "type": "user access",
-      "remarks": "failure",
-      "complement": {}
+      "remarks": "failure"
     }
   ],
   "subjects": [
