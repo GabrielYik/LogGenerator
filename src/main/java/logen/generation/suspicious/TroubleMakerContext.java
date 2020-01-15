@@ -3,12 +3,12 @@ package logen.generation.suspicious;
 import java.util.List;
 import logen.log.Activity;
 
-public class TroubleMakingContext {
+public class TroubleMakerContext {
     private Trouble trouble;
     private List<Activity> suspiciousActivities;
     private List<String> subjects;
 
-    public TroubleMakingContext(Trouble trouble, List<Activity> suspiciousActivities, List<String> subjects) {
+    public TroubleMakerContext(Trouble trouble, List<Activity> suspiciousActivities, List<String> subjects) {
         this.trouble = trouble;
         this.suspiciousActivities = suspiciousActivities;
         this.subjects = subjects;

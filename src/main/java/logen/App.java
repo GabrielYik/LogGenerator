@@ -4,7 +4,6 @@ import static logen.storage.Config.FILE_EXTENSION;
 import static logen.storage.Config.LOG_DIR_PATH;
 import static logen.storage.Config.SCENARIO_DIR_PATH;
 import static logen.storage.Config.SCENARIO_DIR_PATH_JAR;
-import static logen.storage.Config.scenarioFileFilter;
 import static logen.util.PathUtil.SCENARIO_FILE_FILTER;
 
 import com.fasterxml.jackson.databind.ObjectMapper;

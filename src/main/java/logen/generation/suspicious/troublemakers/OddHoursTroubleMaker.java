@@ -5,16 +5,16 @@ import java.util.List;
 import logen.generation.TransitionContext;
 import logen.log.Activity;
 import logen.log.Log;
-import logen.generation.InstrumentConductor;
+import logen.generation.normal.NormalConductor;
 import logen.generation.suspicious.Trouble;
 
 public class OddHoursTroubleMaker implements TroubleMaker {
     private Trouble trouble;
-    private InstrumentConductor conductor;
+    private NormalConductor normalConductor;
 
     public OddHoursTroubleMaker(Trouble trouble, List<Activity> suspiciousActivities, List<String> subjects) {
         this.trouble = trouble;
-        conductor = new InstrumentConductor(suspiciousActivities, subjects);
+        normalConductor = new NormalConductor(suspiciousActivities, subjects);
     }
 
     @Override
@@ -29,7 +29,7 @@ public class OddHoursTroubleMaker implements TroubleMaker {
         int currentCount = 0;
         TransitionContext context = new TransitionContext(new ArrayList<>(), trouble.getTime());
         for (int i = 0; i < trouble.getCount(); i++) {
-            context = conductor.orchestrate(context, currentCount, trouble.getCount());
+            context = normalConductor.orchestrate(context, currentCount, trouble.getCount());
             currentCount++;
         }
         return context.getPartialLogs();

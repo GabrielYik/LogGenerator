@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Activity {
-    private String name;
+    private String description;
     private String type;
+    private String subject;
     private String remarks;
     private Activity complement;
 
@@ -13,12 +14,12 @@ public class Activity {
 
     }
 
-    public String getName() {
-        return name;
+    public String getDescription() {
+        return description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getType() {
@@ -27,6 +28,18 @@ public class Activity {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
+    }
+
+    public boolean hasSubject() {
+        return subject != null;
     }
 
     public String getRemarks() {
@@ -46,13 +59,14 @@ public class Activity {
     }
 
     public boolean hasComplement() {
-        return complement.name != null && complement.type != null & complement.remarks != null;
+        return complement != null;
     }
 
     public List<String> toCollection() {
         List<String> array = new ArrayList<>();
-        array.add(name);
+        array.add(description);
         array.add(type);
+        array.add(subject);
         array.add(remarks);
         return array;
     }
@@ -60,7 +74,7 @@ public class Activity {
     @Override
     public String toString() {
         return "Activity{"
-            + "name='" + name + '\''
+            + "name='" + description + '\''
             + ", type='" + type + '\''
             + ", remarks='" + remarks + '\''
             + ", complement=" + complement

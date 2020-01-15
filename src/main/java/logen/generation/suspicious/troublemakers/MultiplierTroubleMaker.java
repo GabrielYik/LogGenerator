@@ -3,7 +3,8 @@ package logen.generation.suspicious.troublemakers;
 import logen.generation.TransitionContext;
 import logen.log.Activity;
 import logen.log.Log;
-import logen.util.TimeGenerator;
+import logen.util.RandomChooser;
+import logen.util.TemporalGenerator;
 import logen.generation.suspicious.Trouble;
 
 import java.time.LocalTime;
@@ -15,11 +16,13 @@ public class MultiplierTroubleMaker implements TroubleMaker {
 
     private Log.Builder suspiciousLog;
 
-    public MultiplierTroubleMaker(Trouble trouble, Activity suspiciousActivity, String subject) {
+    public MultiplierTroubleMaker(Trouble trouble, Activity suspiciousActivity, List<String> subjects) {
         this.trouble = trouble;
+        if (!suspiciousActivity.hasSubject()) {
+            suspiciousActivity.setSubject(RandomChooser.chooseFrom(subjects));
+        }
         suspiciousLog = Log.builder()
-            .withActivity(suspiciousActivity)
-            .withSubject(subject);
+            .withActivity(suspiciousActivity);
     }
 
     @Override
@@ -39,7 +42,7 @@ public class MultiplierTroubleMaker implements TroubleMaker {
         LocalTime base = previousTime;
         for (int i = 0; i < trouble.getCount(); i++) {
             Log.Builder copy = (Log.Builder) suspiciousLog.clone();
-            base = TimeGenerator.generateFrom(base);
+            base = TemporalGenerator.generateTimeFrom(base);
             copy.withTime(base);
             copies.add(copy);
         }

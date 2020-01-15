@@ -1,5 +1,7 @@
 package logen.generation;
 
+import logen.generation.normal.NormalConductor;
+import logen.generation.suspicious.SuspiciousConductor;
 import logen.log.Log;
 import logen.storage.Scenario;
 import logen.util.BreakpointChooser;
@@ -12,15 +14,15 @@ import java.util.stream.Collectors;
 
 public class LogGenerator {
     private int logCount;
-    private InstrumentConductor conductor;
-    private TroublePipeline pipeline;
+    private NormalConductor normalConductor;
+    private SuspiciousConductor suspiciousConductor;
 
     public LogGenerator(Scenario scenario) {
         logCount = scenario.getLogCount();
-        conductor = new InstrumentConductor(
+        normalConductor = new NormalConductor(
             scenario.getNormalActivities(),
             scenario.getSubjects());
-        pipeline = new TroublePipeline(
+        suspiciousConductor = new SuspiciousConductor(
             scenario.getSuspiciousActivities(),
             scenario.getTroubles(),
             scenario.getSubjects());
@@ -32,9 +34,9 @@ public class LogGenerator {
         TransitionContext context = new TransitionContext(new ArrayList<>(), LocalTime.now());
         while (currentLogCount != logCount) {
             if (hasReachedBreakpoint(currentLogCount, breakpoints)) {
-                context = pipeline.runNext(context);
+                context = suspiciousConductor.orchestrate(context);
             } else {
-                context = conductor.orchestrate(context, currentLogCount, logCount);
+                context = normalConductor.orchestrate(context, currentLogCount, logCount);
                 currentLogCount++;
             }
         }
@@ -45,7 +47,7 @@ public class LogGenerator {
     }
 
     private ListIterator<Integer> generateBreakpoints() {
-        BreakpointChooser chooser = new BreakpointChooser(logCount, pipeline.getTroubleMakerCount());
+        BreakpointChooser chooser = new BreakpointChooser(logCount, suspiciousConductor.getTroubleMakerCount());
         return chooser.generateBreakpoints();
     }
 
