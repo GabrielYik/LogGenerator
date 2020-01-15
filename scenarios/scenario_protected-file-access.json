@@ -1,0 +1,44 @@
+{
+  "logCount": "10",
+  "headers": [
+    "time", "description", "type", "subject", "remarks"
+  ],
+  "normalActivities": [
+    {
+      "name": "escalate privilege for process",
+      "type": "permission modification",
+      "remarks": "success",
+      "complement": {
+        "name": "accessing file",
+        "type": "file access",
+        "remarks": "success",
+        "complement": {}
+      }
+    },
+    {
+      "name": "restoring previous privilege for process",
+      "type": "permission modification",
+      "remarks": "",
+      "complement": {}
+    }
+  ],
+  "suspiciousActivities": [
+    {
+      "name": "escalate privilege for process",
+      "type": "permission modification",
+      "remarks": "success",
+      "complement": {}
+    }
+  ],
+  "subjects": [
+    "A", "B"
+  ],
+  "troubles": [
+    {
+      "type": "empty",
+      "time": "",
+      "nextTime": "",
+      "count": ""
+    }
+  ]
+}
