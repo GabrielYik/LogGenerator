@@ -1,5 +1,5 @@
 {
-  "logCount": "1000",
+  "logCount": "100",
   "headers": [
     "time", "description", "type", "user", "remarks"
   ],
@@ -37,7 +37,7 @@
   "troubles": [
     {
       "type": "remover",
-      "count": "4"
+      "count": "10"
     }
   ]
 }

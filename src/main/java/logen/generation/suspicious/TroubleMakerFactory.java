@@ -3,6 +3,7 @@ package logen.generation.suspicious;
 import logen.generation.suspicious.troublemakers.EmptyTroubleMaker;
 import logen.generation.suspicious.troublemakers.MultiplierTroubleMaker;
 import logen.generation.suspicious.troublemakers.OddHoursTroubleMaker;
+import logen.generation.suspicious.troublemakers.RemoverTroubleMaker;
 import logen.generation.suspicious.troublemakers.TroubleMaker;
 
 public class TroubleMakerFactory {
@@ -20,6 +21,8 @@ public class TroubleMakerFactory {
                 context.getSuspiciousActivities(),
                 context.getSubjects(),
                 context.getTemporalGenerator());
+        case "remover":
+            return new RemoverTroubleMaker(context.getTrouble());
         default:
             return new EmptyTroubleMaker();
         }

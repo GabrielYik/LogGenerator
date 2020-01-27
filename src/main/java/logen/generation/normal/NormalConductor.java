@@ -62,6 +62,10 @@ public class NormalConductor {
         }
     }
 
+    private void undoChoice() {
+        complementPartialLogs.pop();
+    }
+
     private Log.Builder generateNewPartialLog() {
         LocalTime time = temporalGenerator.generateTime();
         Activity chosenActivity = RandomChooser.chooseFrom(activities);
@@ -73,14 +77,8 @@ public class NormalConductor {
             .withTime(time)
             .withActivity(chosenActivity);
         if (chosenActivity.hasComplement()) {
-            Activity complementActivity = chosenActivity.getComplement();
-            if (!complementActivity.hasSubject()) {
-                String subject = RandomChooser.chooseFrom(subjects);
-                complementActivity.setSubject(subject);
-            }
-            Log.Builder complementPartialLog = Log.builder()
-                .withActivity(complementActivity);
-            complementPartialLogs.push(complementPartialLog);
+            Activity complement = chosenActivity.getComplement();
+            storeComplement(complement);
         }
         return partialLog;
     }
@@ -90,10 +88,20 @@ public class NormalConductor {
             return generateNewPartialLog();
         }
         Log.Builder complementPartialLog = complementPartialLogs.pop();
+        if (complementPartialLog.hasComplement()) {
+            Activity complement = complementPartialLog.getComplement();
+            storeComplement(complement);
+        }
         return complementPartialLog.withTime(temporalGenerator.generateTime());
     }
 
-    private void undoChoice() {
-        complementPartialLogs.pop();
+    private void storeComplement(Activity complement) {
+        if (!complement.hasSubject()) {
+            String subject = RandomChooser.chooseFrom(subjects);
+            complement.setSubject(subject);
+        }
+        Log.Builder complementPartialLog = Log.builder()
+            .withActivity(complement);
+        complementPartialLogs.push(complementPartialLog);
     }
 }

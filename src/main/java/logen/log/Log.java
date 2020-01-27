@@ -57,6 +57,10 @@ public class Log implements Cloneable {
             return this;
         }
 
+        public Activity getComplement() {
+            return log.activity.getComplement();
+        }
+
         public boolean hasComplement() {
             return log.activity.hasComplement();
         }
