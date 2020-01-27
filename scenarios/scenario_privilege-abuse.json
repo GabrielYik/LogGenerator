@@ -1,0 +1,97 @@
+{
+  "logCount": "100",
+  "headers": [
+    "time", "description", "type", "subject", "remarks"
+  ],
+  "period": {
+    "active": {
+      "days": "weekdays",
+      "startTime": "09:00:00",
+      "endTime": "17:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
+  "normalActivities": [
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "success",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "remarks": "success"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "failure"
+    },
+    {
+      "description": "superuser privileges invocation attempt",
+      "type": "permission modification",
+      "subject": "Jason",
+      "remarks": "failure"
+    },
+    {
+      "description": "superuser privileges invocation attempt",
+      "type": "permission modification",
+      "subject": "Kara",
+      "remarks": "success"
+    },
+    {
+      "description": "superuser privileges invocation attempt",
+      "type": "permission modification",
+      "subject": "Kara",
+      "remarks": "success",
+      "complement": {
+        "description": "file accessed",
+        "type": "file access",
+        "subject": "Kara",
+        "remarks": "success"
+      }
+    }
+  ],
+  "suspiciousActivities": [
+    {
+      "description": "superuser privileges invocation attempt",
+      "type": "permission modification",
+      "subject": "Yiyi",
+      "remarks": "failure"
+    },
+    {
+      "description": "superuser privileges invocation attempt",
+      "type": "permission modification",
+      "subject": "Ray",
+      "remarks": "failure",
+      "complement": {
+        "description": "superuser privileges invocation attempt",
+        "type": "permission modification",
+        "subject": "Ray",
+        "remarks": "success",
+        "complement": {
+          "description": "file accessed",
+          "type": "file access",
+          "subject": "Ray",
+          "remarks": "success",
+          "complement": {
+            "description": "login",
+            "type": "user access",
+            "subject": "Ray",
+            "remarks": "success"
+          }
+        }
+      }
+    }
+  ],
+  "subjects": [
+    "Amanda", "Bob"
+  ],
+  "troubles": [
+    {
+      "type": "empty"
+    }
+  ]
+}

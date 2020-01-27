@@ -1,0 +1,89 @@
+{
+  "logCount": "1000",
+  "headers": [
+    "time", "description", "type", "user", "remarks"
+  ],
+  "period": {
+    "active": {
+      "days": "weekdays",
+      "startTime": "09:00:00",
+      "endTime": "17:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
+  "normalActivities": [
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "success",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "remarks": "success"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "failure"
+    },
+    {
+      "description": "directory creation",
+      "type": "terminal input",
+      "remarks": "mkdir passwds"
+    },
+    {
+      "description": "directory deletion",
+      "type": "terminal input",
+      "remarks": "rmdir test"
+    },
+    {
+      "description": "file creation",
+      "type": "terminal input",
+      "remarks": "touch test.txt"
+    },
+    {
+      "description": "file creation",
+      "type": "terminal input",
+      "remarks": "touch progress.txt"
+    },
+    {
+      "description": "file deletion",
+      "type": "terminal input",
+      "remarks": "rm progress_2020-01-01.txt"
+    }
+  ],
+  "suspiciousActivities": [
+    {
+      "description": "terminal navigation",
+      "type": "terminal input",
+      "remarks": "cd ..",
+      "complement": {
+        "description": "file creation",
+        "type": "terminal input",
+        "remarks": "vim progress_2020-01-02.txt",
+        "complement": {
+          "description": "file listing",
+          "type": "terminal input",
+          "remarks": "ls -a",
+          "complement": {
+            "description": "file deletion",
+            "type": "terminal input",
+            "remarks": "rm -r passwds"
+          }
+        }
+      }
+    }
+  ],
+  "subjects": [
+    "A", "B"
+  ],
+  "troubles": [
+    {
+      "type": "high volume",
+      "count": "4"
+    }
+  ]
+}

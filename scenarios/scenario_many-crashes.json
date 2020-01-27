@@ -1,0 +1,103 @@
+{
+  "logCount": "100",
+  "headers": [
+    "time", "description", "type", "subject", "remarks"
+  ],
+  "period": {
+    "active": {
+      "days": "weekdays",
+      "startTime": "09:00:00",
+      "endTime": "17:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
+  "normalActivities": [
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "success",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "remarks": "success"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "failure"
+    },
+    {
+      "description": "starting program",
+      "type": "process management",
+      "remarks": "success",
+      "complement": {
+        "description": "killing program",
+        "type": "process management",
+        "remarks": "success"
+      }
+    },
+    {
+      "description": "starting program",
+      "type": "process management",
+      "remarks": "success",
+      "complement": {
+        "description": "killing program",
+        "type": "process management",
+        "remarks": "failure",
+        "complement": {
+          "description": "killing program (2)",
+          "type": "process management",
+          "remarks": "success"
+        }
+      }
+    }
+  ],
+  "suspiciousActivities": [
+    {
+      "description": "starting program",
+      "type": "process management",
+      "remarks": "success",
+      "complement": {
+        "description": "killing program",
+        "type": "process management",
+        "remarks": "failure"
+      }
+    },
+    {
+      "description": "starting program",
+      "type": "process management",
+      "remarks": "success",
+      "complement": {
+        "description": "killing program",
+        "type": "process management",
+        "remarks": "failure",
+        "complement": {
+          "description": "killing program (2)",
+          "type": "process management",
+          "remarks": "waiting on child"
+        }
+      }
+    },
+    {
+      "description": "starting program",
+      "type": "process management",
+      "remarks": "success",
+      "complement": {
+        "description": "killing program",
+        "type": "process management",
+        "remarks": "waiting on child"
+      }
+    }
+  ],
+  "subjects": [
+    "Amanda", "Bob"
+  ],
+  "troubles": [
+    {
+      "type": "empty"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "logCount": "10",
+  "headers": [
+    "time", "description", "type", "user", "location"
+  ],
+  "normalActivities": [
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "A",
+      "remarks": "Malaysia",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "subject": "A",
+        "remarks": "Malaysia"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "B",
+      "remarks": "Thailand",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "subject": "B",
+        "remarks": "Thailand"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "C",
+      "remarks": "Vietnam",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "subject": "C",
+        "remarks": "Vietnam"
+      }
+    }
+  ],
+  "suspiciousActivities": [
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "B",
+      "remarks": "Indonesia",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "subject": "B",
+        "remarks": "Indonesia"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "C",
+      "remarks": "Thailand",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "subject": "C",
+        "remarks": "Thailand"
+      }
+    }
+  ],
+  "subjects": [
+    "A", "B"
+  ],
+  "troubles": [
+    {
+      "type": "empty"
+    }
+  ]
+}

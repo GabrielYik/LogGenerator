@@ -1,5 +1,5 @@
 {
-  "logCount": "10",
+  "logCount": "1000",
   "headers": [
     "time", "description", "type", "user", "remarks"
   ],
@@ -30,31 +30,13 @@
       "remarks": "failure"
     }
   ],
-  "suspiciousActivities": [
-    {
-      "description": "login",
-      "type": "user access",
-      "remarks": "success",
-      "complement": {
-        "description": "logout",
-        "type": "user access",
-        "remarks": "success"
-      }
-    },
-    {
-      "description": "login",
-      "type": "user access",
-      "remarks": "failure"
-    }
-  ],
+  "suspiciousActivities": [],
   "subjects": [
     "A", "B"
   ],
   "troubles": [
     {
-      "type": "odd hours",
-      "startTime": "02:00:00",
-      "endTime": "08:30:00",
+      "type": "remover",
       "count": "4"
     }
   ]

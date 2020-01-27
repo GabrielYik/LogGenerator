@@ -1,8 +1,18 @@
 {
-  "logCount": "10",
+  "logCount": "1000",
   "headers": [
     "time", "description", "type", "user", "remarks"
   ],
+  "period": {
+    "active": {
+      "days": "weekdays",
+      "startTime": "09:00:00",
+      "endTime": "17:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
   "normalActivities": [
     {
       "description": "login",
