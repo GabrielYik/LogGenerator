@@ -31,8 +31,9 @@ import java.util.Scanner;
 
 public class App {
     private static final int EXIT_COMMAND = -1;
-    private static final int SCENARIO_OUT_OF_BOUNDS = -2;
-    private static final int UNKNOWN_INPUT = -3;
+    private static final int ALL_COMMAND = -2;
+    private static final int SCENARIO_OUT_OF_BOUNDS = -3;
+    private static final int UNKNOWN_INPUT = -4;
 
     private static final int MIN_SCENARIO_CHOICE = 1;
 
@@ -40,6 +41,49 @@ public class App {
         List<String> scenariosFileNames = fetchScenariosFileNames();
         displayScenarioChoices(scenariosFileNames);
         handleUserRequests(scenariosFileNames);
+    }
+
+    private static List<String> fetchScenariosFileNames() throws IOException {
+        try {
+            return fetchScenariosFileNames(SCENARIO_DIR_PATH);
+        } catch (NoSuchFileException e) {
+            try {
+                return fetchScenariosFileNames(SCENARIO_DIR_PATH_JAR);
+            } catch (NoSuchFileException f) {
+                createEmptyScenariosFolder();
+                return Collections.emptyList();
+            }
+        }
+    }
+
+    private static List<String> fetchScenariosFileNames(String scenarioDirectoryPath) throws IOException {
+        List<String> scenarios = new ArrayList<>();
+        Path scenarioDirPath = new File(scenarioDirectoryPath).toPath();
+        Files.newDirectoryStream(scenarioDirPath, SCENARIO_FILE_FILTER)
+            .forEach(p -> scenarios.add(PathUtil.toFileNameWithoutExtension(p)));
+        return scenarios;
+    }
+
+    private static void createEmptyScenariosFolder() throws IOException {
+        System.out.println("No folder named \"scenarios\"");
+        System.out.println("Creating folder now");
+        System.out.println("...");
+        Files.createDirectory(Paths.get(SCENARIO_DIR_PATH_JAR));
+        System.out.println("Folder created");
+    }
+
+
+    private static void displayScenarioChoices(List<String> scenariosFileNames) {
+        Collections.sort(scenariosFileNames);
+        System.out.println();
+        System.out.println("Scenarios Available");
+        for (int listing = 1; listing <= scenariosFileNames.size(); listing++) {
+            System.out.println(
+                "("
+                    + listing
+                    + ") "
+                    + scenariosFileNames.get(listing - 1));
+        }
     }
 
     private static void handleUserRequests(List<String> scenariosFileNames) throws IOException {
@@ -53,6 +97,17 @@ public class App {
                 System.out.println("Goodbye");
                 toContinue = false;
                 break;
+            case ALL_COMMAND:
+                for (String scenarioFileName : scenariosFileNames) {
+                    Scenario scenario = readScenario(scenarioFileName);
+
+                    LogGenerator logGenerator = new LogGenerator(scenario);
+                    List<Log> logs = logGenerator.generate();
+                    List<String> headers = scenario.getHeaders();
+
+                    writeAsCsv(headers, logs, scenarioFileName);
+                    System.out.println("File generated.");
+                }
             case SCENARIO_OUT_OF_BOUNDS:
                 System.out.println("Scenario choice does not exist. Pick another.");
                 break;
@@ -74,52 +129,11 @@ public class App {
         } while (toContinue);
     }
 
-    private static List<String> fetchScenariosFileNames() throws IOException {
-        try {
-            return fetchScenariosFileNames(SCENARIO_DIR_PATH);
-        } catch (NoSuchFileException e) {
-            try {
-                return fetchScenariosFileNames(SCENARIO_DIR_PATH_JAR);
-            } catch (NoSuchFileException f) {
-                createEmptyScenariosFolder();
-                return Collections.emptyList();
-            }
-        }
-    }
-
-    private static void createEmptyScenariosFolder() throws IOException {
-        System.out.println("No folder named \"scenarios\"");
-        System.out.println("Creating folder now");
-        System.out.println("...");
-        Files.createDirectory(Paths.get(SCENARIO_DIR_PATH_JAR));
-        System.out.println("Folder created");
-    }
-
-    private static List<String> fetchScenariosFileNames(String scenarioDirectoryPath) throws IOException {
-            List<String> scenarios = new ArrayList<>();
-            Path scenarioDirPath = new File(scenarioDirectoryPath).toPath();
-            Files.newDirectoryStream(scenarioDirPath, SCENARIO_FILE_FILTER)
-                .forEach(p -> scenarios.add(PathUtil.toFileNameWithoutExtension(p)));
-            return scenarios;
-    }
-
-    private static void displayScenarioChoices(List<String> scenariosFileNames) {
-        Collections.sort(scenariosFileNames);
-        System.out.println();
-        System.out.println("Scenarios Available");
-        for (int listing = 1; listing <= scenariosFileNames.size(); listing++) {
-            System.out.println(
-                "("
-                    + listing
-                    + ") "
-                    + scenariosFileNames.get(listing - 1));
-        }
-    }
-
     private static String getUserInput() {
         System.out.println();
         System.out.println("Options");
         System.out.println("- select a scenario file to use by entering its number");
+        System.out.println("- select multiple scenario files to use by entering \"all\"");
         System.out.println("- exit the program by entering \"exit\"");
 
         System.out.println();

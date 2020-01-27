@@ -7,9 +7,9 @@ import logen.storage.LocalTimeDeserialiser;
 public class Trouble {
     private String type;
     @JsonDeserialize(using = LocalTimeDeserialiser.class)
-    private LocalTime time;
+    private LocalTime startTime;
     @JsonDeserialize(using = LocalTimeDeserialiser.class)
-    private LocalTime nextTime;
+    private LocalTime endTime;
     private int count;
 
     public String getType() {
@@ -20,20 +20,20 @@ public class Trouble {
         this.type = type;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public LocalTime getStartTime() {
+        return startTime;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    public LocalTime getNextTime() {
-        return nextTime;
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
-    public void setNextTime(LocalTime nextTime) {
-        this.nextTime = nextTime;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
     public int getCount() {

@@ -10,20 +10,22 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
-import java.util.function.Function;
+import java.util.function.Supplier;
 
 public class NormalConductor {
     private List<Activity> activities;
     private List<String> subjects;
+    private TemporalGenerator temporalGenerator;
 
     private Stack<Log.Builder> complementPartialLogs;
 
-    private List<Function<LocalTime, Log.Builder>> choices;
+    private List<Supplier<Log.Builder>> choices;
     private int choiceCount;
 
-    public NormalConductor(List<Activity> activities, List<String> subjects) {
+    public NormalConductor(List<Activity> activities, List<String> subjects, TemporalGenerator temporalGenerator) {
         this.activities = activities;
         this.subjects = subjects;
+        this.temporalGenerator = temporalGenerator;
 
         complementPartialLogs = new Stack<>();
 
@@ -35,23 +37,23 @@ public class NormalConductor {
 
     public TransitionContext orchestrate(TransitionContext context, int currentLogCount, int finalLogCount) {
         List<Log.Builder> partialLogs = context.getPartialLogs();
-        Log.Builder partialLog = generatePartialLog(currentLogCount, finalLogCount, context.getPreviousTime());
+        Log.Builder partialLog = generatePartialLog(currentLogCount, finalLogCount);
         partialLogs.add(partialLog);
-        return new TransitionContext(partialLogs, partialLog.getTime());
+        return new TransitionContext(partialLogs);
     }
 
-    private Log.Builder generatePartialLog(int currentLogCount, int finalLogCount, LocalTime previousTime) {
+    private Log.Builder generatePartialLog(int currentLogCount, int finalLogCount) {
         int difference = finalLogCount - currentLogCount;
         if (difference == complementPartialLogs.size()) {
-            return complementPartialLogs.pop().withTime(TemporalGenerator.generateTimeFrom(previousTime));
+            return complementPartialLogs.pop().withTime(temporalGenerator.generateTime());
         } else if (difference > complementPartialLogs.size()) {
             int choice = RandomChooser.chooseFrom(choiceCount);
-            Log.Builder partialLog = choices.get(choice).apply(previousTime);
+            Log.Builder partialLog = choices.get(choice).get();
             if (choice == 0 && partialLog.hasComplement()) {
                 int newDifference = finalLogCount - (currentLogCount + 1);
                 if (newDifference < complementPartialLogs.size()) {
                     undoChoice();
-                    return generatePartialLog(currentLogCount, finalLogCount, previousTime);
+                    return generatePartialLog(currentLogCount, finalLogCount);
                 }
             }
             return partialLog;
@@ -60,8 +62,8 @@ public class NormalConductor {
         }
     }
 
-    private Log.Builder generateNewPartialLog(LocalTime previousTime) {
-        LocalTime time = TemporalGenerator.generateTimeFrom(previousTime);
+    private Log.Builder generateNewPartialLog() {
+        LocalTime time = temporalGenerator.generateTime();
         Activity chosenActivity = RandomChooser.chooseFrom(activities);
         if (!chosenActivity.hasSubject()) {
             String subject = RandomChooser.chooseFrom(subjects);
@@ -83,12 +85,12 @@ public class NormalConductor {
         return partialLog;
     }
 
-    private Log.Builder chooseComplementPartialLog(LocalTime previousTime) {
+    private Log.Builder chooseComplementPartialLog() {
         if (complementPartialLogs.isEmpty()) {
-            return generateNewPartialLog(previousTime);
+            return generateNewPartialLog();
         }
         Log.Builder complementPartialLog = complementPartialLogs.pop();
-        return complementPartialLog.withTime(TemporalGenerator.generateTimeFrom(previousTime));
+        return complementPartialLog.withTime(temporalGenerator.generateTime());
     }
 
     private void undoChoice() {

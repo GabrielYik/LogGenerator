@@ -12,12 +12,14 @@ public class TroubleMakerFactory {
             return new MultiplierTroubleMaker(
                 context.getTrouble(),
                 context.getSuspiciousActivities().get(0),
-                context.getSubjects());
+                context.getSubjects(),
+                context.getTemporalGenerator());
         case "odd hours":
             return new OddHoursTroubleMaker(
                 context.getTrouble(),
                 context.getSuspiciousActivities(),
-                context.getSubjects());
+                context.getSubjects(),
+                context.getTemporalGenerator());
         default:
             return new EmptyTroubleMaker();
         }

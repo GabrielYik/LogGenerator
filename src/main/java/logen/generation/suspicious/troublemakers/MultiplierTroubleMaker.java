@@ -7,17 +7,22 @@ import logen.util.RandomChooser;
 import logen.util.TemporalGenerator;
 import logen.generation.suspicious.Trouble;
 
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MultiplierTroubleMaker implements TroubleMaker {
     private Trouble trouble;
+    private TemporalGenerator temporalGenerator;
 
     private Log.Builder suspiciousLog;
 
-    public MultiplierTroubleMaker(Trouble trouble, Activity suspiciousActivity, List<String> subjects) {
+    public MultiplierTroubleMaker(
+        Trouble trouble,
+        Activity suspiciousActivity,
+        List<String> subjects,
+        TemporalGenerator temporalGenerator) {
         this.trouble = trouble;
+        this.temporalGenerator = temporalGenerator;
         if (!suspiciousActivity.hasSubject()) {
             suspiciousActivity.setSubject(RandomChooser.chooseFrom(subjects));
         }
@@ -27,23 +32,19 @@ public class MultiplierTroubleMaker implements TroubleMaker {
 
     @Override
     public TransitionContext makeTrouble(TransitionContext context) {
-        LocalTime previousTime = context.getPreviousTime();
-        List<Log.Builder> logCopies = generateCopies(suspiciousLog, previousTime);
+        List<Log.Builder> logCopies = generateCopies(suspiciousLog);
         int last = logCopies.size() - 1;
-        LocalTime newPreviousTime = logCopies.get(last).getTime();
 
         List<Log.Builder> partialLogs = context.getPartialLogs();
         partialLogs.addAll(logCopies);
-        return new TransitionContext(partialLogs, newPreviousTime);
+        return new TransitionContext(partialLogs);
     }
 
-    private List<Log.Builder> generateCopies(Log.Builder suspiciousLog, LocalTime previousTime) {
+    private List<Log.Builder> generateCopies(Log.Builder suspiciousLog) {
         List<Log.Builder> copies = new ArrayList<>();
-        LocalTime base = previousTime;
         for (int i = 0; i < trouble.getCount(); i++) {
             Log.Builder copy = (Log.Builder) suspiciousLog.clone();
-            base = TemporalGenerator.generateTimeFrom(base);
-            copy.withTime(base);
+            copy.withTime(temporalGenerator.generateTime());
             copies.add(copy);
         }
         return copies;

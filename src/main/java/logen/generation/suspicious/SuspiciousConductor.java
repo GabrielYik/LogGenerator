@@ -3,6 +3,7 @@ package logen.generation.suspicious;
 import logen.generation.TransitionContext;
 import logen.log.Activity;
 import logen.generation.suspicious.troublemakers.TroubleMaker;
+import logen.util.TemporalGenerator;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -12,10 +13,14 @@ public class SuspiciousConductor {
     private List<TroubleMaker> troubleMakers;
     private Iterator<TroubleMaker> troubleMakersIterator;
 
-    public SuspiciousConductor(List<Activity> suspiciousActivities, List<Trouble> troubles, List<String> subjects) {
+    public SuspiciousConductor(
+        List<Activity> suspiciousActivities,
+        List<Trouble> troubles,
+        List<String> subjects,
+        TemporalGenerator temporalGenerator) {
         troubleMakers = new ArrayList<>();
         for (Trouble trouble : troubles) {
-            TroubleMakerContext context = new TroubleMakerContext(trouble, suspiciousActivities, subjects);
+            TroubleMakerContext context = new TroubleMakerContext(trouble, suspiciousActivities, subjects, temporalGenerator);
             TroubleMaker troubleMaker = TroubleMakerFactory.getTroubleMaker(context);
             troubleMakers.add(troubleMaker);
         }
