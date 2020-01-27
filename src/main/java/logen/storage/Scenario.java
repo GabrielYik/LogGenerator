@@ -8,6 +8,7 @@ import java.util.List;
 public class Scenario {
     private int logCount;
     private List<String> headers;
+    private Period period;
 
     private List<Activity> normalActivities;
     private List<Activity> suspiciousActivities;
@@ -29,6 +30,14 @@ public class Scenario {
 
     public void setHeaders(List<String> headers) {
         this.headers = headers;
+    }
+
+    public Period getPeriod() {
+        return period;
+    }
+
+    public void setPeriod(Period period) {
+        this.period = period;
     }
 
     public List<Activity> getNormalActivities() {
