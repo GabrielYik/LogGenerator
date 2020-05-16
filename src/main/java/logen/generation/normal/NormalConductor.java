@@ -80,6 +80,10 @@ public class NormalConductor {
             Activity complement = chosenActivity.getComplement();
             storeComplement(complement);
         }
+
+        if (!chosenActivity.isPersistent()) {
+            activities.remove(chosenActivity);
+        }
         return partialLog;
     }
 

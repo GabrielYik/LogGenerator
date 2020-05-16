@@ -8,6 +8,7 @@ import static logen.storage.Config.SCENARIO_DIR_PATH_JAR;
 import static logen.storage.Config.SCENARIO_FILE_PREFIX;
 import static logen.util.PathUtil.SCENARIO_FILE_FILTER;
 
+import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
@@ -147,6 +148,8 @@ public class App {
     private static int handleUserInput(String userInput, int maxScenarioChoice) {
         if (userInput.equalsIgnoreCase("exit")) {
             return EXIT_COMMAND;
+        } else if (userInput.equalsIgnoreCase("all")) {
+            return ALL_COMMAND;
         } else {
             try {
                 int scenarioChoice = Integer.parseInt(userInput);
@@ -165,6 +168,7 @@ public class App {
 
     private static Scenario readScenario(String scenarioFileName) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
         File scenarioFile = new File(SCENARIO_DIR_PATH + scenarioFileName + SCENARIO_FILE_EXTENSION);
         return objectMapper.readValue(scenarioFile, Scenario.class);
     }
@@ -188,6 +192,6 @@ public class App {
     }
 
     private static String toPrettyFileName(String fileName) {
-        return fileName.substring(SCENARIO_FILE_PREFIX.length() + 1);
+        return "log_" + fileName.substring(SCENARIO_FILE_PREFIX.length() + 1);
     }
 }

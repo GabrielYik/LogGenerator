@@ -33,6 +33,11 @@ public class BreakpointChooser {
 
     private List<Unit> generateUnits(int unitsSize) {
         int unitCount = troubleMakerCount;
+        if (unitCount == 0) {
+            List<Unit> unit = new LinkedList<>();
+            unit.add(new Unit(0, unitCount - 1));
+            return unit;
+        }
         int unitSize = unitsSize / unitCount;
         List<Unit> units = new LinkedList<>();
         int start = 0;

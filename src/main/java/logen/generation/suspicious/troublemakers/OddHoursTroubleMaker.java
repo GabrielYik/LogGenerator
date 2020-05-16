@@ -1,5 +1,7 @@
 package logen.generation.suspicious.troublemakers;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import logen.generation.TransitionContext;
@@ -16,9 +18,12 @@ public class OddHoursTroubleMaker implements TroubleMaker {
     public OddHoursTroubleMaker(
         Trouble trouble,
         List<Activity> suspiciousActivities,
-        List<String> subjects,
-        TemporalGenerator temporalGenerator) {
+        List<String> subjects) {
         this.trouble = trouble;
+        TemporalGenerator temporalGenerator = new TemporalGenerator(
+            LocalDateTime.of(LocalDate.now(), trouble.getStartTime()),
+            LocalDateTime.of(LocalDate.now(), trouble.getEndTime())
+        );
         normalConductor = new NormalConductor(suspiciousActivities, subjects, temporalGenerator);
     }
 

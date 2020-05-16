@@ -19,10 +19,15 @@ public class SuspiciousConductor {
         List<String> subjects,
         TemporalGenerator temporalGenerator) {
         troubleMakers = new ArrayList<>();
-        for (Trouble trouble : troubles) {
-            TroubleMakerContext context = new TroubleMakerContext(trouble, suspiciousActivities, subjects, temporalGenerator);
-            TroubleMaker troubleMaker = TroubleMakerFactory.getTroubleMaker(context);
+        if (troubles.isEmpty()) {
+            TroubleMaker troubleMaker = TroubleMakerFactory.getTroubleMaker(null);
             troubleMakers.add(troubleMaker);
+        } else {
+            for (Trouble trouble : troubles) {
+                TroubleMakerContext context = new TroubleMakerContext(trouble, suspiciousActivities, subjects, temporalGenerator);
+                TroubleMaker troubleMaker = TroubleMakerFactory.getTroubleMaker(context);
+                troubleMakers.add(troubleMaker);
+            }
         }
         troubleMakersIterator = troubleMakers.iterator();
     }

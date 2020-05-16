@@ -2,6 +2,7 @@ package logen.log;
 
 import java.util.ArrayList;
 import java.util.List;
+import logen.storage.Period;
 
 public class Activity {
     private String description;
@@ -9,6 +10,7 @@ public class Activity {
     private String subject;
     private String remarks;
     private Activity complement;
+    private String persistence;
 
     public Activity() {
 
@@ -62,6 +64,18 @@ public class Activity {
         return complement != null;
     }
 
+    public String getPersistence() {
+        return persistence;
+    }
+
+    public void setPersistence(String persistence) {
+        this.persistence = persistence;
+    }
+
+    public boolean isPersistent() {
+        return persistence == null;
+    }
+
     public List<String> toCollection() {
         List<String> array = new ArrayList<>();
         array.add(description);
@@ -69,6 +83,24 @@ public class Activity {
         array.add(subject);
         array.add(remarks);
         return array;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Activity)) {
+            return false;
+        }
+
+        Activity activity = (Activity) other;
+        return description.equals(activity.description)
+            && type.equals(activity.type)
+            && subject.equals(activity.subject)
+            && remarks.equals(activity.remarks)
+            && persistence.equals(activity.persistence);
     }
 
     @Override
