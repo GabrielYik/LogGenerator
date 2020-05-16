@@ -1,42 +1,85 @@
 {
-  "logCount": "10",
+  "logCount": "150",
   "headers": [
     "time", "description", "type", "user", "remarks"
   ],
+  "period":{
+    "active": {
+      "days": "weekdays",
+      "startTime": "09:00:00",
+      "endTime": "17:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
   "normalActivities": [
     {
-      "description": "stock_take.xlsx",
+      "description": "upload of kHpoRqWw_bruteforce.c",
       "type": "file upload",
-      "subject": "A",
-      "remarks": ""
+      "subject": "AkHpoRqWw",
+      "remarks": "STATUS success"
     },
     {
-      "description": "delivery_update.xlsx",
+      "description": "upload of jMshMNGI_brute_forcee.c.",
       "type": "file upload",
-      "subject": "B",
-      "remarks": ""
-    }
-  ],
-  "suspiciousActivities": [
-    {
-      "description": "stock_take.png",
-      "type": "file upload",
-      "subject": "A",
-      "remarks": ""
+      "subject": "jMshMNGI",
+      "remarks": "STATUS failure REASON incorrect file naming convention"
     },
     {
-      "description": "stock_take.jpeg",
+      "description": "upload of BtcKNiKw_bruteforce.java",
       "type": "file upload",
-      "subject": "C",
-      "remarks": ""
+      "subject": "BtcKNiKw",
+      "remarks": "STATUS failure REASON incorrect file extension"
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "BKVwfCEB",
+      "remarks": "STATUS success INPUT \"BKVwfCEB\"",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "subject": "BKVwfCEB",
+        "remarks": "STATUS success"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "yySthMsH",
+      "remarks": "STATUS success INPUT \"yySthMsH\"",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "subject": "yySthMsH",
+        "remarks": "STATUS success"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "ZCzEGxgG",
+      "remarks": "STATUS failure REASON invalid user"
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "subject": "yiGkACiW",
+      "remarks": "STATUS success INPUT \"yiGkACiW\"); DROP TABLE materials;\"",
+      "persistence": "one-time"
+    },
+    {
+      "description": "upload of mwciGDBm_bruteforce.vb",
+      "type": "file upload",
+      "subject": "mwciGDBm",
+      "remarks": "STATUS success",
+      "persistence": "one time"
     }
   ],
+  "suspiciousActivities": [],
   "subjects": [
-    "A", "B"
+    "oVjebmPB", "IjPoEIlu", "qNHgMqis", "PuqHyxOA", "eyKoFZtO", "CLdiLyDr", "kEmcJAqi", "UwwYkudF"
   ],
-  "troubles": [
-    {
-      "type": "empty"
-    }
-  ]
+  "troubles": []
 }

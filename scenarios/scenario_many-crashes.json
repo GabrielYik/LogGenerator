@@ -1,5 +1,5 @@
 {
-  "logCount": "100",
+  "logCount": "150",
   "headers": [
     "time", "description", "type", "subject", "remarks"
   ],
@@ -17,87 +17,148 @@
     {
       "description": "login",
       "type": "user access",
-      "remarks": "success",
+      "remarks": "STATUS success",
       "complement": {
         "description": "logout",
         "type": "user access",
-        "remarks": "success"
+        "remarks": "STATUS success"
       }
     },
     {
       "description": "login",
       "type": "user access",
-      "remarks": "failure"
+      "remarks": "STATUS failure"
     },
     {
-      "description": "starting program",
+      "description": "starting process #83609",
       "type": "process management",
-      "remarks": "success",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 10MB SHARED 5MB STATUS success",
       "complement": {
-        "description": "killing program",
+        "description": "killing process #83609",
         "type": "process management",
-        "remarks": "success"
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 15MB STATUS success"
       }
     },
     {
-      "description": "starting program",
+      "description": "starting process #47004",
       "type": "process management",
-      "remarks": "success",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success",
       "complement": {
-        "description": "killing program",
+        "description": "killing process #47004",
         "type": "process management",
-        "remarks": "failure",
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 17MB STATUS success"
+      }
+    },
+    {
+      "description": "starting process #22304",
+      "type": "process management",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success",
+      "complement": {
+        "description": "killing process #22304",
+        "type": "process management",
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 66kB STATUS success"
+      }
+    },
+    {
+      "description": "starting process #07982",
+      "type": "process management",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 4MB SHARED 1MB STATUS success",
+      "complement": {
+        "description": "killing process #07982",
+        "type": "process management",
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 5MB STATUS success"
+      }
+    },
+    {
+      "description": "starting process #22491",
+      "type": "process management",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success",
+      "complement": {
+        "description": "killing process #22491",
+        "type": "process management",
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true",
         "complement": {
-          "description": "killing program (2)",
+          "description": "killing process #22491",
           "type": "process management",
-          "remarks": "success"
+          "subject": "kernel",
+          "remarks": "MEMORY-DEALLOCATION 30MB STATUS success FOLLOW-UP false"
+        }
+      }
+    },
+    {
+      "description": "starting process #37587",
+      "type": "process management",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 100MB SHARED 25MB STATUS success",
+      "complement": {
+        "description": "killing process #37587",
+        "type": "process management",
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 71MB STATUS failure FOLLOW-UP true",
+        "complement": {
+          "description": "killing process #37587",
+          "type": "process management",
+          "subject": "kernel",
+          "remarks": "MEMORY-DEALLOCATION 125MB STATUS success FOLLOW-UP false"
+        }
+      }
+    },
+    {
+      "description": "starting process #93440",
+      "type": "process management",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 68MB SHARED 0MB STATUS success",
+      "complement": {
+        "description": "killing process #93440",
+        "type": "process management",
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 0MB REASON memory corruption STATUS failure FOLLOW-UP true",
+        "complement": {
+          "description": "killing process #93440",
+          "type": "process management",
+          "subject": "kernel",
+          "remarks": "MEMORY-DEALLOCATION 39MB STATUS failure FOLLOW-UP false"
+        }
+      }
+    },
+    {
+      "description": "starting process #31683",
+      "type": "process management",
+      "subject": "kernel",
+      "remarks": "MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success",
+      "complement": {
+        "description": "killing process #31683",
+        "type": "process management",
+        "subject": "kernel",
+        "remarks": "MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true",
+        "complement": {
+          "description": "killing child process #92526",
+          "type": "process management",
+          "subject": "kernel",
+          "remarks": "MEMORY-DEALLOCATION 0MB REASON child process #43567 has not terminated STATUS failure FOLLOW-UP true",
+          "complement": {
+            "description": "killing process #43567",
+            "type": "process management",
+            "subject": "kernel",
+            "remarks": "MEMORY-DEALLOCATION 0MB REASON child process #21686 has not terminated STATUS failure FOLLOW-UP true"
+          }
         }
       }
     }
   ],
-  "suspiciousActivities": [
-    {
-      "description": "starting program",
-      "type": "process management",
-      "remarks": "success",
-      "complement": {
-        "description": "killing program",
-        "type": "process management",
-        "remarks": "failure"
-      }
-    },
-    {
-      "description": "starting program",
-      "type": "process management",
-      "remarks": "success",
-      "complement": {
-        "description": "killing program",
-        "type": "process management",
-        "remarks": "failure",
-        "complement": {
-          "description": "killing program (2)",
-          "type": "process management",
-          "remarks": "waiting on child"
-        }
-      }
-    },
-    {
-      "description": "starting program",
-      "type": "process management",
-      "remarks": "success",
-      "complement": {
-        "description": "killing program",
-        "type": "process management",
-        "remarks": "waiting on child"
-      }
-    }
-  ],
+  "suspiciousActivities": [],
   "subjects": [
-    "Amanda", "Bob"
+    "kHVnhYFm", "yxgUMFNM", "xvfMlTdO", "hetFTNRB"
   ],
-  "troubles": [
-    {
-      "type": "empty"
-    }
-  ]
+  "troubles": []
 }

@@ -1,0 +1,96 @@
+{
+  "logCount": "200",
+  "headers": [
+    "time", "description", "type", "subject", "remarks"
+  ],
+  "period": {
+    "active": {
+      "days": "weekdays",
+      "startTime": "07:00:00",
+      "endTime": "22:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
+  "normalActivities": [
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "CATEGORY student STATUS success",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "remarks": "CATEGORY student STATUS success"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "CATEGORY teacher STATUS success",
+      "complement": {
+        "description": "logout",
+        "type": "user access",
+        "remarks": "CATEGORY teacher STATUS success"
+      }
+    },
+    {
+      "description": "login",
+      "type": "user access",
+      "remarks": "CATEGORY student STATUS failure"
+    },
+    {
+      "description":"\"Engineering 101\" request",
+      "type": "book retrieval",
+      "remarks": "REQUESTER-CATEGORY student BOOK-CATEGORY student INPUT \"Engineering 101\" STATUS success"
+    },
+    {
+      "description":"\"Mathematics is Fun\" request",
+      "type": "book retrieval",
+      "remarks": "REQUESTER-CATEGORY student BOOK-CATEGORY teacher INPUT \"Mathematics is Fun\" STATUS failure"
+    },
+    {
+      "description": "\"The Economics of Computer Science\" request",
+      "type": "book retrieval",
+      "remarks": "REQUESTER-CATEGORY student BOOK-CATEGORY student INPUT \"The Economics of Computer Science\" STATUS success"
+    },
+    {
+      "description": "\"Mapping the World\" request",
+      "type": "book retrieval",
+      "remarks": "REQUESTER-CATEGORY teacher BOOK-CATEGORY teacher INPUT \"Mapping the World\""
+    },
+    {
+      "description": "\"Large-scale Software Projects - Case Studies\" request",
+      "type": "book retrieval",
+      "remarks": "REQUESTER-CATEGORY teacher BOOK-CATEGORY teacher INPUT \"Large-scale Software Projects - Case Studies\" STATUS success"
+    },
+    {
+      "description": "\"Physiotherapy for the Elderly\"",
+      "type": "book retrieval",
+      "remarks": "REQUESTER-CATEGORY student BOOK-CATEGORY student INPUT \"Physiotherapy for the Elderly  \" STATUS success"
+    },
+    {
+      "description": "\"Large-scale Software Projects - Case Studies \\90\\90\\90\" request",
+      "type": "book retrieval",
+      "remarks": "REQUESTER-CATEGORY student BOOK-CATEGORY teacher INPUT \"Large-scale Software Projects - Case Studies \\90\\90\\90\\90\\90\\90\\90\\90\\90\\90AAAAAAAAOx16702430\" STATUS failure",
+      "persistence": "one time",
+      "complement": {
+        "description": "\"Large-scale Software Projects - Case Studies \\90\\90\\90\" request",
+        "type": "book retrieval",
+        "remarks": "REQUESTER-CATEGORY student BOOK-CATEGORY teacher INPUT \"Large-scale Software Projects - Case Studies \\90\\90\\90\\90\\90\\90\\90\\90\\90\\90\\90AAAAAAAAOx16702430\" STATUS failure",
+        "persistence": "one time",
+        "complement": {
+          "description": "\"Large-scale Software Projects - Case Studies \\90\\90\\90\" request",
+          "type": "book retrieval",
+          "remarks": "REQUESTER-CATEGORY student BOOK-CATEGORY teacher INPUT \"Large-scale Software Projects - Case Studies \\90\\90\\90\\90\\90\\90\\90\\90\\90\\90\\90\\90AAAAAAAAOx16702430\" STATUS success",
+          "persistence": "one-time"
+        }
+      }
+    }
+  ],
+  "suspiciousActivities": [],
+  "subjects": [
+    "AxwATwZk", "MIdcaaTz", "YYEiYdfj", "BENSLmav", "kcTsrDhT", "pWJxvLVL"
+  ],
+  "troubles": []
+}

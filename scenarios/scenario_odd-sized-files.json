@@ -1,0 +1,115 @@
+{
+  "logCount": "150",
+  "headers": [
+    "time", "description", "type", "user", "size"
+  ],
+  "period": {
+    "active": {
+      "days": "weekdays",
+      "startTime": "06:00:00",
+      "endTime": "23:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
+  "normalActivities": [
+    {
+      "description": "conference author data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 60KB STATUS success"
+    },
+    {
+      "description": "conference review data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 57KB STATUS success"
+    },
+    {
+      "description": "conference submission data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 63KB STATUS success"
+    },
+    {
+      "description": "conference author data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 48KB STATUS success"
+    },
+    {
+      "description": "conference review data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 46KB STATUS success"
+    },
+    {
+      "description": "conference submission data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 39KB STATUS success"
+    },
+    {
+      "description": "conference author data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 45KB STATUS failure"
+    },
+    {
+      "description": "conference review data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 67KB STATUS failure"
+    },
+    {
+      "description": "conference submission data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 66KB STATUS failure"
+    },
+    {
+      "description": "author-author chart requested and serviced",
+      "type": "visualisation service",
+      "remarks": "VALID-REQUEST true DATA-AVAILABLE true STATUS success"
+    },
+    {
+      "description": "author-submission bar chart requested",
+      "type": "visualisation service",
+      "remarks": "VALID-REQUEST true DATA-AVAILABLE false STATUS failure"
+    },
+    {
+      "description": "author-submission bar chart requested and serviced",
+      "type": "visualisation service",
+      "remarks": "VALID-REQUEST true DATA-AVAILABLE true STATUS success"
+    },
+    {
+      "description": "submission-review pair map requested and serviced",
+      "type": "visualisation service",
+      "remarks": "VALID-REQUEST true DATA-AVAILABLE true STATUS success"
+    },
+    {
+      "description": "author-submission pie chart requested",
+      "type": "visualisation service",
+      "remarks": "VALID-REQUEST false DATA-AVAILABLE null STATUS failure"
+    },
+    {
+      "description": "conference submission data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 1.34MB STATUS success",
+      "persistence": "one time"
+    },
+    {
+      "description": "conference review data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 1.56MB STATUS success",
+      "persistence": "one time"
+    },
+    {
+      "description": "conference author data uploaded",
+      "type": "file upload",
+      "remarks": "SIZE 1.7MB STATUS success",
+      "persistence": "one time"
+    }
+  ],
+  "suspiciousActivities": [],
+  "subjects": [
+    "VfzUVGuD", "xsQGxmyg", "EGbKNaFe", "ILBUpnLn", "VBXQsDBa", "VqgxYZGk"
+  ],
+  "troubles": [
+    {
+      "type": "empty"
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 {
-  "logCount": "1000",
+  "logCount": "150",
   "headers": [
     "time", "description", "type", "user", "remarks"
   ],
@@ -15,75 +15,84 @@
   },
   "normalActivities": [
     {
-      "description": "login",
+      "description": "account login",
       "type": "user access",
-      "remarks": "success",
+      "subject": "vf3P9Tflis",
+      "remarks": "STATUS success",
       "complement": {
-        "description": "logout",
+        "description": "account logout",
         "type": "user access",
-        "remarks": "success"
+        "subject": "vf3P9Tflis",
+        "remarks": "STATUS success"
       }
     },
     {
-      "description": "login",
+      "description": "account login",
       "type": "user access",
-      "remarks": "failure"
+      "subject": "het5IHLIpv",
+      "remarks": "STATUS failure"
     },
     {
       "description": "directory creation",
       "type": "terminal input",
-      "remarks": "mkdir passwds"
+      "subject": "WZ0il5z1pN",
+      "remarks": "INPUT \"mkdir progress_update\""
     },
     {
       "description": "directory deletion",
       "type": "terminal input",
-      "remarks": "rmdir test"
+      "subject": "7KuUzfMSvL",
+      "remarks": "INPUT \"rmdir test\""
     },
     {
       "description": "file creation",
       "type": "terminal input",
-      "remarks": "touch test.txt"
+      "subject": "7KuUzfMSvL",
+      "remarks": "INPUT \"touch test.txt\""
     },
     {
       "description": "file creation",
       "type": "terminal input",
-      "remarks": "touch progress.txt"
+      "subject": "Mf8lO0tsRZ",
+      "remarks": "INPUT \"touch progress.txt\""
     },
     {
       "description": "file deletion",
       "type": "terminal input",
-      "remarks": "rm progress_2020-01-01.txt"
-    }
-  ],
-  "suspiciousActivities": [
+      "subject": "OZimr9MYXC",
+      "remarks": "INPUT \"rm progress_2020-01-01.txt\""
+    },
     {
       "description": "terminal navigation",
       "type": "terminal input",
-      "remarks": "cd ..",
+      "subject": "LuUd4WAWVZ",
+      "remarks": "INPUT \"cd ../..\"",
       "complement": {
         "description": "file creation",
         "type": "terminal input",
-        "remarks": "vim progress_2020-01-02.txt",
+        "subject": "LuUd4WAWVZ",
+        "remarks": "INPUT \"vim progress_2020-01-02.txt\"",
         "complement": {
-          "description": "file listing",
+          "description": "file list",
           "type": "terminal input",
-          "remarks": "ls -a",
+          "subject": "LuUd4WAWVZ",
+          "remarks": "INPUT \"ls -a\"",
           "complement": {
-            "description": "file deletion",
+            "description": "directory deletion",
             "type": "terminal input",
-            "remarks": "rm -r passwds"
+            "subject": "LuUd4WAWVZ",
+            "remarks": "INPUT \"rm -r .annual_reports\""
           }
         }
-      }
+      },
+      "persistence": "one time"
     }
   ],
-  "subjects": [
-    "A", "B"
-  ],
+  "suspiciousActivities": [],
+  "subjects": [],
   "troubles": [
     {
-      "type": "high volume",
-      "count": "4"
+      "type": "empty"
     }
   ]
 }
