@@ -1,0 +1,151 @@
+time,description,type,subject,remarks
+09:20:39,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+09:54:30,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+10:00:54,starting process #31683,process management,kernel,MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success
+10:06:52,login,user access,yxgUMFNM,STATUS failure
+10:30:11,killing process #31683,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true
+10:44:21,starting process #22491,process management,kernel,MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success
+10:59:35,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true
+11:02:25,starting process #83609,process management,kernel,MEMORY-ALLOCATION PERSONAL 10MB SHARED 5MB STATUS success
+11:51:29,starting process #22304,process management,kernel,MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success
+12:32:02,killing process #22304,process management,kernel,MEMORY-DEALLOCATION 66kB STATUS success
+13:28:45,killing process #83609,process management,kernel,MEMORY-DEALLOCATION 15MB STATUS success
+13:31:19,login,user access,kHVnhYFm,STATUS success
+14:00:33,logout,user access,xvfMlTdO,STATUS success
+14:21:08,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 30MB STATUS success FOLLOW-UP false
+14:49:19,killing child process #92526,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #43567 has not terminated STATUS failure FOLLOW-UP true
+14:57:14,killing process #43567,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #21686 has not terminated STATUS failure FOLLOW-UP true
+15:45:29,starting process #22491,process management,kernel,MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success
+16:31:24,starting process #22491,process management,kernel,MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success
+16:36:46,starting process #31683,process management,kernel,MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success
+09:41:19,killing process #31683,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true
+09:45:57,killing child process #92526,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #43567 has not terminated STATUS failure FOLLOW-UP true
+10:43:28,starting process #83609,process management,kernel,MEMORY-ALLOCATION PERSONAL 10MB SHARED 5MB STATUS success
+10:59:55,killing process #83609,process management,kernel,MEMORY-DEALLOCATION 15MB STATUS success
+11:03:55,starting process #22304,process management,kernel,MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success
+11:11:51,starting process #93440,process management,kernel,MEMORY-ALLOCATION PERSONAL 68MB SHARED 0MB STATUS success
+11:13:58,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+11:49:35,starting process #22304,process management,kernel,MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success
+11:53:39,killing process #22304,process management,kernel,MEMORY-DEALLOCATION 66kB STATUS success
+12:46:29,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+13:11:53,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+14:02:44,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+14:34:26,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 0MB REASON memory corruption STATUS failure FOLLOW-UP true
+15:26:10,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 39MB STATUS failure FOLLOW-UP false
+15:51:57,login,user access,yxgUMFNM,STATUS failure
+16:05:50,starting process #31683,process management,kernel,MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success
+16:36:42,killing process #31683,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true
+09:05:45,killing child process #92526,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #43567 has not terminated STATUS failure FOLLOW-UP true
+09:54:07,login,user access,yxgUMFNM,STATUS failure
+10:39:07,killing process #43567,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #21686 has not terminated STATUS failure FOLLOW-UP true
+11:29:02,login,user access,kHVnhYFm,STATUS success
+11:54,starting process #31683,process management,kernel,MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success
+12:17:12,starting process #31683,process management,kernel,MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success
+13:01:40,killing process #31683,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true
+13:49:41,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+14:33:15,login,user access,yxgUMFNM,STATUS failure
+15:04:02,starting process #31683,process management,kernel,MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success
+15:45:07,killing process #31683,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true
+16:01:39,login,user access,kHVnhYFm,STATUS success
+16:29:36,logout,user access,xvfMlTdO,STATUS success
+16:43:29,starting process #37587,process management,kernel,MEMORY-ALLOCATION PERSONAL 100MB SHARED 25MB STATUS success
+09:06:59,starting process #93440,process management,kernel,MEMORY-ALLOCATION PERSONAL 68MB SHARED 0MB STATUS success
+09:36:32,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 0MB REASON memory corruption STATUS failure FOLLOW-UP true
+10:23:02,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+11:16:16,starting process #07982,process management,kernel,MEMORY-ALLOCATION PERSONAL 4MB SHARED 1MB STATUS success
+11:26:35,killing process #07982,process management,kernel,MEMORY-DEALLOCATION 5MB STATUS success
+12:04:53,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+12:44:17,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 39MB STATUS failure FOLLOW-UP false
+12:50:59,login,user access,yxgUMFNM,STATUS failure
+13:05:12,login,user access,kHVnhYFm,STATUS success
+13:55:15,logout,user access,xvfMlTdO,STATUS success
+14:04:08,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 71MB STATUS failure FOLLOW-UP true
+14:30:01,starting process #93440,process management,kernel,MEMORY-ALLOCATION PERSONAL 68MB SHARED 0MB STATUS success
+14:41:17,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 0MB REASON memory corruption STATUS failure FOLLOW-UP true
+15:02:20,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 39MB STATUS failure FOLLOW-UP false
+15:08:28,login,user access,kHVnhYFm,STATUS success
+15:36:33,logout,user access,xvfMlTdO,STATUS success
+16:11:35,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 125MB STATUS success FOLLOW-UP false
+16:24:55,starting process #07982,process management,kernel,MEMORY-ALLOCATION PERSONAL 4MB SHARED 1MB STATUS success
+16:31:29,killing process #07982,process management,kernel,MEMORY-DEALLOCATION 5MB STATUS success
+09:50:49,killing child process #92526,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #43567 has not terminated STATUS failure FOLLOW-UP true
+10:28:23,starting process #93440,process management,kernel,MEMORY-ALLOCATION PERSONAL 68MB SHARED 0MB STATUS success
+11:04:58,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 0MB REASON memory corruption STATUS failure FOLLOW-UP true
+11:16:56,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 39MB STATUS failure FOLLOW-UP false
+11:55:41,killing process #43567,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #21686 has not terminated STATUS failure FOLLOW-UP true
+12:11:21,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+12:52:18,starting process #22304,process management,kernel,MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success
+13:12:08,starting process #07982,process management,kernel,MEMORY-ALLOCATION PERSONAL 4MB SHARED 1MB STATUS success
+13:29:29,starting process #93440,process management,kernel,MEMORY-ALLOCATION PERSONAL 68MB SHARED 0MB STATUS success
+13:52:24,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 0MB REASON memory corruption STATUS failure FOLLOW-UP true
+14:07:17,starting process #22491,process management,kernel,MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success
+14:52:59,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true
+15:27:01,login,user access,kHVnhYFm,STATUS success
+15:52:57,login,user access,yxgUMFNM,STATUS failure
+16:01:16,starting process #83609,process management,kernel,MEMORY-ALLOCATION PERSONAL 10MB SHARED 5MB STATUS success
+16:54:15,killing process #83609,process management,kernel,MEMORY-DEALLOCATION 15MB STATUS success
+09:55:03,starting process #22491,process management,kernel,MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success
+09:56:46,starting process #22491,process management,kernel,MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success
+10:21:32,starting process #22491,process management,kernel,MEMORY-ALLOCATION PERSONAL 20MB SHARED 10MB STATUS success
+11:13:13,login,user access,yxgUMFNM,STATUS failure
+11:55:50,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true
+12:00:29,starting process #22304,process management,kernel,MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success
+12:45:36,login,user access,yxgUMFNM,STATUS failure
+13:42:41,login,user access,yxgUMFNM,STATUS failure
+14:10:52,killing process #22304,process management,kernel,MEMORY-DEALLOCATION 66kB STATUS success
+15:02:34,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 30MB STATUS success FOLLOW-UP false
+15:28:24,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+16:15:31,login,user access,yxgUMFNM,STATUS failure
+16:27:59,starting process #83609,process management,kernel,MEMORY-ALLOCATION PERSONAL 10MB SHARED 5MB STATUS success
+16:57:23,killing process #83609,process management,kernel,MEMORY-DEALLOCATION 15MB STATUS success
+09:39:16,starting process #07982,process management,kernel,MEMORY-ALLOCATION PERSONAL 4MB SHARED 1MB STATUS success
+10:34:32,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+11:27:30,starting process #83609,process management,kernel,MEMORY-ALLOCATION PERSONAL 10MB SHARED 5MB STATUS success
+12:20:16,login,user access,yxgUMFNM,STATUS failure
+12:56:20,killing process #83609,process management,kernel,MEMORY-DEALLOCATION 15MB STATUS success
+13:38:38,starting process #37587,process management,kernel,MEMORY-ALLOCATION PERSONAL 100MB SHARED 25MB STATUS success
+14:04:32,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 71MB STATUS failure FOLLOW-UP true
+14:36:58,starting process #07982,process management,kernel,MEMORY-ALLOCATION PERSONAL 4MB SHARED 1MB STATUS success
+15:06:32,starting process #93440,process management,kernel,MEMORY-ALLOCATION PERSONAL 68MB SHARED 0MB STATUS success
+15:57:45,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 0MB REASON memory corruption STATUS failure FOLLOW-UP true
+16:38:43,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 39MB STATUS failure FOLLOW-UP false
+16:40:48,starting process #47004,process management,kernel,MEMORY-ALLOCATION PERSONAL 14MB SHARED 3MB STATUS success
+16:51:18,starting process #07982,process management,kernel,MEMORY-ALLOCATION PERSONAL 4MB SHARED 1MB STATUS success
+09:41:01,killing process #07982,process management,kernel,MEMORY-DEALLOCATION 5MB STATUS success
+10:32:32,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+10:51:04,killing process #07982,process management,kernel,MEMORY-DEALLOCATION 5MB STATUS success
+11:48:37,starting process #22304,process management,kernel,MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success
+12:10:04,killing process #22304,process management,kernel,MEMORY-DEALLOCATION 66kB STATUS success
+12:39:24,starting process #31683,process management,kernel,MEMORY-ALLOCATION PERSONAL 17GB SHARED 50MB STATUS success
+13:20:41,killing process #31683,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true
+13:29:02,starting process #22304,process management,kernel,MEMORY-ALLOCATION PERSONAL 56kB SHARED 10kB STATUS success
+13:51:12,starting process #37587,process management,kernel,MEMORY-ALLOCATION PERSONAL 100MB SHARED 25MB STATUS success
+13:55:03,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 71MB STATUS failure FOLLOW-UP true
+14:37:17,starting process #37587,process management,kernel,MEMORY-ALLOCATION PERSONAL 100MB SHARED 25MB STATUS success
+15:23:19,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 71MB STATUS failure FOLLOW-UP true
+16:04:51,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 125MB STATUS success FOLLOW-UP false
+16:20:08,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 125MB STATUS success FOLLOW-UP false
+09:34:37,starting process #83609,process management,kernel,MEMORY-ALLOCATION PERSONAL 10MB SHARED 5MB STATUS success
+09:45:47,killing process #83609,process management,kernel,MEMORY-DEALLOCATION 15MB STATUS success
+10:30:32,login,user access,yxgUMFNM,STATUS failure
+10:35:48,login,user access,yxgUMFNM,STATUS failure
+11:27:16,killing process #22304,process management,kernel,MEMORY-DEALLOCATION 66kB STATUS success
+12:13:38,killing child process #92526,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #43567 has not terminated STATUS failure FOLLOW-UP true
+12:48:46,killing process #37587,process management,kernel,MEMORY-DEALLOCATION 125MB STATUS success FOLLOW-UP false
+13:22:18,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+13:54:17,killing process #07982,process management,kernel,MEMORY-DEALLOCATION 5MB STATUS success
+14:41:37,killing process #47004,process management,kernel,MEMORY-DEALLOCATION 17MB STATUS success
+15:11:06,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true
+15:52:17,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true
+16:31:04,logout,user access,xvfMlTdO,STATUS success
+16:32:59,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 30MB STATUS success FOLLOW-UP false
+09:21:03,killing process #93440,process management,kernel,MEMORY-DEALLOCATION 39MB STATUS failure FOLLOW-UP false
+09:29:07,killing process #07982,process management,kernel,MEMORY-DEALLOCATION 5MB STATUS success
+09:35:18,killing process #22304,process management,kernel,MEMORY-DEALLOCATION 66kB STATUS success
+09:45:56,killing child process #92526,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #43567 has not terminated STATUS failure FOLLOW-UP true
+10:10:48,killing process #31683,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #92526 has not terminated STATUS failure FOLLOW-UP true
+11:10:10,logout,user access,xvfMlTdO,STATUS success
+11:49:18,killing process #22304,process management,kernel,MEMORY-DEALLOCATION 66kB STATUS success
+12:21:48,killing process #43567,process management,kernel,MEMORY-DEALLOCATION 0MB REASON child process #21686 has not terminated STATUS failure FOLLOW-UP true
+12:23,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true
+13:19:39,killing process #22491,process management,kernel,MEMORY-DEALLOCATION 12MB STATUS failure FOLLOW-UP true

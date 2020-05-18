@@ -1,0 +1,151 @@
+time,description,type,user,remarks
+9:22:18,account login,user access,het5IHLIpv,STATUS failure
+10:16,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+11:05:21,account logout,user access,vf3P9Tflis,STATUS success
+11:31:25,account login,user access,het5IHLIpv,STATUS failure
+12:03:10,account login,user access,vf3P9Tflis,STATUS success
+12:08:50,account logout,user access,vf3P9Tflis,STATUS success
+12:19:05,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+12:54:40,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+13:03:48,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+13:29,account login,user access,het5IHLIpv,STATUS failure
+13:49:06,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+14:49,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+15:40:23,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+15:50:56,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+15:52:51,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+16:00:37,account login,user access,vf3P9Tflis,STATUS success
+16:53:23,account logout,user access,vf3P9Tflis,STATUS success
+9:23:19,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+10:13:19,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+10:46:34,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+10:57:13,account login,user access,het5IHLIpv,STATUS failure
+11:39:16,account login,user access,vf3P9Tflis,STATUS success
+12:02:04,account logout,user access,vf3P9Tflis,STATUS success
+12:54:59,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+13:06:35,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+13:36:34,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+13:47:46,account login,user access,het5IHLIpv,STATUS failure
+14:30:42,account login,user access,het5IHLIpv,STATUS failure
+15:13:20,account login,user access,vf3P9Tflis,STATUS success
+15:43:13,account login,user access,vf3P9Tflis,STATUS success
+16:21:43,account login,user access,het5IHLIpv,STATUS failure
+16:47:51,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+16:54:23,account logout,user access,vf3P9Tflis,STATUS success
+9:53:29,account logout,user access,vf3P9Tflis,STATUS success
+10:28:40,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+10:44:01,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+11:08:56,account login,user access,vf3P9Tflis,STATUS success
+12:04:30,account login,user access,het5IHLIpv,STATUS failure
+12:40:06,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+12:55:18,account login,user access,het5IHLIpv,STATUS failure
+13:37:38,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+14:13:18,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+15:12:31,account logout,user access,vf3P9Tflis,STATUS success
+15:50:32,account login,user access,het5IHLIpv,STATUS failure
+16:25:42,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+16:52:45,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+9:05:51,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+9:26:36,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+10:16:28,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+10:39:06,account login,user access,vf3P9Tflis,STATUS success
+10:51:05,account logout,user access,vf3P9Tflis,STATUS success
+11:33:59,account login,user access,vf3P9Tflis,STATUS success
+11:49:29,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+12:44:14,account login,user access,het5IHLIpv,STATUS failure
+12:47:43,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+13:19:08,account logout,user access,vf3P9Tflis,STATUS success
+14:03:42,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+14:40:16,account login,user access,het5IHLIpv,STATUS failure
+15:14:36,account login,user access,het5IHLIpv,STATUS failure
+15:31:13,account login,user access,vf3P9Tflis,STATUS success
+16:21:54,account logout,user access,vf3P9Tflis,STATUS success
+16:56:12,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+9:09:13,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+10:03:40,account login,user access,het5IHLIpv,STATUS failure
+10:34:34,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+11:03:59,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+12:02:09,account login,user access,het5IHLIpv,STATUS failure
+12:57:40,account login,user access,vf3P9Tflis,STATUS success
+13:44:24,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+14:24:12,account logout,user access,vf3P9Tflis,STATUS success
+14:36:36,account login,user access,vf3P9Tflis,STATUS success
+14:39:16,account logout,user access,vf3P9Tflis,STATUS success
+15:01:01,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+15:15:56,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+15:49:21,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+15:53:46,account login,user access,het5IHLIpv,STATUS failure
+16:23:07,account login,user access,het5IHLIpv,STATUS failure
+9:22:30,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+9:43:24,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+10:33:21,account login,user access,vf3P9Tflis,STATUS success
+10:39:48,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+11:12,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+12:06:28,account logout,user access,vf3P9Tflis,STATUS success
+12:28:09,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+13:26:49,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+14:07:51,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+14:42:15,account login,user access,vf3P9Tflis,STATUS success
+14:44:36,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+15:13:31,account logout,user access,vf3P9Tflis,STATUS success
+15:58:07,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+16:35:40,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+9:58:55,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+10:08:19,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+10:52:24,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+11:40:59,account login,user access,het5IHLIpv,STATUS failure
+12:35:54,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+13:22:28,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+14:08:08,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+14:35:33,account login,user access,vf3P9Tflis,STATUS success
+15:33:20,account logout,user access,vf3P9Tflis,STATUS success
+16:08:51,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+16:26:32,account login,user access,vf3P9Tflis,STATUS success
+9:57:29,account login,user access,het5IHLIpv,STATUS failure
+10:24:01,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+10:59:17,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+11:16:51,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+11:20:35,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+12:03:33,terminal navigation,terminal input,LuUd4WAWVZ,"INPUT ""cd ../.."""
+12:44:39,file creation,terminal input,LuUd4WAWVZ,"INPUT ""vim progress_2020-01-02.txt"""
+12:55:51,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+13:41:18,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+14:08:28,account login,user access,het5IHLIpv,STATUS failure
+14:55:45,file list,terminal input,LuUd4WAWVZ,"INPUT ""ls -a"""
+15:40:37,account login,user access,het5IHLIpv,STATUS failure
+16:32:54,directory deletion,terminal input,LuUd4WAWVZ,"INPUT ""rm -r .annual_reports"""
+16:37:49,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+9:54:32,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+10:23,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+10:52:03,account login,user access,vf3P9Tflis,STATUS success
+11:15:09,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+11:38:53,account login,user access,het5IHLIpv,STATUS failure
+12:35:22,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+13:20:53,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+13:35:23,account logout,user access,vf3P9Tflis,STATUS success
+14:12:15,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+14:34:07,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+15:33:50,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+15:42:51,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+16:22:09,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+16:24:45,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+16:35:36,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+16:40:33,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+16:55:28,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+16:57:16,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""
+9:45:49,account login,user access,vf3P9Tflis,STATUS success
+10:30:29,account logout,user access,vf3P9Tflis,STATUS success
+11:25:01,account login,user access,vf3P9Tflis,STATUS success
+11:30:32,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+12:13:42,account logout,user access,vf3P9Tflis,STATUS success
+12:53:31,directory deletion,terminal input,7KuUzfMSvL,"INPUT ""rmdir test"""
+13:04:09,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+13:15:04,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+13:19:48,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+13:44:13,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+14:16:33,file creation,terminal input,7KuUzfMSvL,"INPUT ""touch test.txt"""
+15:08:43,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+15:35:50,file deletion,terminal input,OZimr9MYXC,"INPUT ""rm progress_2020-01-01.txt"""
+15:53:26,account login,user access,het5IHLIpv,STATUS failure
+16:38:29,directory creation,terminal input,WZ0il5z1pN,"INPUT ""mkdir progress_update"""
+10:05:51,file creation,terminal input,Mf8lO0tsRZ,"INPUT ""touch progress.txt"""

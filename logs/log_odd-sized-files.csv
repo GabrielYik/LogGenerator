@@ -1,0 +1,151 @@
+time,description,type,user,size
+6:15:26,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+6:18,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+7:05:45,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+7:43:13,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+7:44:13,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+8:38:31,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+9:32:23,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+10:12:46,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+10:45:44,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+10:59:50,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+11:04:07,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+11:29:08,conference author data uploaded,file upload,ILBUpnLn,SIZE 45KB STATUS failure
+11:39:54,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+12:00:23,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+12:27:56,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+12:47:16,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+13:17:11,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+13:35:35,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+13:59:31,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+14:02:08,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+14:07:03,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+14:55:03,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+15:01:10,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+15:30:15,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+16:22:09,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+16:59:17,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+17:55:47,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+17:59:19,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+18:25:51,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+19:07:03,conference submission data uploaded,file upload,VqgxYZGk,SIZE 63KB STATUS success
+19:53:33,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+20:27:57,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+21:13:18,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+21:26:37,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+22:23:12,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+6:31,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+7:02:57,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+7:09:17,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+7:38:26,conference review data uploaded,file upload,VBXQsDBa,SIZE 57KB STATUS success
+8:27:10,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+8:35:49,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+9:25:54,conference author data uploaded,file upload,ILBUpnLn,SIZE 45KB STATUS failure
+10:12:20,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+10:25:33,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+11:03:41,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+11:08:22,conference review data uploaded,file upload,VBXQsDBa,SIZE 57KB STATUS success
+11:30:59,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+12:06:46,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+13:02:33,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+13:51:20,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+14:24:56,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+14:33:33,conference submission data uploaded,file upload,VqgxYZGk,SIZE 63KB STATUS success
+14:47:50,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+15:14:37,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+15:56:38,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+16:04:28,conference review data uploaded,file upload,VBXQsDBa,SIZE 57KB STATUS success
+16:59:59,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+17:04:46,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+17:42:22,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+17:55,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+18:48:40,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+19:41:58,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+20:38:44,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+20:50:52,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+21:01:59,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+21:48:37,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+21:59:54,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+22:26:48,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+22:55:06,conference submission data uploaded,file upload,VqgxYZGk,SIZE 63KB STATUS success
+6:02:16,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+6:25:37,conference review data uploaded,file upload,VBXQsDBa,SIZE 1.56MB STATUS success
+6:33:11,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+7:00:43,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+7:07:45,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+7:43:32,conference submission data uploaded,file upload,VqgxYZGk,SIZE 1.34MB STATUS success
+8:33:35,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+9:12:05,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+9:19:48,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+9:35:42,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+10:00:24,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+10:53:58,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+11:53:34,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+11:55:15,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+12:00:07,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+12:05:46,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+12:47:46,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+12:51:49,conference author data uploaded,file upload,VqgxYZGk,SIZE 1.7MB STATUS success
+12:55:30,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+13:16:08,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+13:17:49,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+13:53:45,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+14:14:27,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+14:18:04,conference submission data uploaded,file upload,VqgxYZGk,SIZE 63KB STATUS success
+14:38:45,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+15:05:26,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+15:33:55,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+16:21:49,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+16:59:27,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+17:28:30,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+18:26:39,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+19:11:37,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+19:27:34,conference author data uploaded,file upload,ILBUpnLn,SIZE 45KB STATUS failure
+19:33:51,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+19:50:01,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+20:08:01,conference review data uploaded,file upload,VBXQsDBa,SIZE 57KB STATUS success
+20:34:02,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+20:47:16,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+21:09:11,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+21:45:01,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+22:42:31,author-author chart requested and serviced,visualisation service,VqgxYZGk,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+22:49:22,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+6:03:24,conference author data uploaded,file upload,ILBUpnLn,SIZE 45KB STATUS failure
+6:43:26,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+7:37:22,conference submission data uploaded,file upload,VqgxYZGk,SIZE 63KB STATUS success
+8:28:51,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+8:34:40,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+8:40:33,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+9:07:15,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+9:23:03,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+10:01:14,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+10:34:48,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+11:26:04,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+11:41:06,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+12:01:46,conference review data uploaded,file upload,VBXQsDBa,SIZE 57KB STATUS success
+12:54:34,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+13:19:50,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+14:00:29,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+14:13:38,conference review data uploaded,file upload,ILBUpnLn,SIZE 46KB STATUS success
+14:42:28,conference author data uploaded,file upload,VBXQsDBa,SIZE 60KB STATUS success
+14:48:08,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+14:58:20,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+15:11:12,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+15:59:21,author-submission bar chart requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+16:16:03,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+16:45:41,author-submission pie chart requested,visualisation service,EGbKNaFe,VALID-REQUEST false DATA-AVAILABLE null STATUS failure
+17:36:11,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+18:27:10,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+19:18:56,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+19:39:58,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+19:57:39,conference review data uploaded,file upload,EGbKNaFe,SIZE 67KB STATUS failure
+20:05:58,submission-review pair map requested and serviced,visualisation service,ILBUpnLn,VALID-REQUEST true DATA-AVAILABLE true STATUS success
+20:23:01,conference review data uploaded,file upload,VBXQsDBa,SIZE 57KB STATUS success
+20:35:38,conference review data uploaded,file upload,VBXQsDBa,SIZE 57KB STATUS success
+21:20:01,conference author data uploaded,file upload,ILBUpnLn,SIZE 45KB STATUS failure
+21:27:01,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+21:41:31,author-submission bar chart requested,visualisation service,VfzUVGuD,VALID-REQUEST true DATA-AVAILABLE false STATUS failure
+22:02:42,conference author data uploaded,file upload,VBXQsDBa,SIZE 48KB STATUS success
+22:10:20,conference submission data uploaded,file upload,VBXQsDBa,SIZE 39KB STATUS success
+22:50:20,conference submission data uploaded,file upload,VBXQsDBa,SIZE 66KB STATUS failure
+6:41:58,conference author data uploaded,file upload,ILBUpnLn,SIZE 45KB STATUS failure
