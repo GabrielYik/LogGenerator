@@ -31,95 +31,158 @@ could be where most of the exploit takes place. The end could be where an exploi
 cleaned up.
 
 Each scenario is represented by a configuration file which specifies its attributes.
-Attributes can be either global or local attributes. Global attributes apply to the log
-sheet and all logs in the log sheet. Local attributes apply to some logs or individual
-logs in the log sheet. This level of configuration allows the logs generated to model
-the scenario as close as possible.
+Attributes can be either global, group or local attributes. Global attributes apply to
+the log sheet and all logs in it. Group attributes apply to some logs. Local attributes
+apply to an individual log. This level of configuration allows the logs generated to
+model the scenario as close as possible.
 
-In the next two sections, we detail the global and local attributes of a scenario.
+In the next two sections, we detail the attributes of a log, and the global, group and
+local attributes of a scenario.
+
+== Log Structure
+[cols="2, 5"]
+|===
+|Attribute |Description
+
+|Time
+|The creation time of the log.
+
+|Description
+|The action captured by the log.
+
+Some examples include the login of a user and the deletion of a file.
+
+|Type
+|The category of the log.
+
+Some examples include access control and file retrieval.
+
+|Subject
+|The subject of the log.
+
+This refers to an entity like a human user or computer user. If no subject is specified,
+one of the subjects specified in the global subjects attribute is used.
+
+|Remarks
+|Any additional information about the log.
+
+Some examples include whether the action taken was successful and the amount of memory
+allocated to a process.
+|===
 
 == Scenario Attributes
 
+[cols="2, 5a"]
 .Global
 |===
 |Attribute |Description
 
-|Number of Logs
+|Log Count
 |The number of logs in the log sheet.
 
-Best is if can provide guarantee that maximum number of logs is that
-but need see implementation (might only be able to provide guarantee of minimum number)
-
 |Headers
-|The description of the columns in the log sheet. Each description should be kept
-succinct.
+|The description of the columns in the log sheet.
 
-Number of headers would be fixed, but would be good if can allow definition of additional headers
-Definition of additional headers would require activities to be extentable
+Each description should be succinct for readability.
 
 |Time Period
 |The range of values the time attribute of a log in the log sheet can take.
 
-Currently defined per week
-Need to define per day
+Settings:
+
+* Category
+** WEEKDAY, WEEKEND, EVERY DAY
+* Start Time
+** Any value from 00:00:00 to 23:59:9999
+* End Time
+** Any value from 00:00:00 to 23:59:9999
+* Specifics
+** Specifies the start and end time per day
 
 |Subjects
 |The range of values the subject attribute of a log in the log sheet can take.
 |===
 
+[cols="2,5a"]
+.Group
+|===
+|Attribute |Description
+
+|Identifier
+|The identifier of the group.
+
+|Order
+|The sequence in which the logs in the group in relation to each other should be placed
+in the log sheet
+
+Settings:
+
+* Overall
+** Defines the overall ordering of the logs in the group
+** Positive integer values separated by commas
+** There must be the same number of values as log in the group
+** Each value sets the order of the corresponding log in the same index
+** In a group of 4 logs, the value of 1, 2, 3, 4 means that the first log will be placed
+first, the second log second, and so forth
+
+** In a group of 4 logs, the value of 3, 2, 1, 4 means that the first log will be placed
+third, the second log second, the third log first and the fourth log fourth.
+* Delta
+** Defines how many logs between two consecutive logs in the group
+** Non-negative integer values separated by commas
+** There must be one less value than logs in the group
+** In a group of 4 logs, the value of 0, 0, 0 means that there are 0 logs between the
+first and second log, 0 logs between the second and third log, and so on.
+** In a group of 4 logs, the value of 1, 2, 0 means that there is 1 log between the
+first and second log, 2 logs between the second and third log, and 0 logs between the
+third and fourth log
+
+|Time Period
+|The constraint on the value the time attribute of a log in the group in relation to
+each other can take
+
+Settings:
+
+* Start Time
+* End Time
+
+|Description
+|The value of the description attribute of all logs in the group.
+
+|Type
+|The value of the type attribute of all logs in the group.
+
+|Subject
+|The value of the subject attribute of all log in the group.
+
+|Remarks
+|The value of the remarks attribute of all log in the group.
+|===
+
+[cols="2, 5a"]
 .Local
 |===
 |Attribute |Description
 
 |Description
-|The description of the action captured by a log. Some examples include the login of
-a user and the deletion of a file.
+|The value of the description attribute of the log.
 
 |Type
-|The category of a log. Some examples include access control and file retrieval.
+|The value of the category attribute of the log.
 
 |Subject
-|The subject of a log. If no subject is specified, one of the subjects specified in the
-global subjects attribute is used.
+|The value of the subject attribute of the log.
 
 |Remarks
-|Any additional information about a log. Some examples include whether the action taken
-was successful and the amount of memory allocated to a process.
-
-Currently acts as a collation of extra columns together
+|The value of the remarks attribute of the log.
 
 |Frequency
-|The frequency at which a log should appear in the logsheet.
+|The frequency at which a log should appear in the log sheet.
 
-Could be once or any.
+Settings:
 
-|Time
-|Does the log follow any timestamp, or it requires more tuned timestamps? Does it appear within a range of timestamps?
-
-|Group
-|The grouping which a log belongs. A group allows constraints to be applied to many logs
-instead of the entirety of the log sheet or individual logs.
-
-|Order in Group
-|The sequence in which logs in a group should be placed in the log sheet.
-
-IMMEDIATE after previous? Short time after previous? Any time after previous?
-
-|Time in Group
-|The time of a log in a group.
-
-Do these associated logs appear within the same day? No constraints
+* Frequency
+** ONCE, LESS, MORE, ANY
 |===
 
-
-== What is needed explicitly
-* Each set of logs has to cater to different scenarios
-* Possibly need to customise frequency, ordering and grouping of logs
-* Need to provide noise, but inject a story into the noise. The noise provides camoflauge to hide the security vulnerability
-* We try to cater to every possible scenario
-
-
 == Architecture
-* Pipe and Filter
-* 1st Pipe : insert random logs (without timing) (this is the noise)
-* 2nd Pipe : inject story logs (without timing)
