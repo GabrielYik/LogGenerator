@@ -1,3 +1,125 @@
 = Log Generator - Developer Guide
 :toc: left
 :sectnums:
+
+:appName: LogGenerator
+
+== Introduction
+This guide details the specifications and implementation of `{appName}`.
+
+== Motivation
+A project required that logs be created for examination purposes, namely to test if an
+individual is able to shift through logs to spot security anomalies or vulnerabilities.
+The initial intention was to create these logs manually. However, this approach is
+tedious and potentially error-prone.
+
+As such, a decision was made to automate the generation of logs. The benefits were
+clear: any number of logs can be generated easily, characteristics of the logs generated
+can be specified, and changes made to specific logs can be propagated consistently
+throughout if required. The application developed to automate the generation of logs is
+aptly named `{appName}`.
+
+== Definitions
+A log sheet is a set of logs representing a scenario. A log sheet has a set of headers
+with corresponding columns underneath. Each column represents a specific attribute of a
+log such as its time and description.
+
+A scenario is an umbrella term for a series of actions acting on a software system. This
+series of actions constitute an exploit. A scenario can be seen as a story with a
+beginning, body and end. The beginning could be where an exploit is set up. The body
+could be where most of the exploit takes place. The end could be where an exploit is
+cleaned up.
+
+Each scenario is represented by a configuration file which specifies its attributes.
+Attributes can be either global or local attributes. Global attributes apply to the log
+sheet and all logs in the log sheet. Local attributes apply to some logs or individual
+logs in the log sheet. This level of configuration allows the logs generated to model
+the scenario as close as possible.
+
+In the next two sections, we detail the global and local attributes of a scenario.
+
+== Scenario Attributes
+
+.Global
+|===
+|Attribute |Description
+
+|Number of Logs
+|The number of logs in the log sheet.
+
+Best is if can provide guarantee that maximum number of logs is that
+but need see implementation (might only be able to provide guarantee of minimum number)
+
+|Headers
+|The description of the columns in the log sheet. Each description should be kept
+succinct.
+
+Number of headers would be fixed, but would be good if can allow definition of additional headers
+Definition of additional headers would require activities to be extentable
+
+|Time Period
+|The range of values the time attribute of a log in the log sheet can take.
+
+Currently defined per week
+Need to define per day
+
+|Subjects
+|The range of values the subject attribute of a log in the log sheet can take.
+|===
+
+.Local
+|===
+|Attribute |Description
+
+|Description
+|The description of the action captured by a log. Some examples include the login of
+a user and the deletion of a file.
+
+|Type
+|The category of a log. Some examples include access control and file retrieval.
+
+|Subject
+|The subject of a log. If no subject is specified, one of the subjects specified in the
+global subjects attribute is used.
+
+|Remarks
+|Any additional information about a log. Some examples include whether the action taken
+was successful and the amount of memory allocated to a process.
+
+Currently acts as a collation of extra columns together
+
+|Frequency
+|The frequency at which a log should appear in the logsheet.
+
+Could be once or any.
+
+|Time
+|Does the log follow any timestamp, or it requires more tuned timestamps? Does it appear within a range of timestamps?
+
+|Group
+|The grouping which a log belongs. A group allows constraints to be applied to many logs
+instead of the entirety of the log sheet or individual logs.
+
+|Order in Group
+|The sequence in which logs in a group should be placed in the log sheet.
+
+IMMEDIATE after previous? Short time after previous? Any time after previous?
+
+|Time in Group
+|The time of a log in a group.
+
+Do these associated logs appear within the same day? No constraints
+|===
+
+
+== What is needed explicitly
+* Each set of logs has to cater to different scenarios
+* Possibly need to customise frequency, ordering and grouping of logs
+* Need to provide noise, but inject a story into the noise. The noise provides camoflauge to hide the security vulnerability
+* We try to cater to every possible scenario
+
+
+== Architecture
+* Pipe and Filter
+* 1st Pipe : insert random logs (without timing) (this is the noise)
+* 2nd Pipe : inject story logs (without timing)

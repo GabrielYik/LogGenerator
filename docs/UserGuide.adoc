@@ -2,13 +2,13 @@
 :toc: left
 :sectnums:
 
-:appName: Log Generator
+:appName: LogGenerator
 :scenarioDir: scenarios
 :logsDir: logs
 :repoUrl: https://github.com/GabrielYik/LogGenerator/releases
 
 == Introduction
-The user guide is aimed towards users of `{appName}`.
+This guide details the use of `{appName}`.
 
 == Prerequisites
 . Java SE 8 installed.
