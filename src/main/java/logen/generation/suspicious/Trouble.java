@@ -2,7 +2,7 @@ package logen.generation.suspicious;
 
 import java.time.LocalTime;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import logen.storage.LocalTimeDeserialiser;
+import logen.common.LocalTimeDeserialiser;
 
 public class Trouble {
     private String type;

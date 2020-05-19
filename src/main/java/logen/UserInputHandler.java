@@ -1,10 +1,10 @@
 package logen;
 
-import static logen.storage.Config.LOG_DIR_PATH;
-import static logen.storage.Config.LOG_FILE_EXTENSION;
-import static logen.storage.Config.SCENARIO_DIR_PATH;
-import static logen.storage.Config.SCENARIO_FILE_EXTENSION;
-import static logen.storage.Config.SCENARIO_FILE_PREFIX;
+import static logen.common.Config.LOG_DIR_PATH;
+import static logen.common.Config.LOG_FILE_EXTENSION;
+import static logen.common.Config.SCENARIO_DIR_PATH;
+import static logen.common.Config.SCENARIO_FILE_EXTENSION;
+import static logen.common.Config.SCENARIO_FILE_PREFIX;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logen.generation.LogGenerator;
 import logen.log.Log;
-import logen.storage.Scenario;
+import logen.scenario.Scenario;
 
 public class UserInputHandler {
     private static final String USER_OPTIONS_MESSAGE =

@@ -1,7 +1,8 @@
-package logen.storage;
+package logen.scenario;
 
 import java.time.LocalTime;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import logen.common.LocalTimeDeserialiser;
 
 public class Period {
     private Active active;

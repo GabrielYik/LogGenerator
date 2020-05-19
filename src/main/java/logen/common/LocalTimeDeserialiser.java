@@ -1,4 +1,4 @@
-package logen.storage;
+package logen.common;
 
 import java.io.IOException;
 import java.time.LocalDate;

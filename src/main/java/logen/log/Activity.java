@@ -2,7 +2,6 @@ package logen.log;
 
 import java.util.ArrayList;
 import java.util.List;
-import logen.storage.Period;
 
 public class Activity {
     private String description;

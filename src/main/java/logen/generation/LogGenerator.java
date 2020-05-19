@@ -3,8 +3,8 @@ package logen.generation;
 import logen.generation.normal.NormalConductor;
 import logen.generation.suspicious.SuspiciousConductor;
 import logen.log.Log;
-import logen.storage.Period;
-import logen.storage.Scenario;
+import logen.scenario.Period;
+import logen.scenario.Scenario;
 import logen.util.BreakpointChooser;
 import logen.util.TemporalGenerator;
 
@@ -17,9 +17,9 @@ import java.util.ListIterator;
 import java.util.stream.Collectors;
 
 public class LogGenerator {
-    private int logCount;
-    private NormalConductor normalConductor;
-    private SuspiciousConductor suspiciousConductor;
+    private final int logCount;
+    private final NormalConductor normalConductor;
+    private final SuspiciousConductor suspiciousConductor;
 
     public LogGenerator(Scenario scenario) {
         logCount = scenario.getLogCount();

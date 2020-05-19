@@ -1,4 +1,4 @@
-package logen.storage;
+package logen.scenario;
 
 import logen.log.Activity;
 import logen.generation.suspicious.Trouble;
