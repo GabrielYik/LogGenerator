@@ -1,8 +1,9 @@
 = LogGenerator
 
 == Overview
-Given a JSON file representing a scenario, LogGenerator generates a sequence of security logs in CSV format.
+Given a JSON configuration file representing a scenario, LogGenerator generates a
+sequence of security logs in CSV format.
 
 == Documentation
 * link:docs/UserGuide.adoc[User Guide]
-* link:docs/DeveloperGuide.adoc[Developer Guide].
+* link:docs/DeveloperGuide.adoc[Developer Guide]
