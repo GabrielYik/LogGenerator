@@ -5,7 +5,7 @@
 :appName: LogGenerator
 
 == Introduction
-This guide details the specifications and implementation of `{appName}`.
+This guide details the specification, development and implementation of `{appName}`.
 
 == Motivation
 A project required that logs be created for examination purposes, namely to test if an
@@ -19,22 +19,46 @@ can be specified, and changes made to specific logs can be propagated consistent
 throughout if required. The application developed to automate the generation of logs is
 aptly named `{appName}`.
 
-== Definitions
-A log sheet is a set of logs representing a scenario. A log sheet has a set of headers
-with corresponding columns underneath. Each column represents a specific attribute of a
-log such as its time and description.
+== Basics
 
-A scenario is an umbrella term for a series of actions acting on a software system. This
-series of actions constitute an exploit. A scenario can be seen as a story with a
-beginning, body and end. The beginning could be where an exploit is set up. The body
-could be where most of the exploit takes place. The end could be where an exploit is
-cleaned up.
+A log sheet is a set of logs that captures the actions of a scenario.
+A log sheet has a set of headers with corresponding columns underneath.
+Each column represents a specific attribute of a log such as its time and description.
+
+A scenario consists of a series of actions acting on a software system.
+Some of these actions constitute an exploit.
+An exploit can be seen as a story with a beginning, body and end.
+The beginning is the set up of the exploit, the body is where most of the exploit takes
+place, and the end is the tear down of the exploit.
+
+With the above definitions, a log sheet consists of two types of logs: exploit and
+noise.
+Exploit logs represent the actions in an exploit while noise logs represent everything
+else.
+Noise logs act as noise (hence the name), serves to hide the exploit logs, and also
+makes the scenario more realistic.
 
 Each scenario is represented by a configuration file which specifies its attributes.
-Attributes can be either global, group or local attributes. Global attributes apply to
-the log sheet and all logs in it. Group attributes apply to some logs. Local attributes
-apply to an individual log. This level of configuration allows the logs generated to
-model the scenario as close as possible.
+
+[cols="2, 5"]
+.Attributes
+|===
+|Type |Description
+
+|Global
+|Apply to the log sheet and all logs in it.
+
+|Group
+|Apply to some logs.
+
+Group attributes are primary used to specify exploit logs.
+
+|Local
+|Apply to an individual log.
+|===
+
+This level of configuration allows the logs generated to model the scenario as close as
+possible.
 
 In the next two sections, we detail the attributes of a log, and the global, group and
 local attributes of a scenario.
@@ -103,7 +127,7 @@ Settings:
 |The range of values the subject attribute of a log in the log sheet can take.
 |===
 
-[cols="2,5a"]
+[cols="2, 5a"]
 .Group
 |===
 |Attribute |Description
@@ -117,17 +141,22 @@ in the log sheet
 
 Settings:
 
-* Overall
+* Order
 ** Defines the overall ordering of the logs in the group
 ** Positive integer values separated by commas
 ** There must be the same number of values as log in the group
 ** Each value sets the order of the corresponding log in the same index
 ** In a group of 4 logs, the value of 1, 2, 3, 4 means that the first log will be placed
 first, the second log second, and so forth
-
 ** In a group of 4 logs, the value of 3, 2, 1, 4 means that the first log will be placed
 third, the second log second, the third log first and the fourth log fourth.
-* Delta
+
+|Spacing
+|The number of logs between two specified logs in the group.
+
+Settings:
+
+* Spacing
 ** Defines how many logs between two consecutive logs in the group
 ** Non-negative integer values separated by commas
 ** There must be one less value than logs in the group
@@ -157,6 +186,9 @@ Settings:
 
 |Remarks
 |The value of the remarks attribute of all log in the group.
+
+|Frequency
+|The frequency in which all the logs in the group appear in the log sheet.
 |===
 
 [cols="2, 5a"]
@@ -177,7 +209,7 @@ Settings:
 |The value of the remarks attribute of the log.
 
 |Frequency
-|The frequency at which a log should appear in the log sheet.
+|The frequency at which a log appears in the log sheet.
 
 Settings:
 
@@ -185,4 +217,154 @@ Settings:
 ** ONCE, LESS, MORE, ANY
 |===
 
-== Architecture
+== Specifying Exploit Logs
+An exploit does not show up in logs with a single definite pattern.
+As such, to provide scenario designers with the ability to create different kinds of
+exploits, the attributes order, frequency, time period and space are provided.
+
+These attributes are provided in their entirety at the group level, and the frequency
+attribute is provided at the local level.
+In the group level, if order is specified, the frequency has to be 1 since an ordering
+imposed on logs cannot be fulfilled if the logs could occur any number of times.
+If a frequency other than 1 is specified, an order cannot be specified for the same
+aforementioned reason.
+
+The time period and space attributes can be specified freely.
+
+== Characteristics of a Good Log Sheet
+* Follows the scenario configuration file as closely as possible
+* Random generated noise logs
+* Given different instances of the same scenario configuration file and exploit logs
+with no time constraints, the instances have different placement of exploit logs
+* There must be some number of noise logs before the first exploit log, and some number
+of noise logs after the last exploit log. This is to make it more difficult for the
+exploit logs to be spotted
+
+== Approach
+Among all the scenario attributes, only the time period group attribute is difficult to
+implement. As such, the ease of implementation of this attribute must be considered in
+deciding the best approach to development.
+
+Since there are two types of logs: exploit and noise, development could be done in three
+approaches:
+
+. Exploit then noise
+. Noise then exploit
+. Exploit and noise together
+
+To decide between these three approaches, three criterions are considered:
+
+* Complexity of implementation
+* Cohesiveness
+* Adherence to scenario
+
+=== Exploit then Noise
+
+==== Overview
+Exploit logs are generated before exploit logs.
+
+==== Implementation
+Exploit logs are generated first. There are three constraints on exploit logs to
+consider: order, spacing and time.
+
+Order is the simplest to resolve. If there is only a single group, the logs are ordered
+as specified. If there is more than one group, the ordering between two logs from two
+different groups is not specified and hence can be in any order. If there are no groups,
+no ordering is needed.
+
+Spacing is resolved by putting placeholders between the logs. These placeholders would
+contain details about how many logs are needed between the two logs.
+
+Time is not entirely straightforward to resolve. If there are specific time constraints
+on the group like 1AM to 5AM, these are applied to the time values of the logs. Then,
+we insert placeholders before the first and after the last exploit log. These
+placeholders detail how many logs are needed in those areas.
+
+Now it's time to generate the noise logs. Currently, we have our exploit logs with their
+constraints resolved, and with placeholders between and around them as required. The
+generation of the noise logs need only follow the details of the placeholders. For the
+first placeholder (before the first exploit log), the time values of the noise logs have
+to be generated backwards to ensure that the timings are consistent.
+
+==== Evaluation
+|===
+|Criterion |Evaluation
+
+|Complexity of implementation
+|
+
+|Cohesiveness
+|
+
+|Adherence to scenario
+|
+
+|===
+
+=== Noise then Exploit
+
+==== Overview
+Noise logs are generated before exploit logs.
+
+==== Implementation
+However, the
+time values of the noise logs cannot be generated before injection of exploit logs since
+the injection of exploit logs would require changes in the time values of surrounding
+noise logs to maintain realistic time values throughout. Furthermore, if exploit logs
+are constrained by a time constraint, the noise logs would most likely require a rework
+of their time values.
+
+Instead, we could generate the noise logs without time values, then inject the exploit
+logs with time values, then set the time values of the noise logs from there. If say
+the first exploit log has a time value of 1am, then the previous noise log would be
+around 5pm (assuming 5pm is the end time for all logs). If the first exploit log has a
+time value of 2pm (within the start and end time for all logs), the previous noise log
+would be an amount of time before that.
+
+We could also generate noise logs to fill the entire log sheet, with time values, and
+replace individual noise logs where required with exploit logs. However, this might lead
+to a situation with more logs than is specified since some exploit logs may have time
+constraints that specify that their time values should be outside of the time set
+globally.
+
+==== Evaluation
+|===
+|Criterion |Evaluation
+
+|Complexity of implementation
+|
+
+|Cohesiveness
+|
+
+|Adherence to scenario
+|
+
+|===
+
+=== Noise and Exploit
+
+==== Overview
+Noise and exploit logs are generated together.
+
+==== Implementation
+Some noise logs will be generated
+first, but when it comes to a time when exploit logs have to be generated, noise log
+generation will stop and transfer control to exploit log generation.
+
+This requires checks for every log generation and is inefficient.
+
+==== Evaluation
+|===
+|Criterion |Evaluation
+
+|Complexity of implementation
+|
+
+|Cohesiveness
+|
+
+|Adherence to scenario
+|
+
+|===
