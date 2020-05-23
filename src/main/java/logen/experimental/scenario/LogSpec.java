@@ -31,6 +31,13 @@ public class LogSpec {
         this.subject = subject;
     }
 
+    public void setSubjectIfAbsent(String subject) {
+        //TODO check if null or empty
+        if (this.subject == null) {
+            this.subject = subject;
+        }
+    }
+
     public String getRemarks() {
         return remarks;
     }
