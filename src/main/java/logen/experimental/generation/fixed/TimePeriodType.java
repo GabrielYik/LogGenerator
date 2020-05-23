@@ -5,6 +5,7 @@ import javafx.util.Pair;
 import java.time.LocalTime;
 
 public enum TimePeriodType {
+    CUSTOM(null, null),
     ONE_HOUR(null, null),
     ONE_DAY(null, null),
     AFTER_MIDNIGHT(LocalTime.of(0, 0), LocalTime.of(3, 3));

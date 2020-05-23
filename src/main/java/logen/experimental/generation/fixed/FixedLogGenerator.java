@@ -10,6 +10,7 @@ import logen.experimental.util.TimeGenerator;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class FixedLogGenerator {
     private static final int EXTERNAL_PLACEHOLDER_COUNT = 2;
@@ -27,9 +28,8 @@ public class FixedLogGenerator {
     public Fixture generate() {
         Group group = scenario.getGroups().get(0);
         List<LogSpec> orderedLogSpecs = applyOrder(group.getOrder(), group.getLogSpecs());
-        List<Placeholder> placeholders = applySpacing(group.getSpacings());
-        List<Log> fixedLogs = applyTimePeriod(group.getTimePeriod(), orderedLogSpecs, placeholders);
-        return new Fixture(fixedLogs, placeholders);
+        List<Placeholder.Builder> placeholders = applySpacing(group.getSpacings());
+        return applyTimePeriod(group.getTimePeriod(), orderedLogSpecs, placeholders);
     }
 
     private List<LogSpec> applyOrder(List<Integer> order, List<LogSpec> logSpecs) {
@@ -42,36 +42,56 @@ public class FixedLogGenerator {
         return orderedLogSpecs;
     }
 
-    private List<Placeholder> applySpacing(List<String> spacings) {
-        List<Placeholder> placeholders = new ArrayList<>(spacings.size() + EXTERNAL_PLACEHOLDER_COUNT);
-        //TODO use enum or constant
-        Placeholder externalPlaceholder = new Placeholder("any");
+    private List<Placeholder.Builder> applySpacing(List<String> spacings) {
+        List<Placeholder.Builder> placeholders = new ArrayList<>(spacings.size());
+        Placeholder.Builder externalPlaceholder = new Placeholder.Builder().withSpacing("any");
         placeholders.add(externalPlaceholder);
         for (String spacing : spacings) {
-            Placeholder placeholder = new Placeholder(spacing);
+            Placeholder.Builder placeholder = new Placeholder.Builder().withSpacing(spacing);
             placeholders.add(placeholder);
         }
         placeholders.add(externalPlaceholder);
         return placeholders;
     }
 
-    private List<Log> applyTimePeriod(
+    private Fixture applyTimePeriod(
             TimePeriod timePeriod,
             List<LogSpec> orderedLogSpecs,
-            List<Placeholder> placeholders
+            List<Placeholder.Builder> placeholders
     ) {
         int approximateLogCount = computeApproximateLogCount(orderedLogSpecs.size(), placeholders);
-        TimeGenerator timeGenerator = new TimeGenerator(timePeriod, approximateLogCount);
+        TimeGenerator timeGenerator = TimeGenerator.bounded(
+                timePeriod.getStartTime(),
+                timePeriod.getEndTime(),
+                approximateLogCount
+        );
         List<Log> fixedLogs = new ArrayList<>();
-        for (LogSpec logSpec : orderedLogSpecs) {
-            LocalTime time = timeGenerator.generate();
-            Log fixedLog = new Log(time, logSpec);
-            fixedLogs.add(fixedLog);
+        int counter = orderedLogSpecs.size() + placeholders.size();
+        int logSpecsCounter = 0;
+        int placeholdersCounter = 0;
+        for (int i = 0; i < counter; i++) {
+            if (i % 2 != 0) {
+                LocalTime time = timeGenerator.generate();
+                LogSpec logSpec = orderedLogSpecs.get(logSpecsCounter);
+                Log fixedLog = new Log(time, logSpec);
+                fixedLogs.add(fixedLog);
+                logSpecsCounter++;
+            } else {
+                Placeholder.Builder placeholder = placeholders.get(placeholdersCounter);
+                LocalTime startTime = timeGenerator.generate();
+                timeGenerator.skip(placeholder.getSpacingAmount() - 2);
+                LocalTime endTime = timeGenerator.generate();
+                placeholder.withTimePeriod(new TimePeriod(startTime, endTime));
+                placeholdersCounter++;
+            }
         }
-        return fixedLogs;
+        return new Fixture(
+                fixedLogs,
+                placeholders.stream().map(Placeholder.Builder::build).collect(Collectors.toList())
+        );
     }
 
-    private int computeApproximateLogCount(int orderedLogSpecCount, List<Placeholder> placeholders) {
-        return orderedLogSpecCount + placeholders.stream().mapToInt(Placeholder::getSpacingAmount).sum();
+    private int computeApproximateLogCount(int orderedLogSpecCount, List<Placeholder.Builder> placeholders) {
+        return orderedLogSpecCount + placeholders.stream().mapToInt(Placeholder.Builder::getSpacingAmount).sum();
     }
 }

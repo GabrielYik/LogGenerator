@@ -9,6 +9,16 @@ public class TimePeriod {
     private LocalTime startTime;
     private LocalTime endTime;
 
+    public TimePeriod(TimePeriodType type, LocalTime startTime, LocalTime endTime) {
+        this.type = type;
+        this.startTime = startTime;
+        this.endTime = endTime;
+    }
+
+    public TimePeriod(LocalTime startTime, LocalTime endTime) {
+        new TimePeriod(TimePeriodType.CUSTOM, startTime, endTime);
+    }
+
     public TimePeriodType getType() {
         return type;
     }
