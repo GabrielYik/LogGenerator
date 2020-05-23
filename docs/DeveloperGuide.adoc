@@ -113,14 +113,19 @@ Each description should be succinct for readability.
 
 Settings:
 
-* Category
+* Type
 ** WEEKDAY, WEEKEND, EVERY DAY
 * Start Time
-** Any value from 00:00:00 to 23:59:9999
+** Between 00:00:00 and 23:59:59
 * End Time
-** Any value from 00:00:00 to 23:59:9999
+** Between 00:00:00 and 23:59:59
 * Specifics
-** Specifies the start and end time per day
+** Day
+*** MON, TUE, WED, THU, FRI, SAT, SUN
+** Start Time
+*** Between 00:00:00 and 23:59:59
+** End Time
+*** Between 00:00:00 and 23:59:59
 
 |Subjects
 |The range of values the subject attribute of a log in the log sheet can take.
@@ -171,8 +176,12 @@ each other can take
 
 Settings:
 
+* Type
+** ANY, CUSTOM, ONE HOUR, ONE DAY, AFTER MIDNIGHT
 * Start Time
+** Between 00:00:00 and 23:59:59
 * End Time
+** Between 00:00:00 and 23:59:59
 
 |Description
 |The value of the description attribute of all logs in the group.
@@ -188,6 +197,13 @@ Settings:
 
 |Frequency
 |The frequency in which all the logs in the group appear in the log sheet.
+
+Settings:
+
+* Type
+** ANY, CUSTOM
+* Count
+** Any non-negative integer
 |===
 
 [cols="2, 5a"]
@@ -212,8 +228,10 @@ Settings:
 
 Settings:
 
-* Frequency
-** ONCE, LESS, MORE, ANY
+* Type
+** ANY, CUSTOM
+* Count
+** Any non-negative integer
 |===
 
 == Specifying Exploit Logs
