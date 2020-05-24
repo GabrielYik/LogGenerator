@@ -1,8 +1,8 @@
-= Log Generator - Developer Guide
+:appName: LogGenerator
+
+= `{appName}` - Developer Guide
 :toc: left
 :sectnums:
-
-:appName: LogGenerator
 
 == Introduction
 This guide details the specification, development and implementation of `{appName}`.
@@ -40,29 +40,12 @@ The attributes of the actions in a scenario are configurable through a configura
 file.
 There are three types of attributes: global, group and local.
 
-[cols="2, 5"]
-.Attributes
-|===
-|Type |Description
-
-|Global
-|Applies to the log sheet and all logs in it.
-
-|Group
-|Applies to some logs.
-
-|Local
-|Applies to an individual log.
-|===
-
-This level of configuration allows the logs generated to model the scenario as close as
-possible.
-
-In the next two sections, we detail the attributes of a log, and the global, group and
-local attributes of a scenario.
+In the next two sections, we detail the structure of a log, and the attributes of a
+scenario.
 
 == Log Structure
 [cols="2, 5"]
+.Log Structure
 |===
 |Attribute |Description
 
@@ -94,137 +77,194 @@ allocated to a process.
 |===
 
 == Scenario Attributes
+There are three types of scenario attributes.
 
-[cols="2, 5a"]
-.Global
+[cols="2, 5"]
+.Scenario Attributes
 |===
-|Attribute |Description
+|Type |Description
+
+|Global
+|Applies to the log sheet and all logs in it.
+
+|Group
+|Applies to some logs.
+
+|Local
+|Applies to an individual log.
+|===
+
+This separation of scope allows for the fine-grained configuration of the scenario.
+
+=== Global
+[cols="2, 5, 5a"]
+.Global Scenario Attributes
+|===
+|Attribute |Description |Settings
 
 |Log Count
 |The number of logs in the log sheet.
+|
+* logCount
+** Any positive integer
 
 |Headers
 |The description of the columns in the log sheet.
-
-Each description should be succinct for readability.
+|
+* headers
+** An array of strings, with each string describing an attribute of a log
+** Each description should be succinct for readability
 
 |Time Period
 |The range of values the time attribute of a log in the log sheet can take.
-
-Settings:
-
-* Type
-** WEEKDAY, WEEKEND, EVERY DAY
-* Start Time
-** Between 00:00:00 and 23:59:59
-* End Time
-** Between 00:00:00 and 23:59:59
-* Specifics
-** Day
-*** MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
-** Start Time
-*** Between 00:00:00 and 23:59:59
-** End Time
-*** Between 00:00:00 and 23:59:59
+|
+* type
+** One of the following: WEEKDAY, WEEKEND, EVERY DAY
+* startTime
+** A time between 00:00:00 and 23:59:59
+** The start time must be before the end time
+* endTime
+** A time between 00:00:00 and 23:59:59
+** The end time must be after the start time
+* specifics
+** day
+*** One of the following: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+** startTime
+*** A time between 00:00:00 and 23:59:59
+*** The start time must be before the end time
+** endTime
+*** A time between 00:00:00 and 23:59:59
+*** The end time must be after the start time
 
 |Subjects
 |The range of values the subject attribute of a log in the log sheet can take.
+|
+* subjects
+** An array of non-empty strings, with each string representing a subject
 |===
 
-[cols="2, 5a"]
-.Group
+=== Group
+[cols="2, 5, 5a"]
+.Group Scenario Attributes
 |===
-|Attribute |Description
+|Attribute |Description |Settings
 
 |Identifier
 |The identifier of the group.
+|
+* identifier
+** Any string
 
 |Order
 |The sequence in which the logs in the group in relation to each other should be placed
 in the log sheet
-
-Settings:
-
-* Order
-** Defines the overall ordering of the logs in the group
-** Positive integer values separated by commas
-** There must be the same number of values as log in the group
-** Each value sets the order of the corresponding log in the same index
-** In a group of 4 logs, the value of 1, 2, 3, 4 means that the first log will be placed
+|
+* order
+** An array of positive integers, with each integer specifying the position of the
+corresponding log specification
+** There must be the same number of values as logs in the group
+** E.g. in a group of 4 logs, [1, 2, 3, 4] means that the first log will be placed
 first, the second log second, and so forth
-** In a group of 4 logs, the value of 3, 2, 1, 4 means that the first log will be placed
+** E.g. in a group of 4 logs, [3, 2, 1, 4] means that the first log will be placed
 third, the second log second, the third log first and the fourth log fourth.
 
 |Space
 |The number of logs between two specified logs in the group.
-
-Settings:
-
-* Space
-** Defines how many logs between two consecutive logs in the group
-** Non-negative integer values separated by commas
-** There must be one less value than logs in the group
-** In a group of 4 logs, the value of 0, 0, 0 means that there are 0 logs between the
-first and second log, 0 logs between the second and third log, and so on.
-** In a group of 4 logs, the value of 1, 2, 0 means that there is 1 log between the
-first and second log, 2 logs between the second and third log, and 0 logs between the
-third and fourth log
+|
+* type
+** ANY, CUSTOM
+* amount
+** An array of non-negative integers
+** There must be one less integer than logs in the group
+** E.g. in a group of 4 logs, [0, 0, 0] means that there are 0 logs between the first
+and second log, 0 logs between the second and third log, and so on.
+** E.g. in a group of 4 logs, [1, 2, 0] means that there is 1 log between the first and
+second log, 2 logs between the second and third log, and 0 logs between the third and
+fourth log
 
 |Time Period
 |The constraint on the value the time attribute of a log in the group in relation to
 each other can take
-
-Settings:
-
-* Type
+|
+* type
 ** ANY, CUSTOM, ONE HOUR, ONE DAY, AFTER MIDNIGHT
-* Start Time
-** Between 00:00:00 and 23:59:59
-* End Time
-** Between 00:00:00 and 23:59:59
+* startTime
+** A time between 00:00:00 and 23:59:59
+** The start time must be before the end time
+* endTime
+** A time between 00:00:00 and 23:59:59
+** The end time must be after the start time
 
 |Description
 |The value of the description attribute of all logs in the group.
+|
+* description
+** Any string
 
 |Type
 |The value of the type attribute of all logs in the group.
+|
+* type
+** Any non-empty string
 
 |Subject
 |The value of the subject attribute of all log in the group.
+|
+* subject
+** Any non-empty string
 
 |Remarks
 |The value of the remarks attribute of all log in the group.
+|
+* remarks
+** Any string
 
 |Frequency
 |The frequency in which all the logs in the group appear in the log sheet.
-
-Settings:
-
-* Type
+|
+* type
 ** ANY, CUSTOM
-* Count
-** Any non-negative integer
+* count
+** Any positive integer
 |===
 
-[cols="2, 5a"]
-.Local
+=== Local
+[cols="2, 5, 5a"]
+.Local Scenario Attributes
 |===
 |Attribute |Description
 
 |Description
 |The value of the description attribute of the log.
+|
+* description
+** Any string
 
 |Type
 |The value of the category attribute of the log.
+|
+* type
+** Any non-empty string
 
 |Subject
 |The value of the subject attribute of the log.
+|
+* subject
+** Any non-empty string
 
 |Remarks
 |The value of the remarks attribute of the log.
+|
+* remarks
+** Any string
 
 |Frequency
 |The frequency at which a log appears in the log sheet.
+|
+* type
+** ANY, CUSTOM
+* count
+** Any positive integer
 
 Settings:
 
@@ -234,7 +274,10 @@ Settings:
 ** Any non-negative integer
 |===
 
-== Specifying Exploit Logs
+== Basic Configuration
+
+
+== Advanced Configuration
 An exploit does not show up in logs with a single definite pattern, and its
 characteristics expressed depends on what the scenario designer.
 As such, to provide scenario designers with the ability to specify as large a range of
@@ -245,6 +288,7 @@ There are however three attributes that would most likely be more useful in desi
 more complex exploits: order, space and time period.
 These attributes are present at the group level.
 
+=== Order
 The order attribute allows an exploit to proceed linearly, and allows relationships
 between exploit logs to be expressed more explicitly.
 For example, given two logs, the first capturing a user login and the second capturing a
@@ -255,6 +299,7 @@ an order imposed on logs cannot be fulfilled if the logs can occur any number of
 Likewise, if the frequency attribute does not have the value of ONCE, the order
 attribute cannot be specified for the aforementioned reason.
 
+=== Space
 The space attribute allows an exploit to appear more precisely executed by suggesting
 that some thought was given by the exploit perpetrator as to when consecutive actions
 should be done.
@@ -268,6 +313,7 @@ that particular order.
 If frequency other than ONCE is specified and order is not specified, space cannot be
 specified for the aforementioned reason.
 
+=== Time Period
 The time period attribute allows an exploit to appear more preciously executed by
 suggesting that some thought was given by the exploit perpetrator as to when actions
 should take place. For example, given a set of logs, all capturing failed user logins,
