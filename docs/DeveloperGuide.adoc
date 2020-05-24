@@ -121,7 +121,7 @@ Settings:
 ** Between 00:00:00 and 23:59:59
 * Specifics
 ** Day
-*** MON, TUE, WED, THU, FRI, SAT, SUN
+*** MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 ** Start Time
 *** Between 00:00:00 and 23:59:59
 ** End Time
@@ -155,12 +155,12 @@ first, the second log second, and so forth
 ** In a group of 4 logs, the value of 3, 2, 1, 4 means that the first log will be placed
 third, the second log second, the third log first and the fourth log fourth.
 
-|Spacing
+|Space
 |The number of logs between two specified logs in the group.
 
 Settings:
 
-* Spacing
+* Space
 ** Defines how many logs between two consecutive logs in the group
 ** Non-negative integer values separated by commas
 ** There must be one less value than logs in the group
@@ -242,7 +242,7 @@ different kinds of exploits through logs, all the attributes related to a scenar
 are exposed through a configuration file.
 
 There are however three attributes that would most likely be more useful in designing
-more complex exploits: order, spacing and time period.
+more complex exploits: order, space and time period.
 These attributes are present at the group level.
 
 The order attribute allows an exploit to proceed linearly, and allows relationships
@@ -255,17 +255,17 @@ an order imposed on logs cannot be fulfilled if the logs can occur any number of
 Likewise, if the frequency attribute does not have the value of ONCE, the order
 attribute cannot be specified for the aforementioned reason.
 
-The spacing attribute allows an exploit to appear more precisely executed by suggesting
+The space attribute allows an exploit to appear more precisely executed by suggesting
 that some thought was given by the exploit perpetrator as to when consecutive actions
 should be done.
 For example, given two logs, both capturing failed user logins, the occurrence of first
 log a number of logs away from the second log suggests that the perpetrator could be
 trying to avoid arousing suspicion.
-However, if a specified spacing is specified, the frequency attribute has to be ONCE
-since spacing imposed between two logs is only defined on logs occurring only once, and
-the order attribute has to be specified since spacing is imposed between two logs in
+However, if a specified space is specified, the frequency attribute has to be ONCE
+since space imposed between two logs is only defined on logs occurring only once, and
+the order attribute has to be specified since space is imposed between two logs in
 that particular order.
-If frequency other than ONCE is specified and order is not specified, spacing cannot be
+If frequency other than ONCE is specified and order is not specified, space cannot be
 specified for the aforementioned reason.
 
 The time period attribute allows an exploit to appear more preciously executed by
@@ -274,12 +274,12 @@ should take place. For example, given a set of logs, all capturing failed user l
 the occurrence of this set of logs after midnight suggests that the perpetrator could be
 attempting to brute force a secure system.
 
-Logs that have their order, spacing and time period attributes specified are referred to
+Logs that have their order, space and time period attributes specified are referred to
 as fixed logs.
 This is because these logs have relationships defined on them and others, which results
 in them being placed in specific areas in the log sheet.
 
-On the other hand, logs that do not have their order, spacing and time period attributes
+On the other hand, logs that do not have their order, space and time period attributes
 specified are referred to as fluid logs.
 This is because these logs can be placed anywhere in the log sheet.
 
@@ -323,14 +323,14 @@ Exploit logs are generated before exploit logs.
 
 ==== Implementation
 Exploit logs are generated first. There are three constraints on exploit logs to
-consider: order, spacing and time.
+consider: order, space and time.
 
 Order is the simplest to resolve. If there is only a single group, the logs are ordered
 as specified. If there is more than one group, the ordering between two logs from two
 different groups is not specified and hence can be in any order. If there are no groups,
 no ordering is needed.
 
-Spacing is resolved by putting placeholders between the logs. These placeholders would
+Space is resolved by putting placeholders between the logs. These placeholders would
 contain details about how many logs are needed between the two logs.
 
 Time is not entirely straightforward to resolve. If there are specific time constraints
