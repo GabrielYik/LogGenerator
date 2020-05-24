@@ -1,4 +1,4 @@
-package logen.experimental.generation.fluid;
+package logen.experimental.util;
 
 import logen.experimental.util.RandomChooser;
 

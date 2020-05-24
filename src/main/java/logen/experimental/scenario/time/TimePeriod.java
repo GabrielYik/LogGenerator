@@ -1,22 +1,28 @@
-package logen.experimental.scenario;
-
-import logen.experimental.generation.fixed.TimePeriodType;
+package logen.experimental.scenario.time;
 
 import java.time.LocalTime;
+import java.util.List;
 
 public class TimePeriod {
     private TimePeriodType type;
     private LocalTime startTime;
     private LocalTime endTime;
+    private List<TimePeriodSpecific> specifics;
 
-    public TimePeriod(TimePeriodType type, LocalTime startTime, LocalTime endTime) {
+    public TimePeriod() {
+
+    }
+
+    public TimePeriod(TimePeriodType type) {
         this.type = type;
-        this.startTime = startTime;
-        this.endTime = endTime;
+        startTime = null;
+        endTime = null;
     }
 
     public TimePeriod(LocalTime startTime, LocalTime endTime) {
-        new TimePeriod(TimePeriodType.CUSTOM, startTime, endTime);
+        type = TimePeriodType.CUSTOM;
+        this.startTime = startTime;
+        this.endTime = endTime;
     }
 
     public TimePeriodType getType() {
@@ -41,5 +47,13 @@ public class TimePeriod {
 
     public void setEndTime(LocalTime endTime) {
         this.endTime = endTime;
+    }
+
+    public List<TimePeriodSpecific> getSpecifics() {
+        return specifics;
+    }
+
+    public void setSpecifics(List<TimePeriodSpecific> specifics) {
+        this.specifics = specifics;
     }
 }

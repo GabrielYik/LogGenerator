@@ -1,17 +1,21 @@
-package logen.experimental.scenario;
+package logen.experimental.scenario.group;
+
+import logen.experimental.scenario.common.Frequency;
+import logen.experimental.scenario.common.LogSpec;
+import logen.experimental.scenario.time.TimePeriod;
 
 import java.util.List;
 
 public class Group {
     private String identifier;
     private List<Integer> order;
-    private List<String> spacings;
+    private Space space;
     private TimePeriod timePeriod;
     private String description;
     private String type;
     private String subject;
     private String remarks;
-    private String frequency;
+    private Frequency frequency;
 
     private List<LogSpec> logSpecs;
 
@@ -31,12 +35,12 @@ public class Group {
         this.order = order;
     }
 
-    public List<String> getSpacings() {
-        return spacings;
+    public Space getSpace() {
+        return space;
     }
 
-    public void setSpacings(List<String> spacings) {
-        this.spacings = spacings;
+    public void setSpace(Space space) {
+        this.space = space;
     }
 
     public TimePeriod getTimePeriod() {
@@ -79,11 +83,11 @@ public class Group {
         this.remarks = remarks;
     }
 
-    public String getFrequency() {
+    public Frequency getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
     }
 

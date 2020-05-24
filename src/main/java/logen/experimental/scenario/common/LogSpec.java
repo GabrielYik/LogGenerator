@@ -1,11 +1,11 @@
-package logen.experimental.scenario;
+package logen.experimental.scenario.common;
 
 public class LogSpec {
     private String description;
     private String type;
     private String subject;
     private String remarks;
-    private String frequency;
+    private Frequency frequency;
 
     public String getDescription() {
         return description;
@@ -46,11 +46,11 @@ public class LogSpec {
         this.remarks = remarks;
     }
 
-    public String getFrequency() {
+    public Frequency getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(String frequency) {
+    public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
     }
 }

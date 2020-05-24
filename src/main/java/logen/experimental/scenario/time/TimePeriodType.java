@@ -1,14 +1,19 @@
-package logen.experimental.generation.fixed;
+package logen.experimental.scenario.time;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import javafx.util.Pair;
 
 import java.time.LocalTime;
 
 public enum TimePeriodType {
+    ANY(null, null),
     CUSTOM(null, null),
-    ONE_HOUR(null, null),
-    ONE_DAY(null, null),
-    AFTER_MIDNIGHT(LocalTime.of(0, 0), LocalTime.of(3, 3));
+    WEEKDAY(null, null),
+    WEEKEND(null, null),
+    @JsonProperty("EVERY DAY") EVERY_DAY(null, null),
+    @JsonProperty("ONE HOUR") ONE_HOUR(null, null),
+    @JsonProperty("ONE DAY") ONE_DAY(null, null),
+    @JsonProperty("AFTER MIDNIGHT") AFTER_MIDNIGHT(LocalTime.of(0, 0), LocalTime.of(3, 3));
 
     private final LocalTime startTime;
     private final LocalTime endTime;
