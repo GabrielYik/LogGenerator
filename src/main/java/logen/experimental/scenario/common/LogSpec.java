@@ -53,4 +53,12 @@ public class LogSpec {
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
     }
+
+    public void decrementFrequency() {
+        frequency.decrement();
+    }
+
+    public boolean isExhausted() {
+        return frequency.getCount() == 0;
+    }
 }

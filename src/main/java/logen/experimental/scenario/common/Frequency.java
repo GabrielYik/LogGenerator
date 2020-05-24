@@ -24,4 +24,8 @@ public class Frequency {
     public void setCount(int count) {
         this.count = count;
     }
+
+    public void decrement() {
+        count--;
+    }
 }

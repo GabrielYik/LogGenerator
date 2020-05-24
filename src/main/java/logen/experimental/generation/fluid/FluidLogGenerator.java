@@ -23,8 +23,16 @@ public class FluidLogGenerator {
     }
 
     public List<Log> generate() {
-        LogSpecPool logSpecPool = new LogSpecPool(scenario.getLogSpecs());
-        Pool<String> subjectPool = new Pool<>(scenario.getSubjects());
+        Pool<LogSpec> logSpecPool = new Pool<>(
+                scenario.getLogSpecs(),
+                LogSpec::decrementFrequency,
+                LogSpec::isExhausted
+        );
+        Pool<String> subjectPool = new Pool<>(
+                scenario.getSubjects(),
+                s -> {},
+                s -> false
+        );
         List<Placeholder> placeholders = fixture.getPlaceholders();
 
         List<Log> fluidLogsForFirstPlaceholder = generateLogsForFirstPlaceholder(
@@ -66,7 +74,11 @@ public class FluidLogGenerator {
         return logs;
     }
 
-    private List<Log> generateLogsForFirstPlaceholder(LogSpecPool logSpecPool, Pool<String> subjectPool, Placeholder placeholder) {
+    private List<Log> generateLogsForFirstPlaceholder(
+            Pool<LogSpec> logSpecPool,
+            Pool<String> subjectPool,
+            Placeholder placeholder
+    ) {
         TimeGenerator timeGenerator = TimeGenerator.back(
                 scenario.getTimePeriod().getStartTime(),
                 placeholder.getTimePeriod().getEndTime()
@@ -79,7 +91,11 @@ public class FluidLogGenerator {
         return fluidLogs;
     }
 
-    private List<Log> generateLogsForLastPlaceholder(LogSpecPool logSpecPool, Pool<String> subjectPool, Placeholder placeholder) {
+    private List<Log> generateLogsForLastPlaceholder(
+            Pool<LogSpec> logSpecPool,
+            Pool<String> subjectPool,
+            Placeholder placeholder
+    ) {
         TimeGenerator timeGenerator = TimeGenerator.forward(
                 placeholder.getTimePeriod().getStartTime(),
                 scenario.getTimePeriod().getEndTime()
@@ -92,7 +108,11 @@ public class FluidLogGenerator {
         return fluidLogs;
     }
 
-    private List<List<Log>> generateLogsForRemainingPlaceholders(LogSpecPool logSpecPool, Pool<String> subjectPool, List<Placeholder> placeholders) {
+    private List<List<Log>> generateLogsForRemainingPlaceholders(
+            Pool<LogSpec> logSpecPool,
+            Pool<String> subjectPool,
+            List<Placeholder> placeholders
+    ) {
         List<List<Log>> fluidLogs = new ArrayList<>();
         for (int i = 1; i < placeholders.size() - 1; i++) {
             Placeholder placeholder = placeholders.get(i);
@@ -116,7 +136,11 @@ public class FluidLogGenerator {
         return fluidLogs;
     }
 
-    private Log generateLog(LogSpecPool logSpecPool, Pool<String> subjectPool, TimeGenerator timeGenerator) {
+    private Log generateLog(
+            Pool<LogSpec> logSpecPool,
+            Pool<String> subjectPool,
+            TimeGenerator timeGenerator
+    ) {
         LocalTime time = timeGenerator.generate();
         LogSpec logSpec = logSpecPool.get();
         String subject = subjectPool.get();
