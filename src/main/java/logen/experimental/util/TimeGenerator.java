@@ -1,8 +1,5 @@
 package logen.experimental.util;
 
-import logen.experimental.scenario.TimePeriod;
-
-import java.sql.Time;
 import java.time.LocalTime;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -34,12 +31,12 @@ public class TimeGenerator {
         return new TimeGenerator(earliestTime, latestTime, approximateRequiredGenerations);
     }
 
-    public static TimeGenerator forward(LocalTime earliestTime) {
-        return new TimeGenerator(earliestTime, null, -1);
+    public static TimeGenerator forward(LocalTime earliestTime, LocalTime wrapAroundTime) {
+        return new TimeGenerator(earliestTime, wrapAroundTime, -1);
     }
 
-    public static TimeGenerator back(LocalTime latestTime) {
-        return new TimeGenerator(null, latestTime, -1);
+    public static TimeGenerator back(LocalTime wrapAroundTime, LocalTime latestTime) {
+        return new TimeGenerator(wrapAroundTime, latestTime, -1);
     }
 
     public LocalTime generate() {
@@ -47,8 +44,16 @@ public class TimeGenerator {
         boolean isBack = earliestTime == null && latestTime != null;
         if (isBack) {
             base = base.minusSeconds(seconds);
+            if (base.isBefore(earliestTime)) {
+                base = latestTime;
+                return generate();
+            }
         } else {
             base = base.plusSeconds(seconds);
+            if (base.isAfter(latestTime)) {
+                base = earliestTime;
+                return generate();
+            }
         }
         return base;
     }
@@ -58,7 +63,6 @@ public class TimeGenerator {
                 .current()
                 .nextLong(origin, bound);
     }
-
 
     public void skip(int generationCount) {
 

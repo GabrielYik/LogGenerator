@@ -1,6 +1,7 @@
 package logen.experimental.generation.fixed;
 
-import logen.experimental.scenario.TimePeriod;
+import logen.experimental.scenario.group.SpaceType;
+import logen.experimental.scenario.time.TimePeriod;
 
 /**
  * A representation of potential logs constrained by a time period and quantity.
@@ -8,12 +9,12 @@ import logen.experimental.scenario.TimePeriod;
 public class Placeholder {
     private final TimePeriod timePeriod;
 
-    private final SpacingType spacingType;
+    private final SpaceType spaceType;
     private final int spacingAmount;
 
-    private Placeholder(TimePeriod timePeriod, SpacingType spacingType, int spacingAmount) {
+    private Placeholder(TimePeriod timePeriod, SpaceType spaceType, int spacingAmount) {
         this.timePeriod = timePeriod;
-        this.spacingType = spacingType;
+        this.spaceType = spaceType;
         this.spacingAmount = spacingAmount;
     }
 
@@ -21,8 +22,8 @@ public class Placeholder {
         return timePeriod;
     }
 
-    public SpacingType getSpacingType() {
-        return spacingType;
+    public SpaceType getSpaceType() {
+        return spaceType;
     }
 
     public int getSpacingAmount() {
@@ -34,8 +35,8 @@ public class Placeholder {
 
         private TimePeriod timePeriod;
 
-        private SpacingType spacingType;
-        private int spacingAmount;
+        private SpaceType spaceType;
+        private int spaceAmount;
 
         public Builder() {
 
@@ -46,27 +47,22 @@ public class Placeholder {
             return this;
         }
 
-        public Builder withSpacing(String spacing) {
-            spacingType = SpacingType.map(spacing);
-            switch(spacingType) {
-                case ANY:
-                    spacingAmount = DEFAULT_LOG_COUNT_FOR_SPACING_TYPE_ANY;
-                    break;
-                case CUSTOM:
-                    spacingAmount = Integer.parseInt(spacing);
-                    break;
-                default:
-                    throw new AssertionError();
-            }
+        public Builder withSpaceType(SpaceType spaceType) {
+            this.spaceType = spaceType;
+            return this;
+        }
+
+        public Builder withSpaceAmount(int amount) {
+            this.spaceAmount = amount;
             return this;
         }
 
         public Placeholder build() {
-            return new Placeholder(timePeriod, spacingType, spacingAmount);
+            return new Placeholder(timePeriod, spaceType, spaceAmount);
         }
 
-        public int getSpacingAmount() {
-            return spacingAmount;
+        public int getSpaceAmount() {
+            return spaceAmount;
         }
     }
 }

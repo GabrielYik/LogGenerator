@@ -1,10 +1,14 @@
 package logen.experimental.generation.fixed;
 
+import javafx.util.Pair;
 import logen.experimental.log.Log;
-import logen.experimental.scenario.LogSpec;
+import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.Scenario;
-import logen.experimental.scenario.Group;
-import logen.experimental.scenario.TimePeriod;
+import logen.experimental.scenario.group.Group;
+import logen.experimental.scenario.group.Space;
+import logen.experimental.scenario.group.SpaceType;
+import logen.experimental.scenario.time.TimePeriod;
+import logen.experimental.scenario.time.TimePeriodType;
 import logen.experimental.util.TimeGenerator;
 
 import java.time.LocalTime;
@@ -28,7 +32,10 @@ public class FixedLogGenerator {
     public Fixture generate() {
         Group group = scenario.getGroups().get(0);
         List<LogSpec> orderedLogSpecs = applyOrder(group.getOrder(), group.getLogSpecs());
-        List<Placeholder.Builder> placeholders = applySpacing(group.getSpacings());
+        List<Placeholder.Builder> placeholders = applySpacing(
+                group.getLogSpecs().size(),
+                group.getSpace()
+        );
         return applyTimePeriod(group.getTimePeriod(), orderedLogSpecs, placeholders);
     }
 
@@ -42,15 +49,36 @@ public class FixedLogGenerator {
         return orderedLogSpecs;
     }
 
-    private List<Placeholder.Builder> applySpacing(List<String> spacings) {
-        List<Placeholder.Builder> placeholders = new ArrayList<>(spacings.size());
-        Placeholder.Builder externalPlaceholder = new Placeholder.Builder().withSpacing("any");
-        placeholders.add(externalPlaceholder);
-        for (String spacing : spacings) {
-            Placeholder.Builder placeholder = new Placeholder.Builder().withSpacing(spacing);
-            placeholders.add(placeholder);
+    private List<Placeholder.Builder> applySpacing(int logCount, Space space) {
+        List<Placeholder.Builder> placeholders = new ArrayList<>(logCount - 1 + EXTERNAL_PLACEHOLDER_COUNT);
+        Placeholder.Builder externalPlaceholder = new Placeholder.Builder()
+                .withSpaceType(SpaceType.ANY)
+                .withSpaceAmount(Space.AMOUNT_ANY);
+        placeholders.add(0, externalPlaceholder);
+        placeholders.add(placeholders.size() - 1, externalPlaceholder);
+
+        switch(space.getType()) {
+            case ANY:
+                for (int i = 1; i < placeholders.size() - 1; i++) {
+                    Placeholder.Builder placeholder = new Placeholder.Builder()
+                            .withSpaceType(SpaceType.ANY)
+                            .withSpaceAmount(Space.AMOUNT_ANY);
+                    placeholders.add(placeholder);
+                }
+                break;
+            case CUSTOM:
+                List<Integer> spaceAmount = space.getAmount();
+                for (int i = 1; i < spaceAmount.size() - 1; i++) {
+                    Placeholder.Builder placeholder = new Placeholder.Builder()
+                            .withSpaceType(SpaceType.CUSTOM)
+                            .withSpaceAmount(spaceAmount.get(i));
+                    placeholders.add(placeholder);
+                }
+                break;
+            default:
+                throw new AssertionError();
         }
-        placeholders.add(externalPlaceholder);
+
         return placeholders;
     }
 
@@ -60,29 +88,57 @@ public class FixedLogGenerator {
             List<Placeholder.Builder> placeholders
     ) {
         int approximateLogCount = computeApproximateLogCount(orderedLogSpecs.size(), placeholders);
-        TimeGenerator timeGenerator = TimeGenerator.bounded(
-                timePeriod.getStartTime(),
-                timePeriod.getEndTime(),
-                approximateLogCount
-        );
+
+        TimeGenerator timeGenerator;
+        switch(timePeriod.getType()) {
+            case ANY:
+                break;
+            case CUSTOM:
+                timeGenerator = TimeGenerator.bounded(
+                        timePeriod.getStartTime(),
+                        timePeriod.getEndTime(),
+                        approximateLogCount
+                );
+                break;
+            case ONE_HOUR:
+                break;
+            case ONE_DAY:
+                timeGenerator = TimeGenerator.bounded(
+                        scenario.getTimePeriod().getStartTime(),
+                        scenario.getTimePeriod().getEndTime(),
+                        approximateLogCount
+                );
+                break;
+            case AFTER_MIDNIGHT:
+                Pair<LocalTime, LocalTime> startAndEndTime = TimePeriodType.map(TimePeriodType.AFTER_MIDNIGHT);
+                timeGenerator = TimeGenerator.bounded(
+                        startAndEndTime.getKey(),
+                        startAndEndTime.getValue(),
+                        approximateLogCount
+                );
+                break;
+            default:
+                throw new AssertionError();
+        }
+
         List<Log> fixedLogs = new ArrayList<>();
         int counter = orderedLogSpecs.size() + placeholders.size();
         int logSpecsCounter = 0;
         int placeholdersCounter = 0;
         for (int i = 0; i < counter; i++) {
-            if (i % 2 != 0) {
+            if (i % 2 == 0) {
+                Placeholder.Builder placeholder = placeholders.get(placeholdersCounter);
+                LocalTime startTime = timeGenerator.generate();
+                timeGenerator.skip(placeholder.getSpaceAmount() - 2);
+                LocalTime endTime = timeGenerator.generate();
+                placeholder.withTimePeriod(new TimePeriod(startTime, endTime));
+                placeholdersCounter++;
+            } else {
                 LocalTime time = timeGenerator.generate();
                 LogSpec logSpec = orderedLogSpecs.get(logSpecsCounter);
                 Log fixedLog = new Log(time, logSpec);
                 fixedLogs.add(fixedLog);
                 logSpecsCounter++;
-            } else {
-                Placeholder.Builder placeholder = placeholders.get(placeholdersCounter);
-                LocalTime startTime = timeGenerator.generate();
-                timeGenerator.skip(placeholder.getSpacingAmount() - 2);
-                LocalTime endTime = timeGenerator.generate();
-                placeholder.withTimePeriod(new TimePeriod(startTime, endTime));
-                placeholdersCounter++;
             }
         }
         return new Fixture(
@@ -92,6 +148,6 @@ public class FixedLogGenerator {
     }
 
     private int computeApproximateLogCount(int orderedLogSpecCount, List<Placeholder.Builder> placeholders) {
-        return orderedLogSpecCount + placeholders.stream().mapToInt(Placeholder.Builder::getSpacingAmount).sum();
+        return orderedLogSpecCount + placeholders.stream().mapToInt(Placeholder.Builder::getSpaceAmount).sum();
     }
 }
