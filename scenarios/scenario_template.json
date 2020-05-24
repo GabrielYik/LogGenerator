@@ -1,0 +1,63 @@
+{
+  "logCount": 0,
+  "headers": [],
+  "timePeriod": {
+    "type": "WEEKDAY",
+    "startTime": "",
+    "endTime": "",
+    "specifics": [
+      {
+        "day": "",
+        "startTime": "",
+        "endTime": ""
+      }
+    ]
+  },
+  "subjects": [
+
+  ],
+  "groups": [
+    {
+      "identifier": "",
+      "order": [],
+      "space": {
+        "type": "",
+        "amount": []
+      },
+      "timePeriod": {
+        "type": "CUSTOM",
+        "startTime": "",
+        "endTime": ""
+      },
+      "description": "",
+      "type": "",
+      "subject": "",
+      "remarks": "",
+      "frequency": "ONCE",
+      "logSpecs": [
+        {
+          "description": "",
+          "type": "",
+          "subject": "",
+          "remarks": "",
+          "frequency": {
+            "type": "ANY",
+            "count": 0
+          }
+        }
+      ]
+    }
+  ],
+  "logSpecs": [
+    {
+      "description": "",
+      "type": "",
+      "subject": "",
+      "remarks": "",
+      "frequency": {
+        "type": "",
+        "count": 0
+      }
+    }
+  ]
+}
