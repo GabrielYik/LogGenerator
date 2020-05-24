@@ -1,6 +1,6 @@
 package logen.experimental.generation.fluid;
 
-import logen.experimental.scenario.LogSpec;
+import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.util.RandomChooser;
 
 import java.util.List;

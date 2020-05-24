@@ -1,5 +1,9 @@
 package logen.experimental.scenario;
 
+import logen.experimental.scenario.common.LogSpec;
+import logen.experimental.scenario.group.Group;
+import logen.experimental.scenario.time.TimePeriod;
+
 import java.util.List;
 
 public class Scenario {
