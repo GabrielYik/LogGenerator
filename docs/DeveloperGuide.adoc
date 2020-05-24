@@ -232,7 +232,7 @@ each other can take
 [cols="2, 5, 5a"]
 .Local Scenario Attributes
 |===
-|Attribute |Description
+|Attribute |Description |Settings
 
 |Description
 |The value of the description attribute of the log.
@@ -265,13 +265,6 @@ each other can take
 ** ANY, CUSTOM
 * count
 ** Any positive integer
-
-Settings:
-
-* Type
-** ANY, CUSTOM
-* Count
-** Any non-negative integer
 |===
 
 == Basic Configuration
