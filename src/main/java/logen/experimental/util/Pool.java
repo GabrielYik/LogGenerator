@@ -13,7 +13,7 @@ public class Pool<E> {
             List<E> entities,
             Consumer<E> removalAction,
             Predicate<E> removalCondition
-            ) {
+    ) {
         this.entities = entities;
         this.removalAction = removalAction;
         this.removalCondition = removalCondition;
