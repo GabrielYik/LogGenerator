@@ -1,14 +1,13 @@
 package logen.experimental.generation.fixed;
 
-import javafx.util.Pair;
 import logen.experimental.log.Log;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.Scenario;
 import logen.experimental.scenario.group.Group;
+import logen.experimental.scenario.group.Order;
 import logen.experimental.scenario.group.Space;
 import logen.experimental.scenario.group.SpaceType;
 import logen.experimental.scenario.time.TimePeriod;
-import logen.experimental.scenario.time.TimePeriodType;
 import logen.experimental.util.TimeGenerator;
 
 import java.time.LocalTime;
@@ -39,10 +38,11 @@ public class FixedLogGenerator {
         return applyTimePeriod(group.getTimePeriod(), orderedLogSpecs, placeholders);
     }
 
-    private List<LogSpec> applyOrder(List<Integer> order, List<LogSpec> logSpecs) {
+    private List<LogSpec> applyOrder(Order order, List<LogSpec> logSpecs) {
         List<LogSpec> orderedLogSpecs = new ArrayList<>(logSpecs.size());
-        for (int i = 0; i < order.size(); i++) {
-            int index = order.get(i) - 1;
+        List<Integer> sequence = order.getSequence();
+        for (int i = 0; i < sequence.size(); i++) {
+            int index = sequence.get(i) - 1;
             LogSpec logSpec = logSpecs.get(i);
             orderedLogSpecs.add(index, logSpec);
         }
@@ -88,38 +88,11 @@ public class FixedLogGenerator {
             List<Placeholder.Builder> placeholders
     ) {
         int approximateLogCount = computeApproximateLogCount(orderedLogSpecs.size(), placeholders);
-
-        TimeGenerator timeGenerator;
-        switch(timePeriod.getType()) {
-            case ANY:
-                break;
-            case CUSTOM:
-                timeGenerator = TimeGenerator.bounded(
-                        timePeriod.getStartTime(),
-                        timePeriod.getEndTime(),
-                        approximateLogCount
-                );
-                break;
-            case ONE_HOUR:
-                break;
-            case ONE_DAY:
-                timeGenerator = TimeGenerator.bounded(
-                        scenario.getTimePeriod().getStartTime(),
-                        scenario.getTimePeriod().getEndTime(),
-                        approximateLogCount
-                );
-                break;
-            case AFTER_MIDNIGHT:
-                Pair<LocalTime, LocalTime> startAndEndTime = TimePeriodType.map(TimePeriodType.AFTER_MIDNIGHT);
-                timeGenerator = TimeGenerator.bounded(
-                        startAndEndTime.getKey(),
-                        startAndEndTime.getValue(),
-                        approximateLogCount
-                );
-                break;
-            default:
-                throw new AssertionError();
-        }
+        TimeGenerator timeGenerator = TimeGenerator.bounded(
+                timePeriod.getStartTime(),
+                timePeriod.getEndTime(),
+                approximateLogCount
+        );
 
         List<Log> fixedLogs = new ArrayList<>();
         int counter = orderedLogSpecs.size() + placeholders.size();

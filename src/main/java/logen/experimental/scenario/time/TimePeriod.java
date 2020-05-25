@@ -13,12 +13,6 @@ public class TimePeriod {
 
     }
 
-    public TimePeriod(TimePeriodType type) {
-        this.type = type;
-        startTime = null;
-        endTime = null;
-    }
-
     public TimePeriod(LocalTime startTime, LocalTime endTime) {
         type = TimePeriodType.CUSTOM;
         this.startTime = startTime;
@@ -46,6 +40,11 @@ public class TimePeriod {
     }
 
     public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setStartEndTime(LocalTime startTime, LocalTime endTime) {
+        this.startTime = startTime;
         this.endTime = endTime;
     }
 

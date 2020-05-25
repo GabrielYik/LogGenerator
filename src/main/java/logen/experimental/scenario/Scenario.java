@@ -16,8 +16,15 @@ public class Scenario {
 
     private List<LogSpec> logSpecs;
 
+    //TODO
     public void validate() {
 
+    }
+
+    //TODO preprocess time period
+    public void preprocess() {
+        groups.forEach(group -> group.preprocess(timePeriod));
+        logSpecs.forEach(LogSpec::preprocess);
     }
 
     public int getLogCount() {

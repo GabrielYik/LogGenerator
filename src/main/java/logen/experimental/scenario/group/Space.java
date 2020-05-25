@@ -1,6 +1,5 @@
 package logen.experimental.scenario.group;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Space {

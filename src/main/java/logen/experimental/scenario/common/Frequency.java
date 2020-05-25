@@ -28,4 +28,8 @@ public class Frequency {
     public void decrement() {
         count--;
     }
+
+    public boolean isExhausted() {
+        return count == 0;
+    }
 }

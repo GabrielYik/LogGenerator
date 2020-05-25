@@ -1,14 +1,20 @@
 package logen.experimental.scenario.group;
 
+import javafx.util.Pair;
 import logen.experimental.scenario.common.Frequency;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.time.TimePeriod;
+import logen.experimental.scenario.time.TimePeriodType;
+import logen.experimental.util.RandomChooser;
 
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Group {
     private String identifier;
-    private List<Integer> order;
+    private Order order;
     private Space space;
     private TimePeriod timePeriod;
     private String description;
@@ -19,6 +25,95 @@ public class Group {
 
     private List<LogSpec> logSpecs;
 
+    public void preprocess(TimePeriod globalTimePeriod) {
+        preprocessOrder();
+        preprocessTimePeriod(globalTimePeriod);
+        preprocessLogSpecs();
+    }
+
+    private void preprocessOrder() {
+        switch(order.getType()) {
+            case ANY:
+                List<Integer> sequence = new ArrayList<>(logSpecs.size());
+                int counter = 1;
+                for (int i = 0; i < logSpecs.size(); i++) {
+                    sequence.add(counter++);
+                }
+                Collections.shuffle(sequence);
+                order.setSequence(sequence);
+                break;
+            case CUSTOM:
+                // do nothing
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }
+
+    private void preprocessTimePeriod(TimePeriod globalTimePeriod) {
+        LocalTime startTime;
+        LocalTime endTime;
+        switch(timePeriod.getType()) {
+            case ANY:
+                startTime = RandomChooser.chooseBetween(
+                        globalTimePeriod.getStartTime(),
+                        globalTimePeriod.getEndTime().minusHours(2)
+                );
+                endTime = startTime.plusHours(2);
+                timePeriod.setStartEndTime(startTime, endTime);
+                break;
+            case CUSTOM:
+                // do nothing
+                break;
+            case ONE_HOUR:
+                startTime = RandomChooser.chooseBetween(
+                        globalTimePeriod.getStartTime(),
+                        globalTimePeriod.getEndTime().minusHours(1)
+                );
+                endTime = startTime.plusHours(1);
+                timePeriod.setStartEndTime(startTime, endTime);
+                break;
+            case ONE_DAY:
+                startTime = globalTimePeriod.getStartTime();
+                endTime = globalTimePeriod.getEndTime();
+                timePeriod.setStartEndTime(startTime, endTime);
+                break;
+            case AFTER_MIDNIGHT:
+                Pair<LocalTime, LocalTime> startEndTime = TimePeriodType.map(TimePeriodType.AFTER_MIDNIGHT);
+                startTime = startEndTime.getKey();
+                endTime = startEndTime.getValue();
+                timePeriod.setStartEndTime(startTime, endTime);
+                break;
+            default:
+                throw new AssertionError();
+        }
+    }
+
+    private void preprocessLogSpecs() {
+        logSpecs.forEach(LogSpec::preprocess);
+        overrideLocalAttributes();
+    }
+
+    private void overrideLocalAttributes() {
+        for (LogSpec logSpec : logSpecs) {
+            if (description != null) {
+                logSpec.setDescriptionIfAbsent(description);
+            }
+            if (type != null) {
+                logSpec.setTypeIfAbsent(type);
+            }
+            if (subject != null) {
+                logSpec.setSubjectIfAbsent(subject);
+            }
+            if (remarks != null) {
+                logSpec.setRemarksIfAbsent(remarks);
+            }
+            if (frequency != null) {
+                logSpec.setFrequencyIfAbsent(frequency);
+            }
+        }
+    }
+
     public String getIdentifier() {
         return identifier;
     }
@@ -27,11 +122,11 @@ public class Group {
         this.identifier = identifier;
     }
 
-    public List<Integer> getOrder() {
+    public Order getOrder() {
         return order;
     }
 
-    public void setOrder(List<Integer> order) {
+    public void setOrder(Order order) {
         this.order = order;
     }
 
