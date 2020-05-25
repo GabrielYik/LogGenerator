@@ -71,23 +71,24 @@ This separation of scope allows for the fine-grained configuration of the scenar
 |Time Period
 |The range of values the time attribute of a log in the log sheet can take.
 |
-* type
-** One of the following: WEEKDAY, WEEKEND, EVERY DAY
-* startTime
-** A time between 00:00:00 and 23:59:59
-** The start time must be before the end time
-* endTime
-** A time between 00:00:00 and 23:59:59
-** The end time must be after the start time
-* specifics
-** day
-*** One of the following: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+* timePeriod
+** type
+*** One of the following: WEEKDAY, WEEKEND, EVERY DAY
 ** startTime
 *** A time between 00:00:00 and 23:59:59
 *** The start time must be before the end time
 ** endTime
 *** A time between 00:00:00 and 23:59:59
 *** The end time must be after the start time
+** specifics
+*** day
+**** One of the following: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+*** startTime
+**** A time between 00:00:00 and 23:59:59
+**** The start time must be before the end time
+*** endTime
+**** A time between 00:00:00 and 23:59:59
+**** The end time must be after the start time
 
 |Subjects
 |The range of values the subject attribute of a log in the log sheet can take.
@@ -113,25 +114,29 @@ This separation of scope allows for the fine-grained configuration of the scenar
 in the log sheet
 |
 * order
-** An array of positive integers, with each integer specifying the position of the
+** type
+*** One of the following: ANY, CUSTOM
+** sequence
+*** An array of positive integers, with each integer specifying the position of the
 corresponding log specification
-** There must be the same number of values as logs in the group
-** E.g. in a group of 4 logs, [1, 2, 3, 4] means that the first log will be placed
+*** There must be the same number of values as logs in the group
+*** E.g. in a group of 4 logs, [1, 2, 3, 4] means that the first log will be placed
 first, the second log second, and so forth
-** E.g. in a group of 4 logs, [3, 2, 1, 4] means that the first log will be placed
+*** E.g. in a group of 4 logs, [3, 2, 1, 4] means that the first log will be placed
 third, the second log second, the third log first and the fourth log fourth.
 
 |Space
 |The number of logs between two specified logs in the group.
 |
-* type
-** ANY, CUSTOM
-* amount
-** An array of non-negative integers
-** There must be one less integer than logs in the group
-** E.g. in a group of 4 logs, [0, 0, 0] means that there are 0 logs between the first
+* space
+** type
+*** ANY, CUSTOM
+** amount
+*** An array of non-negative integers
+*** There must be one less integer than logs in the group
+*** E.g. in a group of 4 logs, [0, 0, 0] means that there are 0 logs between the first
 and second log, 0 logs between the second and third log, and so on.
-** E.g. in a group of 4 logs, [1, 2, 0] means that there is 1 log between the first and
+*** E.g. in a group of 4 logs, [1, 2, 0] means that there is 1 log between the first and
 second log, 2 logs between the second and third log, and 0 logs between the third and
 fourth log
 
@@ -139,14 +144,15 @@ fourth log
 |The constraint on the value the time attribute of a log in the group in relation to
 each other can take
 |
-* type
-** ANY, CUSTOM, ONE HOUR, ONE DAY, AFTER MIDNIGHT
-* startTime
-** A time between 00:00:00 and 23:59:59
-** The start time must be before the end time
-* endTime
-** A time between 00:00:00 and 23:59:59
-** The end time must be after the start time
+* timePeriod
+** type
+*** ANY, CUSTOM, ONE HOUR, ONE DAY, AFTER MIDNIGHT
+** startTime
+*** A time between 00:00:00 and 23:59:59
+*** The start time must be before the end time
+** endTime
+*** A time between 00:00:00 and 23:59:59
+*** The end time must be after the start time
 
 |Description
 |The value of the description attribute of all logs in the group.
@@ -175,10 +181,11 @@ each other can take
 |Frequency
 |The frequency in which all the logs in the group appear in the log sheet.
 |
-* type
-** ANY, CUSTOM
-* count
-** Any positive integer
+* frequency
+** type
+*** ANY, CUSTOM
+** count
+*** Any positive integer
 |===
 
 ==== Local
@@ -237,7 +244,7 @@ As such, `{appName}` does not aim to completely capture the characteristics of a
 exploit, but through the various configurable scenario attributes, provide enough
 power to exploit designers to design an exploit representable in logs.
 
-== Logs
+== Log
 * A record which captures an action acting on a software system.
 * Has attributes such as the time and description of the action captured.
 * A set of logs is a log sheet.
@@ -375,4 +382,4 @@ generation of both types of logs.
 
 ==== Conclusion
 The approach of generating fixed logs before filler logs is the best given its
-satisfaction of both criteria.
+satisfaction of both criterion.
