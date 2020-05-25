@@ -1,4 +1,4 @@
-package logen.experimental.generation.fluid;
+package logen.experimental.generation.filler;
 
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.util.RandomChooser;

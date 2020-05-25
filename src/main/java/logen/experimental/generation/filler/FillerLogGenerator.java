@@ -1,4 +1,4 @@
-package logen.experimental.generation.fluid;
+package logen.experimental.generation.filler;
 
 import logen.experimental.generation.fixed.Fixture;
 import logen.experimental.generation.fixed.Placeholder;
@@ -13,11 +13,11 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FluidLogGenerator {
+public class FillerLogGenerator {
     private final Scenario scenario;
     private final Fixture fixture;
 
-    public FluidLogGenerator(Scenario scenario, Fixture fixture) {
+    public FillerLogGenerator(Scenario scenario, Fixture fixture) {
         this.scenario = scenario;
         this.fixture = fixture;
     }

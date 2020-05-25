@@ -2,7 +2,7 @@ package logen.experimental.generation;
 
 import logen.experimental.generation.fixed.FixedLogGenerator;
 import logen.experimental.generation.fixed.Fixture;
-import logen.experimental.generation.fluid.FluidLogGenerator;
+import logen.experimental.generation.filler.FillerLogGenerator;
 import logen.experimental.log.Log;
 import logen.experimental.scenario.Scenario;
 
@@ -17,7 +17,6 @@ public class LogGenerator {
 
     public List<Log> generate() {
         Fixture fixture = new FixedLogGenerator(scenario).generate();
-        return new FluidLogGenerator(scenario, fixture).generate();
+        return new FillerLogGenerator(scenario, fixture).generate();
     }
-
 }
