@@ -1,82 +1,35 @@
 :appName: LogGenerator
 
-= `{appName}` - Developer Guide
-:toc: left
+= LogGenerator - Developer Guide
+:toc:
+:toclevels: 3
 :sectnums:
+:sectnumlevels: 3
 
 == Introduction
 This guide details the specification, development and implementation of `{appName}`.
 
 == Motivation
 A project required that security logs be created for examination purposes, namely to
-test if an individual is able to shift through logs to spot security anomalies or
-vulnerabilities.
+test if an individual is able to shift through logs to spot exploits.
 The initial intention was to create these logs manually.
 However, this approach is tedious and potentially error-prone.
 
 As such, a decision was made to automate the generation of logs.
-The benefits were clear: any number of logs can be generated easily, characteristics of
-the logs generated can be specified, and changes made to specific logs can be propagated
-consistently throughout if required.
+The benefits were clear:
+
+* Many logs can be generated easily
+* Characteristics of the logs generated can be specified
+* Changes made to the characteristics of specific types of logs can be propagated
+consistently throughout if required
+
 The application developed to automate the generation of logs is aptly named `{appName}`.
 
-== Basics
+== Scenario
+* A series of actions acting on a software system.
+* The attributes of a scenario are configurable through a configuration file.
 
-A log sheet is a set of logs that captures the actions of a scenario.
-A log sheet has a set of headers with corresponding columns underneath.
-Each column represents a specific attribute of a log.
-A log has attributes such as its time and description.
-
-A scenario consists of a series of actions acting on a software system.
-Some of these actions constitute an exploit.
-
-With the above definitions, a log sheet consists of two types of logs: exploit and
-noise.
-Exploit logs represent the actions in an exploit while noise logs represent everything
-else.
-Noise logs serve to hide the exploit logs, and also makes the scenario more realistic.
-
-The attributes of the actions in a scenario are configurable through a configuration
-file.
-There are three types of attributes: global, group and local.
-
-In the next two sections, we detail the structure of a log, and the attributes of a
-scenario.
-
-== Log Structure
-[cols="2, 5"]
-.Log Structure
-|===
-|Attribute |Description
-
-|Time
-|The creation time of the log.
-
-|Description
-|The action captured by the log.
-
-Some examples include the login of a user and the deletion of a file.
-
-|Type
-|The category of the log.
-
-Some examples include access control and file retrieval.
-
-|Subject
-|The subject of the log.
-
-This refers to an entity like a human user or computer user.
-If no subject is specified, one of the subjects specified in the global subjects
-attribute is used.
-
-|Remarks
-|Any additional information about the log.
-
-Some examples include whether the action taken was successful and the amount of memory
-allocated to a process.
-|===
-
-== Scenario Attributes
+=== Attributes
 There are three types of scenario attributes.
 
 [cols="2, 5"]
@@ -96,7 +49,7 @@ There are three types of scenario attributes.
 
 This separation of scope allows for the fine-grained configuration of the scenario.
 
-=== Global
+==== Global
 [cols="2, 5, 5a"]
 .Global Scenario Attributes
 |===
@@ -143,7 +96,7 @@ This separation of scope allows for the fine-grained configuration of the scenar
 ** An array of non-empty strings, with each string representing a subject
 |===
 
-=== Group
+==== Group
 [cols="2, 5, 5a"]
 .Group Scenario Attributes
 |===
@@ -228,7 +181,7 @@ each other can take
 ** Any positive integer
 |===
 
-=== Local
+==== Local
 [cols="2, 5, 5a"]
 .Local Scenario Attributes
 |===
@@ -267,77 +220,113 @@ each other can take
 ** Any positive integer
 |===
 
-== Basic Configuration
+=== Exploits
+* An exploit is a subset of a scenario.
+* An exploit occurs due to a perpetrator, or a group of perpetrators that took advantage
+of security anomalies or vulnerabilities in a software system.
 
+==== Design
+There is no formula to designing an exploit.
 
-== Advanced Configuration
-An exploit does not show up in logs with a single definite pattern, and its
-characteristics expressed depends on what the scenario designer.
-As such, to provide scenario designers with the ability to specify as large a range of
-different kinds of exploits through logs, all the attributes related to a scenario
-are exposed through a configuration file.
+In reality, exploits can range from relatively simple operations like taking advantage
+of a lack of restrictions in accessing a company's admin system to more complex
+operations like taking advantage of assumptions and lack of coordination taken by
+various entities in implementing an e-commerce system.
 
-There are however three attributes that would most likely be more useful in designing
-more complex exploits: order, space and time period.
-These attributes are present at the group level.
+As such, `{appName}` does not aim to completely capture the characteristics of an
+exploit, but through the various configurable scenario attributes, provide enough
+power to exploit designers to design an exploit representable in logs.
 
-=== Order
-The order attribute allows an exploit to proceed linearly, and allows relationships
-between exploit logs to be expressed more explicitly.
-For example, given two logs, the first capturing a user login and the second capturing a
-file request by that user, the placement of the first log before the second shows that
-the occurrence of the first log leads to the occurrence of the second.
-However, if a specific order is specified, the frequency attribute has to be ONCE since
-an order imposed on logs cannot be fulfilled if the logs can occur any number of times.
-Likewise, if the frequency attribute does not have the value of ONCE, the order
-attribute cannot be specified for the aforementioned reason.
+== Logs
+* A record which captures an action acting on a software system.
+* Has attributes such as the time and description of the action captured.
+* A set of logs is a log sheet.
+* A log sheet has a set of headers where each header represents an attribute of the log.
 
-=== Space
-The space attribute allows an exploit to appear more precisely executed by suggesting
-that some thought was given by the exploit perpetrator as to when consecutive actions
-should be done.
-For example, given two logs, both capturing failed user logins, the occurrence of first
-log a number of logs away from the second log suggests that the perpetrator could be
-trying to avoid arousing suspicion.
-However, if a specified space is specified, the frequency attribute has to be ONCE
-since space imposed between two logs is only defined on logs occurring only once, and
-the order attribute has to be specified since space is imposed between two logs in
-that particular order.
-If frequency other than ONCE is specified and order is not specified, space cannot be
-specified for the aforementioned reason.
+=== Structure
+[cols="2, 5"]
+.Log Structure
+|===
+|Attribute |Description
 
-=== Time Period
-The time period attribute allows an exploit to appear more preciously executed by
-suggesting that some thought was given by the exploit perpetrator as to when actions
-should take place. For example, given a set of logs, all capturing failed user logins,
-the occurrence of this set of logs after midnight suggests that the perpetrator could be
-attempting to brute force a secure system.
+|Time
+|The creation time of the log.
 
-Logs that have their order, space and time period attributes specified are referred to
-as fixed logs.
-This is because these logs have relationships defined on them and others, which results
-in them being placed in specific areas in the log sheet.
+|Description
+|The action captured by the log.
 
-On the other hand, logs that do not have their order, space and time period attributes
-specified are referred to as fluid logs.
-This is because these logs can be placed anywhere in the log sheet.
+Some examples include the login of a user and the deletion of a file.
 
-[NOTE]
-Fixed logs are not exploit logs.
-Fluid logs are not noise logs.
-A log being fixed or fluid is a physical quality, while a log being exploit or noise is
-based on the intention of the scenario designer.
+|Type
+|The category of the log.
 
-== Characteristics of a Good Log Sheet
-* Follows the scenario configuration file as closely as possible
-* Random generated noise logs
-* Given different instances of the same scenario configuration file and exploit logs
-with no time constraints, the instances have different placement of exploit logs
-* There must be some number of noise logs before the first exploit log, and some number
-of noise logs after the last exploit log. This is to make it more difficult for the
-exploit logs to be spotted
+Some examples include access control and file retrieval.
 
-== Approach
+|Subject
+|The subject of the log.
+
+This refers to an entity like a human user or computer user.
+If no subject is specified, one of the subjects specified in the global subjects
+attribute is used.
+
+|Remarks
+|Any additional information about the log.
+
+Some examples include whether the action taken was successful and the amount of memory
+allocated to a process.
+|===
+
+=== Types
+There are different types of logs.
+Conceptually, they can be categorised a one way.
+However, this categorisation does not carry well into implementation, and another
+categorisation is used instead.
+In both cases, there are no differences in structure of the logs.
+
+==== Exploit and Non-exploit
+Conceptually, there are two types of logs: exploit and non-exploit.
+
+Exploit logs capture the actions of an exploit in a scenario.
+Observing what exploit logs are present serve to help the observing party understand
+what kind of exploit is captured in the scenario, and how the exploit is conducted.
+
+Non-exploit logs represent the other actions in a scenario.
+Non-exploit logs serve to make the scenario more realistic and make the exploit logs
+more difficult to find.
+
+===== Relationship to Scenario Attributes
+Exploit and non-exploit logs have no scenario attributes that make them what they are.
+What makes an exploit log exploit, and a non-exploit log non-exploit is the intention of
+the exploit designer.
+
+==== Fixed and Filler
+For implementation, there are two types of logs: fixed and filler.
+
+Imagine a log sheet as a long horizontal line.
+
+Fixed logs are logs have regions or positions on the line assigned to them.
+This is due to constraints imposed on these logs.
+The possible constraints are the order, space and time period scenario group attributes.
+Hence, fixed logs are logs that are defined in groups and have the aforementioned
+attributes specified.
+
+Now, imagine a log sheet with the fixed logs in place. There are still gaps in between
+these fixed logs. This is where filler logs come in.
+
+Filler logs are the opposite of fixed logs in that they can be placed anywhere on the
+line.
+Filler logs fill the spaces which are left by fixed logs.
+
+===== Relationship to Scenario Attributes
+Fixed logs are defined by the configuration of any of the following scenario group
+attributes: order, space, time period and to a certain extent, frequency.
+On their own, the attributes order, space and time period make the logs fixed.
+However, the configuration of frequency on its own does make a log fixed; it has to be
+configured with any of the aforementioned attributes.
+
+== Architecture
+
+=== Approach
 Among all the scenario attributes, only the time period group attribute is difficult to
 implement. As such, the ease of implementation of this attribute must be considered in
 deciding the best approach to development.
