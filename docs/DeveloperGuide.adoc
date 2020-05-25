@@ -327,127 +327,52 @@ configured with any of the aforementioned attributes.
 == Architecture
 
 === Approach
-Among all the scenario attributes, only the time period group attribute is difficult to
-implement. As such, the ease of implementation of this attribute must be considered in
-deciding the best approach to development.
 
-Since there are two types of logs: exploit and noise, development could be done in three
-approaches:
+==== Problem
+Given that at the implementation level, there are two types of logs: fixed and filler,
+we can base the architecture on the generation of these two types of logs.
+However, a choice has to be made on the order of generation.
 
-. Exploit then noise
-. Noise then exploit
-. Exploit and noise together
+==== Solutions
+There are three approaches:
 
-To decide between these three approaches, three criterions are considered:
+. Generate fixed logs before filler logs
+. Generate filler logs before fixed logs
+. Generate fixed and filler logs together
 
-* Complexity of implementation
-* Cohesiveness
-* Adherence to scenario
+==== Criteria
+To decide between the three approaches, we consider three criterions:
 
-=== Exploit then Noise
-
-==== Overview
-Exploit logs are generated before exploit logs.
-
-==== Implementation
-Exploit logs are generated first. There are three constraints on exploit logs to
-consider: order, space and time.
-
-Order is the simplest to resolve. If there is only a single group, the logs are ordered
-as specified. If there is more than one group, the ordering between two logs from two
-different groups is not specified and hence can be in any order. If there are no groups,
-no ordering is needed.
-
-Space is resolved by putting placeholders between the logs. These placeholders would
-contain details about how many logs are needed between the two logs.
-
-Time is not entirely straightforward to resolve. If there are specific time constraints
-on the group like 1AM to 5AM, these are applied to the time values of the logs. Then,
-we insert placeholders before the first and after the last exploit log. These
-placeholders detail how many logs are needed in those areas.
-
-Now it's time to generate the noise logs. Currently, we have our exploit logs with their
-constraints resolved, and with placeholders between and around them as required. The
-generation of the noise logs need only follow the details of the placeholders. For the
-first placeholder (before the first exploit log), the time values of the noise logs have
-to be generated backwards to ensure that the timings are consistent.
+* Ease of understanding
+* Ease of implementation
 
 ==== Evaluation
+[cols="2, 5a, 5, 5a"]
+.Comparisons
 |===
-|Criterion |Evaluation
+|Criterion |Fixed then Filler |Filler then Fixed |Fixed and Filler
 
-|Complexity of implementation
-|Flow of control linear from generating fixed logs to fluid logs.
+|Ease of understanding
+|Good
+|Good
+|Could be confusing
 
-|Cohesiveness
-|Separation of concerns between generating fixed logs and fluid logs.
+With both fixed and filler logs being generated at the same time, there is a need to
+coordinate the respective generations.
 
-|Adherence to scenario
-|Exact.
-|===
+|Ease of implementation
+|Good
+|Could be complicated
 
-=== Noise then Exploit
+Fixed logs being generated after filler logs would not fit their namings.
+Nonetheless, it could be done.
+There could be gaps placed between filler logs for the fixed logs to be inserted into.
+|Could be complicated
 
-==== Overview
-Noise logs are generated before exploit logs.
-
-==== Implementation
-However, the
-time values of the noise logs cannot be generated before injection of exploit logs since
-the injection of exploit logs would require changes in the time values of surrounding
-noise logs to maintain realistic time values throughout. Furthermore, if exploit logs
-are constrained by a time constraint, the noise logs would most likely require a rework
-of their time values.
-
-Instead, we could generate the noise logs without time values, then inject the exploit
-logs with time values, then set the time values of the noise logs from there. If say
-the first exploit log has a time value of 1am, then the previous noise log would be
-around 5pm (assuming 5pm is the end time for all logs). If the first exploit log has a
-time value of 2pm (within the start and end time for all logs), the previous noise log
-would be an amount of time before that.
-
-We could also generate noise logs to fill the entire log sheet, with time values, and
-replace individual noise logs where required with exploit logs. However, this might lead
-to a situation with more logs than is specified since some exploit logs may have time
-constraints that specify that their time values should be outside of the time set
-globally.
-
-==== Evaluation
-|===
-|Criterion |Evaluation
-
-|Complexity of implementation
-|Flow of control almost linear from fixed logs to fluid to fixed
-
-|Cohesiveness
-|Some criss-crossing of control
-
-|Adherence to scenario
-|Might not when injecting fixed logs into the log sheet
+Like the point made on ease of understanding, there has to be coordination between the
+generation of both types of logs.
 |===
 
-=== Noise and Exploit
-
-==== Overview
-Noise and exploit logs are generated together.
-
-==== Implementation
-Some noise logs will be generated
-first, but when it comes to a time when exploit logs have to be generated, noise log
-generation will stop and transfer control to exploit log generation.
-
-This requires checks for every log generation and is inefficient.
-
-==== Evaluation
-|===
-|Criterion |Evaluation
-
-|Complexity of implementation
-|Flow of control criss crosses here and there
-
-|Cohesiveness
-|
-
-|Adherence to scenario
-|Exact
-|===
+==== Conclusion
+The approach of generating fixed logs before filler logs is the best given its
+satisfaction of both criteria.
