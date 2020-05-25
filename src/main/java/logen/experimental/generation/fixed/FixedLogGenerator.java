@@ -52,8 +52,7 @@ public class FixedLogGenerator {
     private List<Placeholder.Builder> applySpacing(int logCount, Space space) {
         List<Placeholder.Builder> placeholders = new ArrayList<>(logCount - 1 + EXTERNAL_PLACEHOLDER_COUNT);
         Placeholder.Builder externalPlaceholder = new Placeholder.Builder()
-                .withSpaceType(SpaceType.ANY)
-                .withSpaceAmount(Space.AMOUNT_ANY);
+                .withSpaceType(SpaceType.ANY);
         placeholders.add(0, externalPlaceholder);
         placeholders.add(placeholders.size() - 1, externalPlaceholder);
 
@@ -61,8 +60,7 @@ public class FixedLogGenerator {
             case ANY:
                 for (int i = 1; i < placeholders.size() - 1; i++) {
                     Placeholder.Builder placeholder = new Placeholder.Builder()
-                            .withSpaceType(SpaceType.ANY)
-                            .withSpaceAmount(Space.AMOUNT_ANY);
+                            .withSpaceType(SpaceType.ANY);
                     placeholders.add(placeholder);
                 }
                 break;

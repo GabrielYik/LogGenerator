@@ -3,8 +3,6 @@ package logen.experimental.scenario.group;
 import java.util.List;
 
 public class Space {
-    public static final int AMOUNT_ANY = -1;
-
     private SpaceType type;
     private List<Integer> amount;
 

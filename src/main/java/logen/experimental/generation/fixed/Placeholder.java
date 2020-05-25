@@ -30,6 +30,8 @@ public class Placeholder {
         return spacingAmount;
     }
 
+
+
     public static class Builder {
         private static final int DEFAULT_LOG_COUNT_FOR_SPACING_TYPE_ANY = 10;
 
@@ -59,6 +61,10 @@ public class Placeholder {
 
         public Placeholder build() {
             return new Placeholder(timePeriod, spaceType, spaceAmount);
+        }
+
+        public SpaceType getSpaceType() {
+            return spaceType;
         }
 
         public int getSpaceAmount() {
