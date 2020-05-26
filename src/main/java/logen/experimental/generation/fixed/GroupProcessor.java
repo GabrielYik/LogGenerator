@@ -6,7 +6,9 @@ import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.group.Group;
 import logen.experimental.scenario.group.GroupSpacing;
 import logen.experimental.scenario.group.GroupTimePeriod;
-import logen.experimental.util.TimeGenerator;
+import logen.experimental.util.timegenerators.FixedBoundedTimeGenerator;
+import logen.experimental.util.timegenerators.FlexibleBoundedTimeGenerator;
+import logen.experimental.util.timegenerators.TimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -123,7 +125,7 @@ public class GroupProcessor {
     ) {
         GroupTimePeriod timePeriod = group.getTimePeriod();
         int approximateLogCount = computeApproxLogCount(orderedLogSpecs.size(), placeholders);
-        TimeGenerator timeGenerator = TimeGenerator.bounded(
+        TimeGenerator timeGenerator = new FixedBoundedTimeGenerator(
                 timePeriod.getStartTime(),
                 timePeriod.getEndTime(),
                 approximateLogCount
