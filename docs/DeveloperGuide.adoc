@@ -109,11 +109,11 @@ This separation of scope allows for the fine-grained configuration of the scenar
 * identifier
 ** Any string
 
-|Order
+|Ordering
 |The sequence in which the logs in the group in relation to each other should be placed
 in the log sheet
 |
-* order
+* ordering
 ** type
 *** One of the following: ANY, CUSTOM
 ** sequence
@@ -125,10 +125,10 @@ first, the second log second, and so forth
 *** E.g. in a group of 4 logs, [3, 2, 1, 4] means that the first log will be placed
 third, the second log second, the third log first and the fourth log fourth.
 
-|Space
+|Spacing
 |The number of logs between two specified logs in the group.
 |
-* space
+* spacing
 ** type
 *** ANY, CUSTOM
 ** amount
@@ -313,7 +313,7 @@ Imagine a log sheet as a long horizontal line.
 
 Fixed logs are logs have regions or positions on the line assigned to them.
 This is due to constraints imposed on these logs.
-The possible constraints are the order, space and time period scenario group attributes.
+The possible constraints are the ordering, spacing and time period scenario group attributes.
 Hence, fixed logs are logs that are defined in groups and have the aforementioned
 attributes specified.
 
@@ -326,8 +326,8 @@ Filler logs fill the spaces which are left by fixed logs.
 
 ===== Relationship to Scenario Attributes
 Fixed logs are defined by the configuration of any of the following scenario group
-attributes: order, space, time period and to a certain extent, frequency.
-On their own, the attributes order, space and time period make the logs fixed.
+attributes: ordering, spacing, time period and to a certain extent, frequency.
+On their own, the attributes ordering, spacing and time period make the logs fixed.
 However, the configuration of frequency on its own does make a log fixed; it has to be
 configured with any of the aforementioned attributes.
 

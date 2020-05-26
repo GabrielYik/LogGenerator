@@ -19,8 +19,8 @@
   "groups": [
     {
       "identifier": "",
-      "order": [],
-      "space": {
+      "ordering": [],
+      "spacing": {
         "type": "",
         "amount": []
       },
