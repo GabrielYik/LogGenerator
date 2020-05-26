@@ -1,6 +1,6 @@
 package logen.experimental.generation.fixed;
 
-import logen.experimental.scenario.time.TimePeriod;
+import java.time.LocalTime;
 
 /**
  * A representation of the space between two fixed logs,
@@ -13,26 +13,40 @@ import logen.experimental.scenario.time.TimePeriod;
  * values the time attribute of a log can take.
  */
 public class Placeholder {
-    private final TimePeriod timePeriod;
+    private final LocalTime startTime;
+    private final LocalTime endTime;
 
     private final PlaceholderType type;
     private final int logCount;
 
     /**
-     * Constructs a placeholder from a {@code timePeriod},
+     * Constructs a placeholder from a {@code startTime}, {@code endTime},
      * {@code type} and {@code logCount}.
-     * @param timePeriod The time period which a log must is be in
+     * @param startTime The earliest time the first log generated from this
+     *                  placeholder will have
+     * @param endTime The latest time the last log generated from this
+     *                placeholder will have
      * @param type The nature of the number of logs to be generated
      * @param logCount The number of logs to be generated
      */
-    private Placeholder(TimePeriod timePeriod, PlaceholderType type, int logCount) {
-        this.timePeriod = timePeriod;
+    private Placeholder(
+            LocalTime startTime,
+            LocalTime endTime,
+            PlaceholderType type,
+            int logCount
+    ) {
+        this.startTime = startTime;
+        this.endTime = endTime;
         this.type = type;
         this.logCount = logCount;
     }
 
-    public TimePeriod getTimePeriod() {
-        return timePeriod;
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
     }
 
     public PlaceholderType getType() {
@@ -44,7 +58,8 @@ public class Placeholder {
     }
 
     public static class Builder {
-        private TimePeriod timePeriod;
+        private LocalTime startTime;
+        private LocalTime endTime;
 
         private PlaceholderType type;
         private int logCount;
@@ -53,8 +68,13 @@ public class Placeholder {
 
         }
 
-        public Builder withTimePeriod(TimePeriod timePeriod) {
-            this.timePeriod = timePeriod;
+        public Builder withStartTime(LocalTime startTime) {
+            this.startTime = startTime;
+            return this;
+        }
+
+        public Builder withEndTime(LocalTime endTime) {
+            this.endTime = endTime;
             return this;
         }
 
@@ -69,7 +89,7 @@ public class Placeholder {
         }
 
         public Placeholder build() {
-            return new Placeholder(timePeriod, type, logCount);
+            return new Placeholder(startTime, endTime, type, logCount);
         }
 
         public PlaceholderType getType() {

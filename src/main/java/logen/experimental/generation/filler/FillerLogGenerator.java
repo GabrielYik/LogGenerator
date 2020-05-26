@@ -126,12 +126,11 @@ public class FillerLogGenerator {
         List<List<Log>> fluidLogs = new ArrayList<>();
         for (int i = 1; i < placeholders.size() - 1; i++) {
             Placeholder placeholder = placeholders.get(i);
-            TimePeriod timePeriod = placeholder.getTimePeriod();
             int logCount = placeholder.getLogCount();
 
             TimeGenerator timeGenerator = TimeGenerator.bounded(
-                    timePeriod.getStartTime(),
-                    timePeriod.getEndTime(),
+                    placeholder.getStartTime(),
+                    placeholder.getEndTime(),
                     logCount
             );
 
