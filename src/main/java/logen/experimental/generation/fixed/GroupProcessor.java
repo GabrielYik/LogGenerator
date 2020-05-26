@@ -4,7 +4,8 @@ import javafx.util.Pair;
 import logen.experimental.log.Log;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.group.Group;
-import logen.experimental.scenario.group.Spacing;
+import logen.experimental.scenario.group.GroupSpacing;
+import logen.experimental.scenario.group.GroupTimePeriod;
 import logen.experimental.scenario.time.TimePeriod;
 import logen.experimental.util.TimeGenerator;
 
@@ -80,11 +81,11 @@ public class GroupProcessor {
     private List<Placeholder.Builder> applySpacing() {
         int logCount = group.getLogSpecs().size();
         int placeholderCount = logCount - LOG_SPEC_TO_PLACEHOLDER_SIZE_OFFSET + EXTERNAL_PLACEHOLDER_COUNT;
-        Spacing spacing = group.getSpacing();
+        GroupSpacing spacing = group.getSpacing();
         return generatePlaceholders(placeholderCount, spacing);
     }
 
-    private List<Placeholder.Builder> generatePlaceholders(int placeholderCount, Spacing spacing) {
+    private List<Placeholder.Builder> generatePlaceholders(int placeholderCount, GroupSpacing spacing) {
         List<Placeholder.Builder> placeholders = new ArrayList<>(placeholderCount);
         Placeholder.Builder externalPlaceholder = new Placeholder.Builder()
                 .withType(PlaceholderType.FLEXIBLE);
@@ -118,7 +119,7 @@ public class GroupProcessor {
             List<LogSpec> orderedLogSpecs,
             List<Placeholder.Builder> placeholders
     ) {
-        TimePeriod timePeriod = group.getTimePeriod();
+        GroupTimePeriod timePeriod = group.getTimePeriod();
         int approximateLogCount = computeApproxLogCount(orderedLogSpecs.size(), placeholders);
         TimeGenerator timeGenerator = TimeGenerator.bounded(
                 timePeriod.getStartTime(),

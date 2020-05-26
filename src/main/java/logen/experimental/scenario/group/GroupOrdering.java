@@ -2,15 +2,15 @@ package logen.experimental.scenario.group;
 
 import java.util.List;
 
-public class Ordering {
-    private OrderingType type;
+public class GroupOrdering {
+    private GroupOrderingType type;
     private List<Integer> sequence;
 
-    public OrderingType getType() {
+    public GroupOrderingType getType() {
         return type;
     }
 
-    public void setType(OrderingType type) {
+    public void setType(GroupOrderingType type) {
         this.type = type;
     }
 

@@ -2,24 +2,24 @@ package logen.experimental.scenario.group;
 
 import java.util.List;
 
-public class Spacing {
-    private SpacingType type;
+public class GroupSpacing {
+    private GroupSpacingType type;
     private List<Integer> amount;
 
-    public Spacing() {
+    public GroupSpacing() {
 
     }
 
-    public Spacing(SpacingType type, List<Integer> amount) {
+    public GroupSpacing(GroupSpacingType type, List<Integer> amount) {
         this.type = type;
         this.amount = amount;
     }
 
-    public SpacingType getType() {
+    public GroupSpacingType getType() {
         return type;
     }
 
-    public void setType(SpacingType type) {
+    public void setType(GroupSpacingType type) {
         this.type = type;
     }
 

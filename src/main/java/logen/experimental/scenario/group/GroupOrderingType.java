@@ -3,7 +3,7 @@ package logen.experimental.scenario.group;
 /**
  * The type of ordering in a group.
  */
-public enum OrderingType {
+public enum GroupOrderingType {
     /**
      * The system determines the ordering of logs in the group.
      */

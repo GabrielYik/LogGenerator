@@ -4,7 +4,6 @@ import javafx.util.Pair;
 import logen.experimental.scenario.common.Frequency;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.time.TimePeriod;
-import logen.experimental.scenario.time.TimePeriodType;
 import logen.experimental.util.RandomChooser;
 
 import java.time.LocalTime;
@@ -14,9 +13,9 @@ import java.util.List;
 
 public class Group {
     private String identifier;
-    private Ordering ordering;
-    private Spacing spacing;
-    private TimePeriod timePeriod;
+    private GroupOrdering ordering;
+    private GroupSpacing spacing;
+    private GroupTimePeriod timePeriod;
     private String description;
     private String type;
     private String subject;
@@ -79,7 +78,7 @@ public class Group {
                 timePeriod.setStartEndTime(startTime, endTime);
                 break;
             case AFTER_MIDNIGHT:
-                Pair<LocalTime, LocalTime> startEndTime = TimePeriodType.map(TimePeriodType.AFTER_MIDNIGHT);
+                Pair<LocalTime, LocalTime> startEndTime = GroupTimePeriodType.map(GroupTimePeriodType.AFTER_MIDNIGHT);
                 startTime = startEndTime.getKey();
                 endTime = startEndTime.getValue();
                 timePeriod.setStartEndTime(startTime, endTime);
@@ -122,27 +121,27 @@ public class Group {
         this.identifier = identifier;
     }
 
-    public Ordering getOrdering() {
+    public GroupOrdering getOrdering() {
         return ordering;
     }
 
-    public void setOrdering(Ordering ordering) {
+    public void setOrdering(GroupOrdering ordering) {
         this.ordering = ordering;
     }
 
-    public Spacing getSpacing() {
+    public GroupSpacing getSpacing() {
         return spacing;
     }
 
-    public void setSpacing(Spacing spacing) {
+    public void setSpacing(GroupSpacing spacing) {
         this.spacing = spacing;
     }
 
-    public TimePeriod getTimePeriod() {
+    public GroupTimePeriod getTimePeriod() {
         return timePeriod;
     }
 
-    public void setTimePeriod(TimePeriod timePeriod) {
+    public void setTimePeriod(GroupTimePeriod timePeriod) {
         this.timePeriod = timePeriod;
     }
 

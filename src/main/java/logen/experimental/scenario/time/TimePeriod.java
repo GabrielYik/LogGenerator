@@ -43,11 +43,6 @@ public class TimePeriod {
         this.endTime = endTime;
     }
 
-    public void setStartEndTime(LocalTime startTime, LocalTime endTime) {
-        this.startTime = startTime;
-        this.endTime = endTime;
-    }
-
     public List<TimePeriodSpecific> getSpecifics() {
         return specifics;
     }
