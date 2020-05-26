@@ -6,7 +6,6 @@ import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.group.Group;
 import logen.experimental.scenario.group.GroupSpacing;
 import logen.experimental.scenario.group.GroupTimePeriod;
-import logen.experimental.scenario.time.TimePeriod;
 import logen.experimental.util.TimeGenerator;
 
 import java.time.LocalTime;
@@ -59,6 +58,7 @@ public class GroupProcessor {
                 logSpecs,
                 placeholders
         );
+        result = applyFrequency(result.getKey(), result.getValue());
         return new GroupFixture(result.getKey(), result.getValue());
     }
 
@@ -87,10 +87,12 @@ public class GroupProcessor {
 
     private List<Placeholder.Builder> generatePlaceholders(int placeholderCount, GroupSpacing spacing) {
         List<Placeholder.Builder> placeholders = new ArrayList<>(placeholderCount);
-        Placeholder.Builder externalPlaceholder = new Placeholder.Builder()
+        Placeholder.Builder firstPlaceholder = new Placeholder.Builder()
                 .withType(PlaceholderType.FLEXIBLE);
-        placeholders.add(0, externalPlaceholder);
-        placeholders.add(placeholders.size() - 1, externalPlaceholder);
+        Placeholder.Builder lastPlaceholder = new Placeholder.Builder()
+                .withType(PlaceholderType.FLEXIBLE);
+        placeholders.add(0, firstPlaceholder);
+        placeholders.add(placeholders.size() - 1, lastPlaceholder);
 
         switch(spacing.getType()) {
             case ANY:
@@ -139,7 +141,7 @@ public class GroupProcessor {
                 timeGenerator.skip(placeholder.getLogCount() - TIME_SKIP_OFFSET);
                 LocalTime endTime = timeGenerator.generate();
 
-                placeholder.withTimePeriod(new TimePeriod(startTime, endTime));
+                placeholder.withStartTime(startTime).withEndTime(endTime);
                 counterForPlaceholders++;
             } else {
                 LocalTime time = timeGenerator.generate();
@@ -158,5 +160,46 @@ public class GroupProcessor {
     ) {
         return logCount + placeholders.stream()
                 .mapToInt(Placeholder.Builder::getLogCount).sum();
+    }
+
+    private Pair<List<Log>, List<Placeholder.Builder>> applyFrequency(
+            List<Log> fixedLogs,
+            List<Placeholder.Builder> placeholders
+    ) {
+        int count = group.getFrequency().getCount();
+        if (count == 1) {
+            return new Pair<>(fixedLogs, placeholders);
+        } else {
+            List<Log> multipliedFixedLogs = multipleLogs(fixedLogs, count);
+            List<Placeholder.Builder> multipliedPlaceholders = multipleAndOverlapPlaceholders(
+                    placeholders, count
+            );
+            return new Pair<>(multipliedFixedLogs, multipliedPlaceholders);
+        }
+    }
+
+    private List<Log> multipleLogs(List<Log> fixedLogs, int count) {
+        List<Log> consolidatedFixedLogs = new ArrayList<>();
+        int counter = 0;
+        do {
+            consolidatedFixedLogs.addAll(fixedLogs);
+            counter++;
+        } while (counter < count);
+        return consolidatedFixedLogs;
+    }
+
+    private List<Placeholder.Builder> multipleAndOverlapPlaceholders(
+            List<Placeholder.Builder> placeholders,
+            int count
+    ) {
+        List<Placeholder.Builder> consolidatedPlaceholders = new ArrayList<>(placeholders);
+        int counter = 1;
+        do {
+            int lastIndex = consolidatedPlaceholders.size() - 1;
+            consolidatedPlaceholders.remove(lastIndex);
+            consolidatedPlaceholders.addAll(placeholders);
+            counter++;
+        } while (counter < count);
+        return consolidatedPlaceholders;
     }
 }
