@@ -4,9 +4,7 @@ import javafx.util.Pair;
 import logen.experimental.log.Log;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.group.Group;
-import logen.experimental.scenario.group.Order;
-import logen.experimental.scenario.group.Space;
-import logen.experimental.scenario.group.SpaceType;
+import logen.experimental.scenario.group.Spacing;
 import logen.experimental.scenario.time.TimePeriod;
 import logen.experimental.util.TimeGenerator;
 
@@ -14,17 +12,47 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A processor that applies the scenario group attributes that define
+ * fixed logs on the logs in a group.
+ */
 public class GroupProcessor {
+    private static final int ONE_TO_ZERO_BASED_INDEX_OFFSET = 1;
+    private static final int LOG_SPEC_TO_PLACEHOLDER_SIZE_OFFSET = 1;
+    /**
+     * One time skip since the earliest time has already been generated
+     * and one time skip since the latest time has yet to be generated.
+     */
+    private static final int TIME_SKIP_OFFSET = 2;
+    /**
+     * One placeholder for the space before the first fixed log of a group
+     * and another for the space after the last fixed log of a group.
+     */
     private static final int EXTERNAL_PLACEHOLDER_COUNT = 2;
 
     private final Group group;
 
+    /**
+     * Constructs a group processor from {@code Group}.
+     * @param group The group to process
+     */
     public GroupProcessor(Group group) {
         this.group = group;
     }
 
+    /**
+     * Applies the scenario group attributes:
+     * <ul>
+     *     <li>ordering
+     *     <li>spacing
+     *     <li>time period
+     * </ul>
+     * to the logs in the group
+     * @return a group fixture that bundles both the fixed logs and
+     * incomplete placeholders generated from the group
+     */
     public GroupFixture process() {
-        List<LogSpec> logSpecs = applyOrder();
+        List<LogSpec> logSpecs = applyOrdering();
         List<Placeholder.Builder> placeholders = applySpacing();
         Pair<List<Log>, List<Placeholder.Builder>> result = applyTimePeriod(
                 logSpecs,
@@ -33,14 +61,16 @@ public class GroupProcessor {
         return new GroupFixture(result.getKey(), result.getValue());
     }
 
-    private List<LogSpec> applyOrder() {
-        Order order = group.getOrder();
+    private List<LogSpec> applyOrdering() {
+        List<Integer> sequence = group.getOrdering().getSequence();
         List<LogSpec> logSpecs = group.getLogSpecs();
+        return orderLogSpecs(sequence, logSpecs);
+    }
 
+    private List<LogSpec> orderLogSpecs(List<Integer> sequence, List<LogSpec> logSpecs) {
         List<LogSpec> orderedLogSpecs = new ArrayList<>(logSpecs.size());
-        List<Integer> sequence = order.getSequence();
         for (int i = 0; i < sequence.size(); i++) {
-            int index = sequence.get(i) - 1;
+            int index = sequence.get(i) - ONE_TO_ZERO_BASED_INDEX_OFFSET;
             LogSpec logSpec = logSpecs.get(i);
             orderedLogSpecs.add(index, logSpec);
         }
@@ -49,35 +79,38 @@ public class GroupProcessor {
 
     private List<Placeholder.Builder> applySpacing() {
         int logCount = group.getLogSpecs().size();
-        Space space = group.getSpace();
+        int placeholderCount = logCount - LOG_SPEC_TO_PLACEHOLDER_SIZE_OFFSET + EXTERNAL_PLACEHOLDER_COUNT;
+        Spacing spacing = group.getSpacing();
+        return generatePlaceholders(placeholderCount, spacing);
+    }
 
-        List<Placeholder.Builder> placeholders = new ArrayList<>(logCount - 1 + EXTERNAL_PLACEHOLDER_COUNT);
+    private List<Placeholder.Builder> generatePlaceholders(int placeholderCount, Spacing spacing) {
+        List<Placeholder.Builder> placeholders = new ArrayList<>(placeholderCount);
         Placeholder.Builder externalPlaceholder = new Placeholder.Builder()
-                .withSpaceType(SpaceType.ANY);
+                .withType(PlaceholderType.FLEXIBLE);
         placeholders.add(0, externalPlaceholder);
         placeholders.add(placeholders.size() - 1, externalPlaceholder);
 
-        switch(space.getType()) {
+        switch(spacing.getType()) {
             case ANY:
                 for (int i = 1; i < placeholders.size() - 1; i++) {
                     Placeholder.Builder placeholder = new Placeholder.Builder()
-                            .withSpaceType(SpaceType.ANY);
+                            .withType(PlaceholderType.FLEXIBLE);
                     placeholders.add(placeholder);
                 }
                 break;
             case CUSTOM:
-                List<Integer> spaceAmount = space.getAmount();
+                List<Integer> spaceAmount = spacing.getAmount();
                 for (int i = 1; i < spaceAmount.size() - 1; i++) {
                     Placeholder.Builder placeholder = new Placeholder.Builder()
-                            .withSpaceType(SpaceType.CUSTOM)
-                            .withSpaceAmount(spaceAmount.get(i));
+                            .withType(PlaceholderType.CUSTOM)
+                            .withLogCount(spaceAmount.get(i));
                     placeholders.add(placeholder);
                 }
                 break;
             default:
                 throw new AssertionError();
         }
-
         return placeholders;
     }
 
@@ -86,7 +119,7 @@ public class GroupProcessor {
             List<Placeholder.Builder> placeholders
     ) {
         TimePeriod timePeriod = group.getTimePeriod();
-        int approximateLogCount = computeApproximateLogCount(orderedLogSpecs.size(), placeholders);
+        int approximateLogCount = computeApproxLogCount(orderedLogSpecs.size(), placeholders);
         TimeGenerator timeGenerator = TimeGenerator.bounded(
                 timePeriod.getStartTime(),
                 timePeriod.getEndTime(),
@@ -95,28 +128,34 @@ public class GroupProcessor {
 
         List<Log> fixedLogs = new ArrayList<>();
         int counter = orderedLogSpecs.size() + placeholders.size();
-        int logSpecsCounter = 0;
-        int placeholdersCounter = 0;
+        int counterForLogSpecs = 0;
+        int counterForPlaceholders = 0;
         for (int i = 0; i < counter; i++) {
             if (i % 2 == 0) {
-                Placeholder.Builder placeholder = placeholders.get(placeholdersCounter);
+                Placeholder.Builder placeholder = placeholders.get(counterForPlaceholders);
+
                 LocalTime startTime = timeGenerator.generate();
-                timeGenerator.skip(placeholder.getSpaceAmount() - 2);
+                timeGenerator.skip(placeholder.getLogCount() - TIME_SKIP_OFFSET);
                 LocalTime endTime = timeGenerator.generate();
+
                 placeholder.withTimePeriod(new TimePeriod(startTime, endTime));
-                placeholdersCounter++;
+                counterForPlaceholders++;
             } else {
                 LocalTime time = timeGenerator.generate();
-                LogSpec logSpec = orderedLogSpecs.get(logSpecsCounter);
+                LogSpec logSpec = orderedLogSpecs.get(counterForLogSpecs);
                 Log fixedLog = new Log(time, logSpec);
                 fixedLogs.add(fixedLog);
-                logSpecsCounter++;
+                counterForLogSpecs++;
             }
         }
         return new Pair<>(fixedLogs, placeholders);
     }
 
-    private int computeApproximateLogCount(int orderedLogSpecCount, List<Placeholder.Builder> placeholders) {
-        return orderedLogSpecCount + placeholders.stream().mapToInt(Placeholder.Builder::getSpaceAmount).sum();
+    private int computeApproxLogCount(
+            int logCount,
+            List<Placeholder.Builder> placeholders
+    ) {
+        return logCount + placeholders.stream()
+                .mapToInt(Placeholder.Builder::getLogCount).sum();
     }
 }

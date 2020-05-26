@@ -8,6 +8,9 @@ import logen.experimental.scenario.Scenario;
 
 import java.util.List;
 
+/**
+ * A generator of logs.
+ */
 public class LogGenerator {
     private final Scenario scenario;
 
@@ -15,6 +18,11 @@ public class LogGenerator {
         this.scenario = scenario;
     }
 
+    /**
+     * Generates logs.
+     * The logs are a mixture of fixed and filler logs.
+     * @return A list of logs
+     */
     public List<Log> generate() {
         Fixture fixture = new FixedLogGenerator(scenario).generate();
         return new FillerLogGenerator(scenario, fixture).generate();

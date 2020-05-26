@@ -13,6 +13,10 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A generator of filler logs.
+ * The generator has to be executed after the generation of fixed logs.
+ */
 public class FillerLogGenerator {
     private final Scenario scenario;
     private final Fixture fixture;
@@ -22,6 +26,12 @@ public class FillerLogGenerator {
         this.fixture = fixture;
     }
 
+    /**
+     * Generates filler logs and consolidates both the fixed logs
+     * from the fixture from a {@code FixedLogGenerator} and the
+     * filler logs generated.
+     * @return A consolidated list of fixed and filler logs.
+     */
     public List<Log> generate() {
         Pool<LogSpec> logSpecPool = new Pool<>(
                 scenario.getLogSpecs(),
@@ -84,7 +94,7 @@ public class FillerLogGenerator {
                 placeholder.getTimePeriod().getEndTime()
         );
         List<Log> fluidLogs = new ArrayList<>();
-        for (int i = placeholder.getSpacingAmount() - 1; i > -1; i--) {
+        for (int i = placeholder.getLogCount() - 1; i > -1; i--) {
             Log fluidLog = generateLog(logSpecPool, subjectPool, timeGenerator);
             fluidLogs.add(fluidLog);
         }
@@ -101,7 +111,7 @@ public class FillerLogGenerator {
                 scenario.getTimePeriod().getEndTime()
         );
         List<Log> fluidLogs = new ArrayList<>();
-        for (int i = 0; i < placeholder.getSpacingAmount(); i++) {
+        for (int i = 0; i < placeholder.getLogCount(); i++) {
             Log fluidLog = generateLog(logSpecPool, subjectPool, timeGenerator);
             fluidLogs.add(fluidLog);
         }
@@ -117,7 +127,7 @@ public class FillerLogGenerator {
         for (int i = 1; i < placeholders.size() - 1; i++) {
             Placeholder placeholder = placeholders.get(i);
             TimePeriod timePeriod = placeholder.getTimePeriod();
-            int logCount = placeholder.getSpacingAmount();
+            int logCount = placeholder.getLogCount();
 
             TimeGenerator timeGenerator = TimeGenerator.bounded(
                     timePeriod.getStartTime(),

@@ -1,5 +1,8 @@
 package logen.experimental.scenario.common;
 
+/**
+ * A specification for a log.
+ */
 public class LogSpec {
     private String description;
     private String type;

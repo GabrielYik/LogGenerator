@@ -1,44 +1,53 @@
 package logen.experimental.generation.fixed;
 
-import logen.experimental.scenario.group.SpaceType;
 import logen.experimental.scenario.time.TimePeriod;
 
 /**
- * A representation of potential logs constrained by a time period and quantity.
+ * A representation of the space between two fixed logs,
+ * the space before a fixed log with only logs right adjacent,
+ * or the space before a fixed log with only logs left adjacent.
+ * <p>
+ * A placeholder specifies the characteristics of the logs that
+ * have to be generated in the space.
+ * The characteristics are the number of logs and the range of
+ * values the time attribute of a log can take.
  */
 public class Placeholder {
     private final TimePeriod timePeriod;
 
-    private final SpaceType spaceType;
-    private final int spacingAmount;
+    private final PlaceholderType type;
+    private final int logCount;
 
-    private Placeholder(TimePeriod timePeriod, SpaceType spaceType, int spacingAmount) {
+    /**
+     * Constructs a placeholder from a {@code timePeriod},
+     * {@code type} and {@code logCount}.
+     * @param timePeriod The time period which a log must is be in
+     * @param type The nature of the number of logs to be generated
+     * @param logCount The number of logs to be generated
+     */
+    private Placeholder(TimePeriod timePeriod, PlaceholderType type, int logCount) {
         this.timePeriod = timePeriod;
-        this.spaceType = spaceType;
-        this.spacingAmount = spacingAmount;
+        this.type = type;
+        this.logCount = logCount;
     }
 
     public TimePeriod getTimePeriod() {
         return timePeriod;
     }
 
-    public SpaceType getSpaceType() {
-        return spaceType;
+    public PlaceholderType getType() {
+        return type;
     }
 
-    public int getSpacingAmount() {
-        return spacingAmount;
+    public int getLogCount() {
+        return logCount;
     }
-
-
 
     public static class Builder {
-        private static final int DEFAULT_LOG_COUNT_FOR_SPACING_TYPE_ANY = 10;
-
         private TimePeriod timePeriod;
 
-        private SpaceType spaceType;
-        private int spaceAmount;
+        private PlaceholderType type;
+        private int logCount;
 
         public Builder() {
 
@@ -49,26 +58,26 @@ public class Placeholder {
             return this;
         }
 
-        public Builder withSpaceType(SpaceType spaceType) {
-            this.spaceType = spaceType;
+        public Builder withType(PlaceholderType type) {
+            this.type = type;
             return this;
         }
 
-        public Builder withSpaceAmount(int amount) {
-            this.spaceAmount = amount;
+        public Builder withLogCount(int amount) {
+            this.logCount = amount;
             return this;
         }
 
         public Placeholder build() {
-            return new Placeholder(timePeriod, spaceType, spaceAmount);
+            return new Placeholder(timePeriod, type, logCount);
         }
 
-        public SpaceType getSpaceType() {
-            return spaceType;
+        public PlaceholderType getType() {
+            return type;
         }
 
-        public int getSpaceAmount() {
-            return spaceAmount;
+        public int getLogCount() {
+            return logCount;
         }
     }
 }

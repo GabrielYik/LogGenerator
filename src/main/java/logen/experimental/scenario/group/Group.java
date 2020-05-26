@@ -14,8 +14,8 @@ import java.util.List;
 
 public class Group {
     private String identifier;
-    private Order order;
-    private Space space;
+    private Ordering ordering;
+    private Spacing spacing;
     private TimePeriod timePeriod;
     private String description;
     private String type;
@@ -32,7 +32,7 @@ public class Group {
     }
 
     private void preprocessOrder() {
-        switch(order.getType()) {
+        switch(ordering.getType()) {
             case ANY:
                 List<Integer> sequence = new ArrayList<>(logSpecs.size());
                 int counter = 1;
@@ -40,7 +40,7 @@ public class Group {
                     sequence.add(counter++);
                 }
                 Collections.shuffle(sequence);
-                order.setSequence(sequence);
+                ordering.setSequence(sequence);
                 break;
             case CUSTOM:
                 // do nothing
@@ -122,20 +122,20 @@ public class Group {
         this.identifier = identifier;
     }
 
-    public Order getOrder() {
-        return order;
+    public Ordering getOrdering() {
+        return ordering;
     }
 
-    public void setOrder(Order order) {
-        this.order = order;
+    public void setOrdering(Ordering ordering) {
+        this.ordering = ordering;
     }
 
-    public Space getSpace() {
-        return space;
+    public Spacing getSpacing() {
+        return spacing;
     }
 
-    public void setSpace(Space space) {
-        this.space = space;
+    public void setSpacing(Spacing spacing) {
+        this.spacing = spacing;
     }
 
     public TimePeriod getTimePeriod() {
