@@ -64,4 +64,8 @@ public class FixedBoundedTimeGenerator extends AbstractTimeGenerator {
     public LocalTime generate() {
         return null;
     }
+
+    public void skip(int generationCount) {
+
+    }
 }

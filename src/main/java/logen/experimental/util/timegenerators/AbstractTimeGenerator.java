@@ -4,8 +4,8 @@ import java.time.LocalTime;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class AbstractTimeGenerator implements TimeGenerator {
-    private static final int SECONDS_IN_MINUTE = 60;
-    private static final int SECONDS_IN_HOUR = 3600;
+    public static final int SECONDS_IN_MINUTE = 60;
+    public static final int SECONDS_IN_HOUR = 3600;
 
     protected final LocalTime fromTime;
     protected final LocalTime toTime;

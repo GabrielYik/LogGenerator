@@ -6,19 +6,23 @@ import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.group.Group;
 import logen.experimental.scenario.group.GroupSpacing;
 import logen.experimental.scenario.group.GroupTimePeriod;
+import logen.experimental.util.timegenerators.AbstractTimeGenerator;
 import logen.experimental.util.timegenerators.FixedBoundedTimeGenerator;
-import logen.experimental.util.timegenerators.FlexibleBoundedTimeGenerator;
 import logen.experimental.util.timegenerators.TimeGenerator;
 
+import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * A processor that applies the scenario group attributes that define
- * fixed logs on the logs in a group.
+ * fixed logs on the logs of a group.
  */
 public class GroupProcessor {
+    /**
+     * The offset needed to convert a one-based index to a zero-based index.
+     */
     private static final int ONE_TO_ZERO_BASED_INDEX_OFFSET = 1;
     private static final int LOG_SPEC_TO_PLACEHOLDER_SIZE_OFFSET = 1;
     /**
@@ -48,6 +52,7 @@ public class GroupProcessor {
      *     <li>ordering
      *     <li>spacing
      *     <li>time period
+     *     <li>frequency
      * </ul>
      * to the logs in the group
      * @return a group fixture that bundles both the fixed logs and
@@ -124,26 +129,36 @@ public class GroupProcessor {
             List<Placeholder.Builder> placeholders
     ) {
         GroupTimePeriod timePeriod = group.getTimePeriod();
-        int approximateLogCount = computeApproxLogCount(orderedLogSpecs.size(), placeholders);
-        TimeGenerator timeGenerator = new FixedBoundedTimeGenerator(
+        int logCount;
+        switch(timePeriod.getType()) {
+            case ANY:
+                logCount = orderedLogSpecs.size() + computeRecommendedLogCount();
+                break;
+            case CUSTOM:
+                logCount = orderedLogSpecs.size() + computeLogCount(placeholders);
+                break;
+            default:
+                throw new AssertionError();
+        }
+        FixedBoundedTimeGenerator timeGenerator = new FixedBoundedTimeGenerator(
                 timePeriod.getStartTime(),
                 timePeriod.getEndTime(),
-                approximateLogCount
+                logCount
         );
 
         List<Log> fixedLogs = new ArrayList<>();
         int counter = orderedLogSpecs.size() + placeholders.size();
         int counterForLogSpecs = 0;
         int counterForPlaceholders = 0;
-        for (int i = 0; i < counter; i++) {
+        for (int i = 1; i < counter - 1; i++) {
             if (i % 2 == 0) {
                 Placeholder.Builder placeholder = placeholders.get(counterForPlaceholders);
 
                 LocalTime startTime = timeGenerator.generate();
                 timeGenerator.skip(placeholder.getLogCount() - TIME_SKIP_OFFSET);
                 LocalTime endTime = timeGenerator.generate();
-
                 placeholder.withStartTime(startTime).withEndTime(endTime);
+
                 counterForPlaceholders++;
             } else {
                 LocalTime time = timeGenerator.generate();
@@ -156,12 +171,17 @@ public class GroupProcessor {
         return new Pair<>(fixedLogs, placeholders);
     }
 
-    private int computeApproxLogCount(
-            int logCount,
-            List<Placeholder.Builder> placeholders
-    ) {
-        return logCount + placeholders.stream()
-                .mapToInt(Placeholder.Builder::getLogCount).sum();
+    private int computeRecommendedLogCount() {
+        LocalTime startTime = group.getTimePeriod().getStartTime();
+        LocalTime endTime = group.getTimePeriod().getEndTime();
+        int seconds = endTime.toSecondOfDay() - startTime.toSecondOfDay();
+        return 1 + seconds / (AbstractTimeGenerator.SECONDS_IN_HOUR - AbstractTimeGenerator.SECONDS_IN_MINUTE);
+    }
+
+    private int computeLogCount(List<Placeholder.Builder> placeholders) {
+        return placeholders.subList(1, placeholders.size() - 2).stream()
+                .mapToInt(Placeholder.Builder::getLogCount)
+                .sum();
     }
 
     private Pair<List<Log>, List<Placeholder.Builder>> applyFrequency(

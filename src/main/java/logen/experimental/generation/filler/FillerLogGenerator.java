@@ -5,9 +5,10 @@ import logen.experimental.generation.fixed.Placeholder;
 import logen.experimental.log.Log;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.Scenario;
-import logen.experimental.scenario.time.TimePeriod;
 import logen.experimental.util.Pool;
-import logen.experimental.util.TimeGenerator;
+import logen.experimental.util.timegenerators.FixedBoundedTimeGenerator;
+import logen.experimental.util.timegenerators.TimeGenerator;
+import logen.experimental.util.timegenerators.UnboundedTimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -56,7 +57,7 @@ public class FillerLogGenerator {
                 placeholders.get(placeholders.size() - 1)
         );
 
-        List<List<Log>> fluidLogsForRemainingPlaceholders = generateLogsForRemainingPlaceholders(
+        List<List<Log>> fillerLogsForBetweenPlaceholders = generateLogsForBetweenPlaceholders(
                 logSpecPool,
                 subjectPool,
                 placeholders
@@ -64,7 +65,7 @@ public class FillerLogGenerator {
 
         List<List<Log>> fluidLogs = new ArrayList<>();
         fluidLogs.add(fluidLogsForFirstPlaceholder);
-        fluidLogs.addAll(fluidLogsForRemainingPlaceholders);
+        fluidLogs.addAll(fillerLogsForBetweenPlaceholders);
         fluidLogs.add(fluidLogsForLastPlaceholder);
 
         List<Log> fixedLogs = fixture.getLogs();
@@ -89,9 +90,8 @@ public class FillerLogGenerator {
             Pool<String> subjectPool,
             Placeholder placeholder
     ) {
-        TimeGenerator timeGenerator = TimeGenerator.back(
-                scenario.getTimePeriod().getStartTime(),
-                placeholder.getTimePeriod().getEndTime()
+        TimeGenerator timeGenerator = UnboundedTimeGenerator.back(
+                placeholder.getEndTime(), scenario.getTimePeriod().getStartTime()
         );
         List<Log> fluidLogs = new ArrayList<>();
         for (int i = placeholder.getLogCount() - 1; i > -1; i--) {
@@ -106,8 +106,8 @@ public class FillerLogGenerator {
             Pool<String> subjectPool,
             Placeholder placeholder
     ) {
-        TimeGenerator timeGenerator = TimeGenerator.forward(
-                placeholder.getTimePeriod().getStartTime(),
+        TimeGenerator timeGenerator = UnboundedTimeGenerator.forward(
+                placeholder.getStartTime(),
                 scenario.getTimePeriod().getEndTime()
         );
         List<Log> fluidLogs = new ArrayList<>();
@@ -118,31 +118,37 @@ public class FillerLogGenerator {
         return fluidLogs;
     }
 
-    private List<List<Log>> generateLogsForRemainingPlaceholders(
+    private List<List<Log>> generateLogsForBetweenPlaceholders(
             Pool<LogSpec> logSpecPool,
             Pool<String> subjectPool,
             List<Placeholder> placeholders
     ) {
-        List<List<Log>> fluidLogs = new ArrayList<>();
+        List<List<Log>> fillerLogs = new ArrayList<>();
         for (int i = 1; i < placeholders.size() - 1; i++) {
             Placeholder placeholder = placeholders.get(i);
-            int logCount = placeholder.getLogCount();
 
-            TimeGenerator timeGenerator = TimeGenerator.bounded(
-                    placeholder.getStartTime(),
-                    placeholder.getEndTime(),
-                    logCount
-            );
+            switch(placeholder.getType()) {
+                case FLEXIBLE:
+                    break;
+                case CUSTOM:
+                    int logCount = placeholder.getLogCount();
+                    TimeGenerator timeGenerator = new FixedBoundedTimeGenerator(
+                            placeholder.getStartTime(),
+                            placeholder.getEndTime(),
+                            scenario.getTimePeriod().getStartTime(),
+                            scenario.getTimePeriod().getEndTime(),
+                            logCount
+                    );
 
-            List<Log> fluidLogsForPlaceholder = new ArrayList<>(logCount);
-            for (int j = 0; j < logCount; j++) {
-                Log fluidLog = generateLog(logSpecPool, subjectPool, timeGenerator);
-                fluidLogsForPlaceholder.add(fluidLog);
+                    List<Log> fillerLogsForPlaceholder = new ArrayList<>(logCount);
+                    for (int j = 0; j < logCount; j++) {
+                        Log fillerLog = generateLog(logSpecPool, subjectPool, timeGenerator);
+                        fillerLogsForPlaceholder.add(fillerLog);
+                    }
+                    fillerLogs.add(fillerLogsForPlaceholder);
             }
-
-            fluidLogs.add(fluidLogsForPlaceholder);
         }
-        return fluidLogs;
+        return fillerLogs;
     }
 
     private Log generateLog(
