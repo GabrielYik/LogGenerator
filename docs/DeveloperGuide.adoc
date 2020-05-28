@@ -116,7 +116,7 @@ in the log sheet
 * ordering
 ** type
 *** One of the following: ANY, CUSTOM
-** sequence
+** positions
 *** An array of positive integers, with each integer specifying the position of the
 corresponding log specification
 *** There must be the same number of values as logs in the group
