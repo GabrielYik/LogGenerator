@@ -55,19 +55,28 @@ public class GroupTimePeriodApplier extends GroupAttributeApplier {
         );
 
         List<Log> fixedLogs = new ArrayList<>();
-        int totalCounter = logSpecs.size() + placeholders.size();
+        int counter = logSpecs.size() + placeholders.size();
         int counterForLogSpecs = 0;
         int counterForPlaceholders = 0;
-        for (int i = 1; i < totalCounter - 1; i++) {
+        for (int i = 1; i < counter - 1; i++) {
             if (isPlaceholder(i)) {
                 Placeholder.Builder placeholder = placeholders.get(counterForPlaceholders);
                 setTimeForPlaceholder(placeholder, timeGenerator);
                 counterForPlaceholders++;
             } else {
                 LogSpec logSpec = logSpecs.get(counterForLogSpecs);
-                Log fixedLog = setTimeForLogSpec(logSpec, timeGenerator);
+                LocalTime time = timeGenerator.generate();
+                Log fixedLog = constructFixedLog(logSpec, time);
                 fixedLogs.add(fixedLog);
                 counterForLogSpecs++;
+
+                if (isFrontPlaceholderBefore(i)) {
+                    setTimeForFrontPlaceholder(time);
+                }
+
+                if (isBackPlaceholderAfter(i, counter - 2)) {
+                    setTimeForBackPlaceholder(time);
+                }
             }
         }
 
@@ -174,15 +183,52 @@ public class GroupTimePeriodApplier extends GroupAttributeApplier {
     }
 
     /**
-     * Computes the time value for {@code logSpec} and constructs a log
-     * from the time generated and {@code logSpec}.
+     * Constructs a log from {@code logSpec} and {@code time}.
      *
      * @param logSpec The log specification
-     * @param timeGenerator The time generator to generate the time value
-     * @return A log constructed from {@code logSpec} and the time generated
+     * @param time The time value for {@code logSpec}
+     * @return A log constructed from {@code logSpec} and {@code time}
      */
-    private Log setTimeForLogSpec(LogSpec logSpec, FixedBoundedTimeGenerator timeGenerator) {
-        LocalTime time = timeGenerator.generate();
+    private Log constructFixedLog(LogSpec logSpec, LocalTime time) {
         return new Log(time, logSpec);
     }
+
+    /**
+     * Checks if the placeholder before the fixed log at {@code index}
+     * is the first placeholder.
+     *
+     * @param index The index of the fixed log
+     * @return True if the placeholder before the fixed log is the first,
+     *   false otherwise
+     */
+    private boolean isFrontPlaceholderBefore(int index) {
+        return index == 1;
+    }
+
+    private void setTimeForFrontPlaceholder(LocalTime time) {
+        Placeholder.Builder frontPlaceholder = placeholders.get(0);
+        frontPlaceholder
+                .withStartTime(null)
+                .withEndTime(time.minusMinutes(1));
+    }
+
+    /**
+     * Checks if the placeholder after the fixed log at {@code index}
+     * is the last.
+     *
+     * @param index The index of the fixed log
+     * @return True if the placeholder after the fixed log is the last,
+     *   false otherwise
+     */
+    private boolean isBackPlaceholderAfter(int index, int secondLastIndex) {
+        return index == secondLastIndex;
+    }
+
+    private void setTimeForBackPlaceholder(LocalTime time) {
+        Placeholder.Builder backPlaceholder = placeholders.get(placeholders.size() - 1);
+        backPlaceholder
+                .withStartTime(time.plusMinutes(1))
+                .withEndTime(null);
+    }
+
 }
