@@ -4,15 +4,15 @@ import java.util.List;
 
 public class GroupSpacing {
     private GroupSpacingType type;
-    private List<Integer> amount;
+    private List<Integer> amounts;
 
     public GroupSpacing() {
 
     }
 
-    public GroupSpacing(GroupSpacingType type, List<Integer> amount) {
+    public GroupSpacing(GroupSpacingType type, List<Integer> amounts) {
         this.type = type;
-        this.amount = amount;
+        this.amounts = amounts;
     }
 
     public GroupSpacingType getType() {
@@ -23,11 +23,11 @@ public class GroupSpacing {
         this.type = type;
     }
 
-    public List<Integer> getAmount() {
-        return amount;
+    public List<Integer> getAmounts() {
+        return amounts;
     }
 
-    public void setAmount(List<Integer> amount) {
-        this.amount = amount;
+    public void setAmounts(List<Integer> amounts) {
+        this.amounts = amounts;
     }
 }

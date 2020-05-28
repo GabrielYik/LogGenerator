@@ -4,13 +4,12 @@ import java.time.LocalTime;
 
 /**
  * A representation of the space between two fixed logs,
- * the space before a fixed log with only logs right adjacent,
- * or the space before a fixed log with only logs left adjacent.
+ * before a fixed log with only logs right adjacent,
+ * or after a fixed log with only logs left adjacent.
  * <p>
- * A placeholder specifies the characteristics of the logs that
- * have to be generated in the space.
- * The characteristics are the number of logs and the range of
- * values the time attribute of a log can take.
+ * More specifically, a placeholder specifies the number of logs
+ * that are supposed to be generated in the space represented,
+ * and the earliest and latest time values of those logs.
  */
 public class Placeholder {
     private final LocalTime startTime;
@@ -98,6 +97,10 @@ public class Placeholder {
 
         public int getLogCount() {
             return logCount;
+        }
+
+        public static Builder merge(Builder earlier, Builder later) {
+            return null;
         }
     }
 }

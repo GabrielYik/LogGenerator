@@ -39,7 +39,7 @@ public class Group {
                     sequence.add(counter++);
                 }
                 Collections.shuffle(sequence);
-                ordering.setSequence(sequence);
+                ordering.setPositions(sequence);
                 break;
             case CUSTOM:
                 // do nothing

@@ -29,7 +29,7 @@ public class FixedLogGenerator {
     public Fixture generate() {
         List<GroupFixture> groupFixtures = new ArrayList<>();
         for (Group group : scenario.getGroups()) {
-            GroupFixture groupFixture = new GroupProcessor(group).process();
+            GroupFixture groupFixture = new GroupAttributesApplier(group).apply();
             groupFixtures.add(groupFixture);
         }
         return null;

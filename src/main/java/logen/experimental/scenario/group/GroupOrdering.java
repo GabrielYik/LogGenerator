@@ -4,7 +4,7 @@ import java.util.List;
 
 public class GroupOrdering {
     private GroupOrderingType type;
-    private List<Integer> sequence;
+    private List<Integer> positions;
 
     public GroupOrderingType getType() {
         return type;
@@ -14,11 +14,11 @@ public class GroupOrdering {
         this.type = type;
     }
 
-    public List<Integer> getSequence() {
-        return sequence;
+    public List<Integer> getPositions() {
+        return positions;
     }
 
-    public void setSequence(List<Integer> sequence) {
-        this.sequence = sequence;
+    public void setPositions(List<Integer> positions) {
+        this.positions = positions;
     }
 }
