@@ -11,26 +11,26 @@ import java.util.List;
  * placeholders generated from a {@code GroupProcessor}.
  */
 public class GroupFixture {
-    private final List<Log> logs;
+    private final List<Log> fixedLogs;
     private final List<Placeholder.Builder> placeholders;
 
     private GroupFixture() {
-        logs = new ArrayList<>();
+        fixedLogs = new ArrayList<>();
         placeholders = new ArrayList<>();
     }
 
     /**
-     * Constructs a group fixture from {@code logs} and {@code placeholders}.
-     * @param logs The fixed logs from a {@code GroupProcessor}
+     * Constructs a group fixture from {@code fixedLogs} and {@code placeholders}.
+     * @param fixedLogs The fixed logs from a {@code GroupProcessor}
      * @param placeholders The incomplete placeholders from a {@code GroupProcessor}
      */
-    public GroupFixture(List<Log> logs, List<Placeholder.Builder> placeholders) {
-        this.logs = logs;
+    public GroupFixture(List<Log> fixedLogs, List<Placeholder.Builder> placeholders) {
+        this.fixedLogs = fixedLogs;
         this.placeholders = placeholders;
     }
 
-    public List<Log> getLogs() {
-        return logs;
+    public List<Log> getFixedLogs() {
+        return fixedLogs;
     }
 
     public List<Placeholder.Builder> getPlaceholders() {
@@ -42,13 +42,13 @@ public class GroupFixture {
     }
 
     public static GroupFixture merge(GroupFixture first, GroupFixture second) {
-        List<Log> consolidatedLogs = new ArrayList<>(first.logs);
-        consolidatedLogs.addAll(second.logs);
+        List<Log> consolidatedFixedLogs = new ArrayList<>(first.fixedLogs);
+        consolidatedFixedLogs.addAll(second.fixedLogs);
         List<Placeholder.Builder> consolidatedPlaceholders = Placeholder.Builder.merge(
                 first.placeholders,
                 second.placeholders
         );
-        return new GroupFixture(consolidatedLogs, consolidatedPlaceholders);
+        return new GroupFixture(consolidatedFixedLogs, consolidatedPlaceholders);
     }
 
     public static class Builder {
@@ -103,15 +103,15 @@ public class GroupFixture {
         }
 
         public static Builder merge(Builder first, Builder second) {
-            List<Log> consolidatedLogs = new ArrayList<>(first.fixedLogs);
-            consolidatedLogs.addAll(second.fixedLogs);
+            List<Log> consolidatedFixedLogs = new ArrayList<>(first.fixedLogs);
+            consolidatedFixedLogs.addAll(second.fixedLogs);
             List<Placeholder.Builder> consolidatedPlaceholders = Placeholder.Builder.merge(
                     first.placeholders,
                     second.placeholders
             );
             return new GroupFixture.Builder()
                     .setLogSpecs(first.logSpecs)
-                    .setFixedLogs(consolidatedLogs)
+                    .setFixedLogs(consolidatedFixedLogs)
                     .setPlaceholders(consolidatedPlaceholders);
         }
     }

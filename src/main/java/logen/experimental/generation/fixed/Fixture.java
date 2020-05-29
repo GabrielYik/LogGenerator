@@ -9,21 +9,21 @@ import java.util.List;
  * generated from a {@code FixedLogGenerator}.
  */
 public class Fixture {
-    private final List<Log> logs;
+    private final List<Log> fixedLogs;
     private final List<Placeholder> placeholders;
 
     /**
-     * Constructs a fixture from {@code logs} and {@code placeholders}.
-     * @param logs The fixed logs from a {@code FixedLogGenerator}
+     * Constructs a fixture from {@code fixedLogs} and {@code placeholders}.
+     * @param fixedLogs The fixed logs from a {@code FixedLogGenerator}
      * @param placeholders The placeholders from a {@code FixedLogGenerator}
      */
-    public Fixture(List<Log> logs, List<Placeholder> placeholders) {
-        this.logs = logs;
+    public Fixture(List<Log> fixedLogs, List<Placeholder> placeholders) {
+        this.fixedLogs = fixedLogs;
         this.placeholders = placeholders;
     }
 
-    public List<Log> getLogs() {
-        return logs;
+    public List<Log> getFixedLogs() {
+        return fixedLogs;
     }
 
     public List<Placeholder> getPlaceholders() {

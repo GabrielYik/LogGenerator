@@ -68,7 +68,7 @@ public class FillerLogGenerator {
         fluidLogs.addAll(fillerLogsForBetweenPlaceholders);
         fluidLogs.add(fluidLogsForLastPlaceholder);
 
-        List<Log> fixedLogs = fixture.getLogs();
+        List<Log> fixedLogs = fixture.getFixedLogs();
         int counter = fixedLogs.size() + fluidLogs.size();
         int counterForFixedLogs = 0;
         int counterForFluidLogs = 0;

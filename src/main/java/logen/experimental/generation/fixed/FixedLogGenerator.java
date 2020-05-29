@@ -41,10 +41,10 @@ public class FixedLogGenerator {
     public Fixture constructFixture(List<GroupFixture> groupFixtures) {
         GroupFixture consolidatedGroupFixture = groupFixtures.stream()
                 .reduce(GroupFixture.empty(), GroupFixture::merge);
-        List<Log> logs = consolidatedGroupFixture.getLogs();
+        List<Log> fixedLogs = consolidatedGroupFixture.getFixedLogs();
         List<Placeholder> placeholders = consolidatedGroupFixture.getPlaceholders().stream()
                 .map(Placeholder.Builder::build)
                 .collect(Collectors.toList());
-        return new Fixture(logs, placeholders);
+        return new Fixture(fixedLogs, placeholders);
     }
 }

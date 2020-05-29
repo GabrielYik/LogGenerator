@@ -34,10 +34,7 @@ public class GroupFrequencyApplier extends GroupAttributeApplier {
             return groupFixture;
         }
 
-        List<GroupFixture.Builder> groupFixtures = new ArrayList<>();
-        for (int i = 0; i < frequency.getCount(); i++) {
-            groupFixtures.add(groupFixture.copy());
-        }
+        List<GroupFixture.Builder> groupFixtures = multipleGroupFixtures();
         return groupFixtures.stream()
                 .reduce(GroupFixture.Builder.empty(), GroupFixture.Builder::merge);
     }
@@ -51,5 +48,19 @@ public class GroupFrequencyApplier extends GroupAttributeApplier {
      */
     private boolean doesNotRequireMultiplication() {
         return frequency.getCount() == 1;
+    }
+
+    /**
+     * Generates copies of the group fixture which quantity is the
+     * frequency count defined on the group.
+     *
+     * @return Multiple copies of the group fixture
+     */
+    private List<GroupFixture.Builder> multipleGroupFixtures() {
+        List<GroupFixture.Builder> groupFixtures = new ArrayList<>();
+        for (int i = 0; i < frequency.getCount(); i++) {
+            groupFixtures.add(groupFixture.copy());
+        }
+        return groupFixtures;
     }
 }
