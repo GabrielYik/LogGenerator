@@ -1,10 +1,12 @@
 package logen.experimental.generation.fixed;
 
+import logen.experimental.log.Log;
 import logen.experimental.scenario.Scenario;
 import logen.experimental.scenario.group.Group;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * A generator of fixed logs.
@@ -32,6 +34,17 @@ public class FixedLogGenerator {
             GroupFixture groupFixture = new GroupAttributesApplier(group).apply();
             groupFixtures.add(groupFixture);
         }
-        return null;
+        return constructFixture(groupFixtures);
+
+    }
+
+    public Fixture constructFixture(List<GroupFixture> groupFixtures) {
+        GroupFixture consolidatedGroupFixture = groupFixtures.stream()
+                .reduce(GroupFixture.empty(), GroupFixture::merge);
+        List<Log> logs = consolidatedGroupFixture.getLogs();
+        List<Placeholder> placeholders = consolidatedGroupFixture.getPlaceholders().stream()
+                .map(Placeholder.Builder::build)
+                .collect(Collectors.toList());
+        return new Fixture(logs, placeholders);
     }
 }

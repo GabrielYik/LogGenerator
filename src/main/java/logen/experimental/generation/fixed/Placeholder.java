@@ -1,6 +1,8 @@
 package logen.experimental.generation.fixed;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A representation of the space between two fixed logs,
@@ -99,8 +101,22 @@ public class Placeholder {
             return logCount;
         }
 
-        public static Builder merge(Builder earlier, Builder later) {
-            return null;
+        public static List<Builder> merge(List<Builder> first, List<Builder> second) {
+            List<Builder> copy = new ArrayList<>(first);
+            Builder earlierPlaceholder = copy.remove(copy.size() - 1);
+            Builder laterPlaceholder = second.get(0);
+            Builder mergedPlaceholder = Placeholder.Builder.merge(earlierPlaceholder, laterPlaceholder);
+            second.set(0, mergedPlaceholder);
+            copy.addAll(second);
+            return copy;
+        }
+
+        private static Builder merge(Builder first, Builder second) {
+            return new Builder()
+                    .withStartTime(first.startTime)
+                    .withEndTime(second.endTime)
+                    .withType(first.type)
+                    .withLogCount(first.logCount);
         }
     }
 }

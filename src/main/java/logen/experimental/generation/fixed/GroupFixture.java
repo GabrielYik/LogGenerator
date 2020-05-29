@@ -3,6 +3,7 @@ package logen.experimental.generation.fixed;
 import logen.experimental.log.Log;
 import logen.experimental.scenario.common.LogSpec;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,11 @@ import java.util.List;
 public class GroupFixture {
     private final List<Log> logs;
     private final List<Placeholder.Builder> placeholders;
+
+    private GroupFixture() {
+        logs = new ArrayList<>();
+        placeholders = new ArrayList<>();
+    }
 
     /**
      * Constructs a group fixture from {@code logs} and {@code placeholders}.
@@ -29,6 +35,20 @@ public class GroupFixture {
 
     public List<Placeholder.Builder> getPlaceholders() {
         return placeholders;
+    }
+
+    public static GroupFixture empty() {
+        return new GroupFixture();
+    }
+
+    public static GroupFixture merge(GroupFixture first, GroupFixture second) {
+        List<Log> consolidatedLogs = new ArrayList<>(first.logs);
+        consolidatedLogs.addAll(second.logs);
+        List<Placeholder.Builder> consolidatedPlaceholders = Placeholder.Builder.merge(
+                first.placeholders,
+                second.placeholders
+        );
+        return new GroupFixture(consolidatedLogs, consolidatedPlaceholders);
     }
 
     public static class Builder {
@@ -69,6 +89,30 @@ public class GroupFixture {
 
         public List<Placeholder.Builder> getPlaceholders() {
             return placeholders;
+        }
+
+        public Builder copy() {
+            return new Builder()
+                    .setLogSpecs(logSpecs)
+                    .setFixedLogs(fixedLogs)
+                    .setPlaceholders(placeholders);
+        }
+
+        public static Builder empty() {
+            return new Builder();
+        }
+
+        public static Builder merge(Builder first, Builder second) {
+            List<Log> consolidatedLogs = new ArrayList<>(first.fixedLogs);
+            consolidatedLogs.addAll(second.fixedLogs);
+            List<Placeholder.Builder> consolidatedPlaceholders = Placeholder.Builder.merge(
+                    first.placeholders,
+                    second.placeholders
+            );
+            return new GroupFixture.Builder()
+                    .setLogSpecs(first.logSpecs)
+                    .setFixedLogs(consolidatedLogs)
+                    .setPlaceholders(consolidatedPlaceholders);
         }
     }
 }
