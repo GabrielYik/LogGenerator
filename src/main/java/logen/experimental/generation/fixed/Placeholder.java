@@ -93,6 +93,14 @@ public class Placeholder {
             return new Placeholder(startTime, endTime, type, logCount);
         }
 
+        public LocalTime getStartTime() {
+            return startTime;
+        }
+
+        public LocalTime getEndTime() {
+            return endTime;
+        }
+
         public PlaceholderType getType() {
             return type;
         }

@@ -6,7 +6,7 @@ import logen.experimental.log.Log;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.Scenario;
 import logen.experimental.util.Pool;
-import logen.experimental.util.timegenerators.FixedBoundedTimeGenerator;
+import logen.experimental.util.timegenerators.BoundedTimeGenerator;
 import logen.experimental.util.timegenerators.TimeGenerator;
 import logen.experimental.util.timegenerators.UnboundedTimeGenerator;
 
@@ -91,7 +91,9 @@ public class FillerLogGenerator {
             Placeholder placeholder
     ) {
         TimeGenerator timeGenerator = UnboundedTimeGenerator.back(
-                placeholder.getEndTime(), scenario.getTimePeriod().getStartTime()
+                placeholder.getEndTime(),
+                scenario.getTimePeriod().getStartTime(),
+                scenario.getTimePeriod().getEndTime()
         );
         List<Log> fluidLogs = new ArrayList<>();
         for (int i = placeholder.getLogCount() - 1; i > -1; i--) {
@@ -108,7 +110,8 @@ public class FillerLogGenerator {
     ) {
         TimeGenerator timeGenerator = UnboundedTimeGenerator.forward(
                 placeholder.getStartTime(),
-                scenario.getTimePeriod().getEndTime()
+                scenario.getTimePeriod().getEndTime(),
+                scenario.getTimePeriod().getStartTime()
         );
         List<Log> fluidLogs = new ArrayList<>();
         for (int i = 0; i < placeholder.getLogCount(); i++) {
@@ -132,7 +135,7 @@ public class FillerLogGenerator {
                     break;
                 case CUSTOM:
                     int logCount = placeholder.getLogCount();
-                    TimeGenerator timeGenerator = new FixedBoundedTimeGenerator(
+                    TimeGenerator timeGenerator = BoundedTimeGenerator.wrap(
                             placeholder.getStartTime(),
                             placeholder.getEndTime(),
                             scenario.getTimePeriod().getStartTime(),

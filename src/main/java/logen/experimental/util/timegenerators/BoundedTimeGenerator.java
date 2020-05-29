@@ -2,15 +2,26 @@ package logen.experimental.util.timegenerators;
 
 import java.time.LocalTime;
 
-public class FixedBoundedTimeGenerator extends AbstractTimeGenerator {
-    private final LocalTime wrapAroundTime;
-    private final LocalTime baseTime;
+public class BoundedTimeGenerator extends AbstractTimeGenerator {
+    private final LocalTime toTime;
     private final int requiredGenerationCount;
+
+    private BoundedTimeGenerator(
+            LocalTime fromTime,
+            LocalTime toTime,
+            LocalTime wrapAroundTime,
+            LocalTime baseTime,
+            int requiredGenerationCount
+    ) {
+        super(fromTime, wrapAroundTime, baseTime);
+        this.toTime = toTime;
+        this.requiredGenerationCount = requiredGenerationCount;
+    }
 
     /**
      * Constructs a generator that generates increasing time values with
      * quantity {@code requiredGenerationCount} between {@code fromTime}
-     * and {@code toTime}.
+     * and {@code toTime} inclusive.
      * If {@code fromTime} is after {@code toTime}, generation wraps around
      * {@code wrapAroundTime} and begins again from {@code baseTime}.
      * After {@code requiredGenerationCount} time values are generated,
@@ -23,18 +34,22 @@ public class FixedBoundedTimeGenerator extends AbstractTimeGenerator {
      *                 {@code wrapAroundTime}
      * @param requiredGenerationCount The number of time values the generator
      *                                will generate
+     * @return
      */
-    public FixedBoundedTimeGenerator(
+    public static BoundedTimeGenerator wrap(
             LocalTime fromTime,
             LocalTime toTime,
             LocalTime wrapAroundTime,
             LocalTime baseTime,
             int requiredGenerationCount
     ) {
-        super(fromTime, toTime);
-        this.wrapAroundTime = wrapAroundTime;
-        this.baseTime = baseTime;
-        this.requiredGenerationCount = requiredGenerationCount;
+        return new BoundedTimeGenerator(
+                fromTime,
+                toTime,
+                wrapAroundTime,
+                baseTime,
+                requiredGenerationCount
+        );
     }
 
     /**
@@ -48,16 +63,20 @@ public class FixedBoundedTimeGenerator extends AbstractTimeGenerator {
      * @param toTime The latest time of the last time value generated
      * @param requiredGenerationCount The number of time values the generator
      *                                will generate
+     * @return
      */
-    public FixedBoundedTimeGenerator(
+    public static BoundedTimeGenerator linear(
             LocalTime fromTime,
             LocalTime toTime,
             int requiredGenerationCount
     ) {
-        super(fromTime, toTime);
-        this.wrapAroundTime = null;
-        this.baseTime = null;
-        this.requiredGenerationCount = requiredGenerationCount;
+        return new BoundedTimeGenerator(
+                fromTime,
+                toTime,
+                null,
+                null,
+                requiredGenerationCount
+        );
     }
 
     @Override

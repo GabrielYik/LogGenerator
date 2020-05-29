@@ -4,17 +4,15 @@ import java.time.LocalTime;
 
 public class UnboundedTimeGenerator extends AbstractTimeGenerator {
     private final TimeGeneratorType type;
-
-    private LocalTime timeValue;
-
+    
     private UnboundedTimeGenerator(
             TimeGeneratorType type,
             LocalTime fromTime,
-            LocalTime toTime
+            LocalTime wrapAroundTime,
+            LocalTime baseTime
     ) {
-        super(fromTime, toTime);
+        super(fromTime, wrapAroundTime, baseTime);
         this.type = type;
-        this.timeValue = fromTime;
     }
 
     /**
@@ -28,11 +26,15 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
      * @param wrapAroundTime The time at which generation wraps around
      * @return A generator of increasing time values
      */
-    public static UnboundedTimeGenerator forward(LocalTime fromTime, LocalTime wrapAroundTime) {
+    public static UnboundedTimeGenerator forward(
+            LocalTime fromTime, 
+            LocalTime wrapAroundTime,
+            LocalTime baseTime) {
         return new UnboundedTimeGenerator(
                 TimeGeneratorType.FORWARD,
                 fromTime,
-                wrapAroundTime
+                wrapAroundTime,
+                baseTime
         );
     }
 
@@ -47,11 +49,16 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
      * @param wrapAroundTime The time at which generation wraps around
      * @return A generator of decreasing time values
      */
-    public static UnboundedTimeGenerator back(LocalTime fromTime, LocalTime wrapAroundTime) {
+    public static UnboundedTimeGenerator back(
+            LocalTime fromTime, 
+            LocalTime wrapAroundTime,
+            LocalTime baseTime
+    ) {
         return new UnboundedTimeGenerator(
                 TimeGeneratorType.BACKWARD,
                 fromTime,
-                wrapAroundTime
+                wrapAroundTime,
+                baseTime
         );
     }
 
@@ -60,22 +67,22 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
         long seconds = generateRandomSeconds();
         switch(type) {
             case FORWARD:
-                timeValue = timeValue.plusSeconds(seconds);
-                if (timeValue.isAfter(toTime)) {
-                    timeValue = fromTime;
+                currentTime = currentTime.plusSeconds(seconds);
+                if (currentTime.isAfter(wrapAroundTime)) {
+                    currentTime = baseTime;
                     return generate();
                 }
                 break;
             case BACKWARD:
-                timeValue = timeValue.minusSeconds(seconds);
-                if (timeValue.isBefore(toTime)) {
-                    timeValue = fromTime;
+                currentTime = currentTime.minusSeconds(seconds);
+                if (currentTime.isBefore(wrapAroundTime)) {
+                    currentTime = baseTime;
                     return generate();
                 }
                 break;
             default:
                 throw new AssertionError();
         }
-        return timeValue;
+        return currentTime;
     }
 }

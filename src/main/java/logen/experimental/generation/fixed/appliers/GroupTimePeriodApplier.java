@@ -6,7 +6,7 @@ import logen.experimental.log.Log;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.group.GroupTimePeriod;
 import logen.experimental.util.timegenerators.AbstractTimeGenerator;
-import logen.experimental.util.timegenerators.FixedBoundedTimeGenerator;
+import logen.experimental.util.timegenerators.BoundedTimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -17,6 +17,11 @@ import java.util.List;
  * defined on the group onto the logs in the group.
  */
 public class GroupTimePeriodApplier extends GroupAttributeApplier {
+    /**
+     * An arbitrary offset to ensure that the placeholders of the group
+     * represent at least one log.
+     */
+    private static final int ARBITRARY_OFFSET = 1;
     /**
      * One time skip since the earliest time has already been generated
      * and one time skip since the latest time has yet to be generated.
@@ -48,7 +53,7 @@ public class GroupTimePeriodApplier extends GroupAttributeApplier {
     @Override
     public GroupFixture.Builder apply() {
         int logCount = computeLogCount();
-        FixedBoundedTimeGenerator timeGenerator = new FixedBoundedTimeGenerator(
+        BoundedTimeGenerator timeGenerator = BoundedTimeGenerator.linear(
                 timePeriod.getStartTime(),
                 timePeriod.getEndTime(),
                 logCount
@@ -107,10 +112,14 @@ public class GroupTimePeriodApplier extends GroupAttributeApplier {
      * @return The recommended log count for the group
      */
     private int computeApproxLogCount() {
+        return logSpecs.size() + computeApproxLogCountForPlaceholders();
+    }
+
+    private int computeApproxLogCountForPlaceholders() {
         LocalTime startTime = timePeriod.getStartTime();
         LocalTime endTime = timePeriod.getEndTime();
         int seconds = endTime.toSecondOfDay() - startTime.toSecondOfDay();
-        return logSpecs.size() + 1 + seconds / (AbstractTimeGenerator.SECONDS_IN_HOUR - AbstractTimeGenerator.SECONDS_IN_MINUTE);
+        return ARBITRARY_OFFSET + seconds / AbstractTimeGenerator.computeAverageInterval();
     }
 
     /**
@@ -163,7 +172,7 @@ public class GroupTimePeriodApplier extends GroupAttributeApplier {
      */
     private void setTimeForPlaceholder(
             Placeholder.Builder placeholder,
-            FixedBoundedTimeGenerator timeGenerator
+            BoundedTimeGenerator timeGenerator
     ) {
         LocalTime startTime = timeGenerator.generate();
         int skipCount = computeSkipCount(placeholder);

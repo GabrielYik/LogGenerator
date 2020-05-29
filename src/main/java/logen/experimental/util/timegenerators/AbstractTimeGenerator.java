@@ -4,15 +4,24 @@ import java.time.LocalTime;
 import java.util.concurrent.ThreadLocalRandom;
 
 public abstract class AbstractTimeGenerator implements TimeGenerator {
-    public static final int SECONDS_IN_MINUTE = 60;
-    public static final int SECONDS_IN_HOUR = 3600;
+    private static final int SECONDS_IN_MINUTE = 60;
+    private static final int SECONDS_IN_HOUR = 3600;
 
     protected final LocalTime fromTime;
-    protected final LocalTime toTime;
+    protected final LocalTime wrapAroundTime;
+    protected final LocalTime baseTime;
 
-    protected AbstractTimeGenerator(LocalTime fromTime, LocalTime toTime) {
+    protected LocalTime currentTime;
+
+    protected AbstractTimeGenerator(
+            LocalTime fromTime,
+            LocalTime wrapAroundTime,
+            LocalTime baseTime
+    ) {
         this.fromTime = fromTime;
-        this.toTime = toTime;
+        this.wrapAroundTime = wrapAroundTime;
+        this.baseTime = baseTime;
+        this.currentTime = fromTime;
     }
 
     @Override
@@ -22,5 +31,9 @@ public abstract class AbstractTimeGenerator implements TimeGenerator {
         return ThreadLocalRandom
                 .current()
                 .nextLong(SECONDS_IN_MINUTE, SECONDS_IN_HOUR);
+    }
+
+    public static int computeAverageInterval() {
+        return SECONDS_IN_HOUR - SECONDS_IN_MINUTE;
     }
 }
