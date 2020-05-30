@@ -90,7 +90,7 @@ public class FillerLogGenerator {
             Pool<String> subjectPool,
             Placeholder placeholder
     ) {
-        TimeGenerator timeGenerator = UnboundedTimeGenerator.back(
+        TimeGenerator timeGenerator = UnboundedTimeGenerator.backward(
                 placeholder.getEndTime(),
                 scenario.getTimePeriod().getStartTime(),
                 scenario.getTimePeriod().getEndTime()

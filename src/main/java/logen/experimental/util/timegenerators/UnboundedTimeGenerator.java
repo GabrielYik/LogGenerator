@@ -2,11 +2,19 @@ package logen.experimental.util.timegenerators;
 
 import java.time.LocalTime;
 
+/**
+ * A generator of time values that is not bounded by any overriding wrap
+ * around time and generates increasing or decreasing time values depending
+ * on its configuration.
+ */
 public class UnboundedTimeGenerator extends AbstractTimeGenerator {
-    private final TimeGeneratorType type;
+    /**
+     * The direction which generation of time values proceeds.
+     */
+    private final TimeGenerationDirection type;
     
     private UnboundedTimeGenerator(
-            TimeGeneratorType type,
+            TimeGenerationDirection type,
             LocalTime fromTime,
             LocalTime wrapAroundTime,
             LocalTime baseTime
@@ -16,14 +24,17 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
     }
 
     /**
-     * Constructs a generator that generates increasing time values between
-     * {@code fromTime} and {@code wrapAroundTime}.
+     * Constructs a generator that generates increasing time values from
+     * {@code baseTime} to {@code wrapAroundTime} starting from {@code fromTime}.
      * If a time value generated is after {@code wrapAroundTime},
      * the time value is discarded and generation wraps around
-     * {@code wrapAroundTime}.
+     * {@code wrapAroundTime} and starts from {@code baseTime}.
      *
      * @param fromTime The earliest time of the first time value generated
-     * @param wrapAroundTime The time at which generation wraps around
+     * @param wrapAroundTime The latest time of a time value generated
+     *                       and the time at which generation wraps around
+     * @param baseTime The time which generation starts from after generation
+     *                 wraps around
      * @return A generator of increasing time values
      */
     public static UnboundedTimeGenerator forward(
@@ -31,7 +42,7 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
             LocalTime wrapAroundTime,
             LocalTime baseTime) {
         return new UnboundedTimeGenerator(
-                TimeGeneratorType.FORWARD,
+                TimeGenerationDirection.FORWARD,
                 fromTime,
                 wrapAroundTime,
                 baseTime
@@ -39,23 +50,26 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
     }
 
     /**
-     * Constructs a generator that generates decreasing time values between
-     * {@code fromTime} and {@code wrapAroundTime}.
+     * Constructs a generator that generates decreasing time values from
+     * {@code wrapAroundTime} to {@code baseTime} starting from {@code fromTime}.
      * If a time value generated is before {@code wrapAroundTime},
      * the time value is discarded and generation wraps around
-     * {@code wrapAroundTime}.
+     * {@code wrapAroundTime} and starts from {@code baseTime}.
      *
      * @param fromTime The latest time of the first time value generated
-     * @param wrapAroundTime The time at which generation wraps around
+     * @param wrapAroundTime The earliest time of a time value generated
+     *                       and the time which generation wraps around
+     * @param baseTime The time which generation starts from after generation
+     *                 wraps around
      * @return A generator of decreasing time values
      */
-    public static UnboundedTimeGenerator back(
+    public static UnboundedTimeGenerator backward(
             LocalTime fromTime, 
             LocalTime wrapAroundTime,
             LocalTime baseTime
     ) {
         return new UnboundedTimeGenerator(
-                TimeGeneratorType.BACKWARD,
+                TimeGenerationDirection.BACKWARD,
                 fromTime,
                 wrapAroundTime,
                 baseTime
@@ -64,25 +78,38 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
 
     @Override
     public LocalTime generate() {
-        long seconds = generateRandomSeconds();
         switch(type) {
             case FORWARD:
-                currentTime = currentTime.plusSeconds(seconds);
-                if (currentTime.isAfter(wrapAroundTime)) {
-                    currentTime = baseTime;
-                    return generate();
-                }
-                break;
+                generateForward();
             case BACKWARD:
-                currentTime = currentTime.minusSeconds(seconds);
-                if (currentTime.isBefore(wrapAroundTime)) {
-                    currentTime = baseTime;
-                    return generate();
-                }
-                break;
+                generateBackward();
             default:
                 throw new AssertionError();
         }
-        return currentTime;
+    }
+
+    private LocalTime generateForward() {
+        long seconds = generateRandomSeconds();
+        timeValue = timeValue.plusSeconds(seconds);
+        if (timeValue.isAfter(wrapAroundTime)) {
+            timeValue = baseTime;
+            return generateForward();
+        }
+        return timeValue;
+    }
+
+    private LocalTime generateBackward() {
+        long seconds = generateRandomSeconds();
+        timeValue = timeValue.minusSeconds(seconds);
+        if (timeValue.isBefore(wrapAroundTime)) {
+            timeValue = baseTime;
+            return generateBackward();
+        }
+        return timeValue;
+    }
+
+    private enum TimeGenerationDirection {
+        FORWARD,
+        BACKWARD
     }
 }

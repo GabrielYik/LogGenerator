@@ -1,9 +1,10 @@
 package logen.experimental.generation.fixed;
 
 import logen.experimental.scenario.Scenario;
-import logen.experimental.util.RandomChooser;
+import logen.experimental.util.RandomUtil;
 import logen.experimental.util.timegenerators.TimeGenerator;
 import logen.experimental.util.timegenerators.UnboundedTimeGenerator;
+import logen.util.RandomChooser;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -136,43 +137,25 @@ public class PlaceholderLogCountSetter {
      * @param logCount The number of logs to distribute
      */
     private void distributeOverOuterPlaceholders(int logCount) {
-        List<Integer> distribution = randomlyDivide(logCount);
+        List<Integer> distribution = distributeEqually(logCount);
+        List<Integer> randomDistribution = RandomUtil.randomise(
+                distribution,
+                RandomUtil::chooseBetween,
+                (a, b) -> a - b,
+                Integer::sum
+        );
         Placeholder.Builder firstPlaceholder = placeholders.get(0);
-        firstPlaceholder.withLogCount(distribution.get(0));
+        firstPlaceholder.withLogCount(randomDistribution.get(0));
         Placeholder.Builder lastPlaceholder = placeholders.get(placeholders.size() - 1);
-        lastPlaceholder.withLogCount(distribution.get(1));
+        lastPlaceholder.withLogCount(randomDistribution.get(1));
     }
 
-    /**
-     * Randomly divide {@code logCount} into two parts.
-     *
-     * @param logCount The number of logs to distribute
-     */
-    private List<Integer> randomlyDivide(int logCount) {
+    private List<Integer> distributeEqually(int logCount) {
         int quotient = logCount / 2;
         int remainder = logCount - quotient;
         List<Integer> values = new ArrayList<>();
         values.add(quotient);
         values.add(remainder);
-        
-        int from = 0;
-        int to = 1;
-        int counter = 1;
-        while (counter != 2) {
-            int randomValue = RandomChooser.chooseBetween(1, values.get(from));
-
-            int fromValue = values.get(from);
-            int toValue = values.get(to);
-            fromValue -= randomValue;
-            toValue += randomValue;
-            values.set(from, fromValue);
-            values.set(to, toValue);
-
-            from = (from + 1) % 2;
-            to = (to + 1) % 2;
-            counter++;
-        }
-
         return values;
     }
 }

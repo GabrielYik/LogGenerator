@@ -20,7 +20,7 @@ public class Pool<E> {
     }
 
     public E get() {
-        E entity = RandomChooser.chooseFrom(entities);
+        E entity = RandomUtil.chooseFrom(entities);
         removalAction.accept(entity);
         if (removalCondition.test(entity)) {
             entities.remove(entity);

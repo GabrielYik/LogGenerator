@@ -4,7 +4,7 @@ import javafx.util.Pair;
 import logen.experimental.scenario.common.Frequency;
 import logen.experimental.scenario.common.LogSpec;
 import logen.experimental.scenario.time.TimePeriod;
-import logen.experimental.util.RandomChooser;
+import logen.experimental.util.RandomUtil;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -54,7 +54,7 @@ public class Group {
         LocalTime endTime;
         switch(timePeriod.getType()) {
             case ANY:
-                startTime = RandomChooser.chooseBetween(
+                startTime = RandomUtil.chooseBetween(
                         globalTimePeriod.getStartTime(),
                         globalTimePeriod.getEndTime().minusHours(2)
                 );
@@ -65,7 +65,7 @@ public class Group {
                 // do nothing
                 break;
             case ONE_HOUR:
-                startTime = RandomChooser.chooseBetween(
+                startTime = RandomUtil.chooseBetween(
                         globalTimePeriod.getStartTime(),
                         globalTimePeriod.getEndTime().minusHours(1)
                 );
