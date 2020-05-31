@@ -1,5 +1,5 @@
 {
-  "logCount": 0,
+  "minLogCount": 0,
   "headers": [],
   "timePeriod": {
     "type": "WEEKDAY",
@@ -18,8 +18,10 @@
   ],
   "groups": [
     {
-      "identifier": "",
-      "ordering": [],
+      "ordering": {
+        "type": "",
+        "positions": []
+      },
       "spacing": {
         "type": "",
         "amount": []
@@ -29,11 +31,14 @@
         "startTime": "",
         "endTime": ""
       },
-      "description": "",
-      "type": "",
-      "subject": "",
-      "remarks": "",
-      "frequency": "ONCE",
+      "descriptions": [],
+      "types": [],
+      "subjects": [],
+      "remarks": [],
+      "frequency": {
+        "type": "",
+        "count": 0
+      },
       "logSpecs": [
         {
           "description": "",
@@ -53,7 +58,7 @@
       "description": "",
       "type": "",
       "subject": "",
-      "remarks": "",
+      "remark": "",
       "frequency": {
         "type": "",
         "count": 0

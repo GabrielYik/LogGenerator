@@ -18,8 +18,8 @@ However, this approach is tedious and potentially error-prone.
 As such, a decision was made to automate the generation of logs.
 The benefits were clear:
 
-* Many logs can be generated easily
-* Characteristics of the logs generated can be specified
+* A large number of logs can be generated easily
+* Characteristics of the logs to be generated can be specified
 * Changes made to the characteristics of specific types of logs can be propagated
 consistently throughout if required
 
@@ -38,7 +38,7 @@ There are three types of scenario attributes.
 |Type |Description
 
 |Global
-|Applies to the log sheet and all logs in it.
+|Applies to all logs.
 
 |Group
 |Applies to some logs.
@@ -47,7 +47,7 @@ There are three types of scenario attributes.
 |Applies to an individual log.
 |===
 
-This separation of scope allows for the fine-grained configuration of the scenario.
+This separation of scope allows for the fine-grained configuration of a scenario.
 
 ==== Global
 [cols="2, 5, 5a"]
@@ -55,21 +55,23 @@ This separation of scope allows for the fine-grained configuration of the scenar
 |===
 |Attribute |Description |Settings
 
-|Log Count
-|The number of logs in the log sheet.
+|Number of Logs
+|The minimum number of logs.
 |
-* logCount
+* minLogCount
 ** Any positive integer
 
 |Headers
-|The description of the columns in the log sheet.
+|The description of all attributes of a logs.
+
+The attributes of a logs are described in <<log_structure, Log Structure>>
 |
 * headers
 ** An array of strings, with each string describing an attribute of a log
 ** Each description should be succinct for readability
 
 |Time Period
-|The range of values the time attribute of a log in the log sheet can take.
+|The range of values the time attribute of a log can take.
 |
 * timePeriod
 ** type
@@ -91,7 +93,7 @@ This separation of scope allows for the fine-grained configuration of the scenar
 **** The end time must be after the start time
 
 |Subjects
-|The range of values the subject attribute of a log in the log sheet can take.
+|The range of values the subject attribute of a log can take.
 |
 * subjects
 ** An array of non-empty strings, with each string representing a subject
@@ -103,15 +105,9 @@ This separation of scope allows for the fine-grained configuration of the scenar
 |===
 |Attribute |Description |Settings
 
-|Identifier
-|The identifier of the group.
-|
-* identifier
-** Any string
-
 |Ordering
-|The sequence in which the logs in the group in relation to each other should be placed
-in the log sheet
+|The sequence in which the logs in the group, in relation to each other, are to be
+placed
 |
 * ordering
 ** type
@@ -141,8 +137,8 @@ second log, 2 logs between the second and third log, and 0 logs between the thir
 fourth log
 
 |Time Period
-|The constraint on the value the time attribute of a log in the group in relation to
-each other can take
+|The constraint on the value the time attribute of a log in the group, in relation to
+each other, can take
 |
 * timePeriod
 ** type
@@ -154,32 +150,32 @@ each other can take
 *** A time between 00:00:00 and 23:59:59
 *** The end time must be after the start time
 
-|Description
-|The value of the description attribute of all logs in the group.
+|Descriptions
+|The range of values the description attribute of a log in the group can take.
 |
-* description
-** Any string
+* descriptions
+** An array of non-empty strings, with each string representing a description
 
-|Type
-|The value of the type attribute of all logs in the group.
+|Types
+|The range of values the type attribute of a log in the group can take.
 |
-* type
-** Any non-empty string
+* types
+** An array of non-empty strings, with each string representing a type
 
-|Subject
-|The value of the subject attribute of all log in the group.
+|Subjects
+|The range of values the subject attribute of a log in the group can take.
 |
-* subject
-** Any non-empty string
+* subjects
+** An array of non-empty strings, with each string representing a subject
 
 |Remarks
-|The value of the remarks attribute of all log in the group.
+|The range of values the remark attribute of a log in the group can take.
 |
 * remarks
-** Any string
+** An array of non-empty strings, with each string representing a remark
 
 |Frequency
-|The frequency in which all the logs in the group appear in the log sheet.
+|The frequency in which all the logs in the group appear.
 |
 * frequency
 ** type
@@ -212,14 +208,14 @@ each other can take
 * subject
 ** Any non-empty string
 
-|Remarks
-|The value of the remarks attribute of the log.
+|Remark
+|The value of the remark attribute of the log.
 |
-* remarks
+* remark
 ** Any string
 
 |Frequency
-|The frequency at which a log appears in the log sheet.
+|The frequency at which a log appears.
 |
 * type
 ** ANY, CUSTOM
@@ -248,8 +244,8 @@ power to exploit designers to design an exploit representable in logs.
 * A record which captures an action acting on a software system.
 * Has attributes such as the time and description of the action captured.
 * A set of logs is a log sheet.
-* A log sheet has a set of headers where each header represents an attribute of the log.
 
+[[log_structure]]
 === Structure
 [cols="2, 5"]
 .Log Structure
@@ -276,7 +272,7 @@ This refers to an entity like a human user or computer user.
 If no subject is specified, one of the subjects specified in the global subjects
 attribute is used.
 
-|Remarks
+|Remark
 |Any additional information about the log.
 
 Some examples include whether the action taken was successful and the amount of memory
@@ -285,10 +281,10 @@ allocated to a process.
 
 === Types
 There are different types of logs.
-Conceptually, they can be categorised a one way.
+Conceptually, they can be categorised a one way: exploit and non-exploit.
 However, this categorisation does not carry well into implementation, and another
-categorisation is used instead.
-In both cases, there are no differences in structure of the logs.
+categorisation is used instead: fixed and filler.
+In both cases, there are no differences in the structure of the logs.
 
 ==== Exploit and Non-exploit
 Conceptually, there are two types of logs: exploit and non-exploit.
