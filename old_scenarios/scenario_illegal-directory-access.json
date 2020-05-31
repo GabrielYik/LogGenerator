@@ -1,0 +1,98 @@
+{
+  "logCount": "150",
+  "headers": [
+    "time", "description", "type", "user", "remarks"
+  ],
+  "period": {
+    "active": {
+      "days": "weekdays",
+      "startTime": "09:00:00",
+      "endTime": "17:00:00"
+    },
+    "inactive": {
+      "days": "weekends"
+    }
+  },
+  "normalActivities": [
+    {
+      "description": "account login",
+      "type": "user access",
+      "subject": "vf3P9Tflis",
+      "remarks": "STATUS success",
+      "complement": {
+        "description": "account logout",
+        "type": "user access",
+        "subject": "vf3P9Tflis",
+        "remarks": "STATUS success"
+      }
+    },
+    {
+      "description": "account login",
+      "type": "user access",
+      "subject": "het5IHLIpv",
+      "remarks": "STATUS failure"
+    },
+    {
+      "description": "directory creation",
+      "type": "terminal input",
+      "subject": "WZ0il5z1pN",
+      "remarks": "INPUT \"mkdir progress_update\""
+    },
+    {
+      "description": "directory deletion",
+      "type": "terminal input",
+      "subject": "7KuUzfMSvL",
+      "remarks": "INPUT \"rmdir test\""
+    },
+    {
+      "description": "file creation",
+      "type": "terminal input",
+      "subject": "7KuUzfMSvL",
+      "remarks": "INPUT \"touch test.txt\""
+    },
+    {
+      "description": "file creation",
+      "type": "terminal input",
+      "subject": "Mf8lO0tsRZ",
+      "remarks": "INPUT \"touch progress.txt\""
+    },
+    {
+      "description": "file deletion",
+      "type": "terminal input",
+      "subject": "OZimr9MYXC",
+      "remarks": "INPUT \"rm progress_2020-01-01.txt\""
+    },
+    {
+      "description": "terminal navigation",
+      "type": "terminal input",
+      "subject": "LuUd4WAWVZ",
+      "remarks": "INPUT \"cd ../..\"",
+      "complement": {
+        "description": "file creation",
+        "type": "terminal input",
+        "subject": "LuUd4WAWVZ",
+        "remarks": "INPUT \"vim progress_2020-01-02.txt\"",
+        "complement": {
+          "description": "file list",
+          "type": "terminal input",
+          "subject": "LuUd4WAWVZ",
+          "remarks": "INPUT \"ls -a\"",
+          "complement": {
+            "description": "directory deletion",
+            "type": "terminal input",
+            "subject": "LuUd4WAWVZ",
+            "remarks": "INPUT \"rm -r .annual_reports\""
+          }
+        }
+      },
+      "persistence": "one time"
+    }
+  ],
+  "suspiciousActivities": [],
+  "subjects": [],
+  "troubles": [
+    {
+      "type": "empty"
+    }
+  ]
+}
