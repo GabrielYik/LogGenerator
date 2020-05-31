@@ -59,7 +59,8 @@ This separation of scope allows for the fine-grained configuration of a scenario
 |The minimum number of logs.
 |
 * minLogCount
-** Any positive integer
+** Options: any positive integer
+** Default: 200
 
 |Headers
 |The description of all attributes of a logs.
@@ -67,7 +68,9 @@ This separation of scope allows for the fine-grained configuration of a scenario
 The attributes of a logs are described in <<log_structure, Log Structure>>
 |
 * headers
-** An array of strings, with each string describing an attribute of a log
+** Options: an array of strings
+** Default: [time, description, type, subject, remark]
+** Each string describes an attribute of a log
 ** Each description should be succinct for readability
 
 |Time Period
@@ -75,28 +78,30 @@ The attributes of a logs are described in <<log_structure, Log Structure>>
 |
 * timePeriod
 ** type
-*** One of the following: WEEKDAY, WEEKEND, EVERY DAY
+*** Options: WEEKDAY, WEEKEND, EVERY DAY
 ** startTime
-*** A time between 00:00:00 and 23:59:59
+*** Options: a time between 00:00:00 and 23:59:59
 *** The start time must be before the end time
 ** endTime
-*** A time between 00:00:00 and 23:59:59
+*** Options: a time between 00:00:00 and 23:59:59
 *** The end time must be after the start time
 ** specifics
 *** day
-**** One of the following: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
+**** Options: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
 *** startTime
-**** A time between 00:00:00 and 23:59:59
+**** Options: a time between 00:00:00 and 23:59:59
 **** The start time must be before the end time
 *** endTime
-**** A time between 00:00:00 and 23:59:59
+**** Options: a time between 00:00:00 and 23:59:59
 **** The end time must be after the start time
 
 |Subjects
 |The range of values the subject attribute of a log can take.
 |
 * subjects
-** An array of non-empty strings, with each string representing a subject
+** Options: an array of non-empty strings
+** Default: none
+** Each string represents a subject
 |===
 
 ==== Group
@@ -111,11 +116,13 @@ placed
 |
 * ordering
 ** type
-*** One of the following: ANY, CUSTOM
-** positions
-*** An array of positive integers, with each integer specifying the position of the
-corresponding log specification
-*** There must be the same number of values as logs in the group
+*** Options: ANY, CUSTOM
+*** Default: ANY
+** positions (if type is CUSTOM)
+*** Options: an array of the integers 1 to n
+*** Default: a random permutation of the integers 1 to n
+*** n refers to the number of log specifications
+*** Each integer specifies the position of the corresponding log specification
 *** E.g. in a group of 4 logs, [1, 2, 3, 4] means that the first log will be placed
 first, the second log second, and so forth
 *** E.g. in a group of 4 logs, [3, 2, 1, 4] means that the first log will be placed
@@ -126,10 +133,12 @@ third, the second log second, the third log first and the fourth log fourth.
 |
 * spacing
 ** type
-*** ANY, CUSTOM
-** amount
-*** An array of non-negative integers
-*** There must be one less integer than logs in the group
+*** Options: ANY, CUSTOM
+*** Default: ANY
+** amount (if type is CUSTOM)
+*** Options: an array of non-negative integers of size n - 1
+*** Default: none
+*** n refers to the number of logs in the group
 *** E.g. in a group of 4 logs, [0, 0, 0] means that there are 0 logs between the first
 and second log, 0 logs between the second and third log, and so on.
 *** E.g. in a group of 4 logs, [1, 2, 0] means that there is 1 log between the first and
@@ -142,46 +151,59 @@ each other, can take
 |
 * timePeriod
 ** type
-*** ANY, CUSTOM, ONE HOUR, ONE DAY, AFTER MIDNIGHT
-** startTime
-*** A time between 00:00:00 and 23:59:59
+*** Options: ANY, CUSTOM, ONE HOUR, ONE DAY, AFTER MIDNIGHT
+*** Default: ANY
+** startTime (if type is *NOT* ANY)
+*** Options: a time between 00:00:00 and 23:59:59
+*** Default: 09:00:00
 *** The start time must be before the end time
-** endTime
-*** A time between 00:00:00 and 23:59:59
+** endTime (if type is *NOT* ANY)
+*** Options: a time between 00:00:00 and 23:59:59
+*** Default: 17:00:00
 *** The end time must be after the start time
 
 |Descriptions
 |The range of values the description attribute of a log in the group can take.
 |
 * descriptions
-** An array of non-empty strings, with each string representing a description
+** Options: an array of non-empty strings
+** Default: none
+** Each string represents a description
 
 |Types
 |The range of values the type attribute of a log in the group can take.
 |
 * types
-** An array of non-empty strings, with each string representing a type
+** Options: an array of non-empty strings
+** Default: none
+** Each string represents a type
 
 |Subjects
 |The range of values the subject attribute of a log in the group can take.
 |
 * subjects
-** An array of non-empty strings, with each string representing a subject
+** Options: an array of non-empty strings
+** Default: none
+** Each string represents a subject
 
 |Remarks
 |The range of values the remark attribute of a log in the group can take.
 |
 * remarks
-** An array of non-empty strings, with each string representing a remark
+** Options: an array of non-empty strings
+** Default: none
+** Each string represents a remark
 
 |Frequency
 |The frequency in which all the logs in the group appear.
 |
 * frequency
 ** type
-*** ANY, CUSTOM
-** count
-*** Any positive integer
+*** Options: ANY, CUSTOM
+*** Default: ANY
+** count (if type is CUSTOM)
+*** Options: Any positive integer
+*** Default: none
 |===
 
 ==== Local
@@ -194,33 +216,39 @@ each other, can take
 |The value of the description attribute of the log.
 |
 * description
-** Any string
+** Options: any string
+** Default: none
 
 |Type
 |The value of the category attribute of the log.
 |
 * type
-** Any non-empty string
+** Options: any non-empty string
+** Default: none
 
 |Subject
 |The value of the subject attribute of the log.
 |
 * subject
-** Any non-empty string
+** Options: any non-empty string
+** Default: none
 
 |Remark
 |The value of the remark attribute of the log.
 |
 * remark
-** Any string
+** Options: any string
+** Default: none
 
 |Frequency
 |The frequency at which a log appears.
 |
 * type
-** ANY, CUSTOM
-* count
-** Any positive integer
+** Options: ANY, CUSTOM
+** Default: ANY
+* count (if type is CUSTOM)
+** Options: any positive integer
+** Default: none
 |===
 
 === Exploits
