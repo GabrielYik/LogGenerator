@@ -30,7 +30,7 @@ The application developed to automate the generation of logs is aptly named `{ap
 * The attributes of a scenario are configurable through a configuration file.
 
 === Attributes
-There are three types of scenario attributes.
+There are three levels of scenario attributes.
 
 [cols="2, 5"]
 .Scenario Attributes
@@ -63,65 +63,93 @@ This separation of scope allows for the fine-grained configuration of a scenario
 ** Default: 200
 
 |Headers
-|The description of all attributes of a logs.
+|The description of all attributes of a log.
 
-The attributes of a logs are described in <<log_structure, Log Structure>>
+The attributes of a log are described in <<log_structure, Log Structure>>.
 |
 * headers
-** Options: an array of strings
+** Options: a non-empty array of strings
 ** Default: [time, description, type, subject, remark]
 ** Each string describes an attribute of a log
 ** Each description should be succinct for readability
 
 |Time Period
-|The range of values the time attribute of a log can take.
+|The value range of the time attribute of all logs.
 |
 * timePeriod
-** type
-*** Options: WEEKDAY, WEEKEND, EVERY DAY
 ** startTime
 *** Options: a time between 00:00:00 and 23:59:59
+*** Default: 09:00:00
 *** The start time must be before the end time
 ** endTime
 *** Options: a time between 00:00:00 and 23:59:59
+*** Default: 17:00:00
 *** The end time must be after the start time
-** specifics
-*** day
-**** Options: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY, SUNDAY
-*** startTime
-**** Options: a time between 00:00:00 and 23:59:59
-**** The start time must be before the end time
-*** endTime
-**** Options: a time between 00:00:00 and 23:59:59
-**** The end time must be after the start time
+
+|Descriptions
+|The value range of the description attribute of all logs.
+|
+* descriptions
+** Options: a non-empty array of non-empty strings
+** Default: none
+** Each string represents a description
+
+|Types
+|The value range of the type attribute of all logs.
+|
+* types
+** Options: a non-empty array of non-empty strings
+** Default: none
+** Each string represents a type
 
 |Subjects
-|The range of values the subject attribute of a log can take.
+|The value range of the subject attribute of all logs.
 |
 * subjects
-** Options: an array of non-empty strings
+** Options: a non-empty array of non-empty strings
 ** Default: none
 ** Each string represents a subject
+
+|Remarks
+|The value range of the remark attribute of all logs.
+|
+* remarks
+** Options: a non-empty array of non-empty strings
+** Default: none
+** Each string represents a remark
+
+|Frequency
+|The frequency in which all logs appear.
+|
+* frequency
+** type
+*** Options: ANY, CUSTOM
+*** Default: none
+** count (if type is CUSTOM)
+*** Options: Any positive integer
+*** Default: none
 |===
 
 ==== Group
+Attributes defined at the group level take precedence over the same attributes (singular
+or plural) defined at the global level.
+
 [cols="2, 5, 5a"]
 .Group Scenario Attributes
 |===
 |Attribute |Description |Settings
 
 |Ordering
-|The sequence in which the logs in the group, in relation to each other, are to be
-placed
+|The sequence in which logs in the group are to be placed.
 |
 * ordering
 ** type
 *** Options: ANY, CUSTOM
 *** Default: ANY
 ** positions (if type is CUSTOM)
-*** Options: an array of the integers 1 to n
+*** Options: a non-empty array of the integers 1 to n
 *** Default: a random permutation of the integers 1 to n
-*** n refers to the number of log specifications
+*** n refers to the number of log specifications in the group
 *** Each integer specifies the position of the corresponding log specification
 *** E.g. in a group of 4 logs, [1, 2, 3, 4] means that the first log will be placed
 first, the second log second, and so forth
@@ -136,9 +164,9 @@ third, the second log second, the third log first and the fourth log fourth.
 *** Options: ANY, CUSTOM
 *** Default: ANY
 ** amount (if type is CUSTOM)
-*** Options: an array of non-negative integers of size n - 1
+*** Options: a non-empty array of non-negative integers of size n - 1
 *** Default: none
-*** n refers to the number of logs in the group
+*** n refers to the number of log specifications in the group
 *** E.g. in a group of 4 logs, [0, 0, 0] means that there are 0 logs between the first
 and second log, 0 logs between the second and third log, and so on.
 *** E.g. in a group of 4 logs, [1, 2, 0] means that there is 1 log between the first and
@@ -146,8 +174,7 @@ second log, 2 logs between the second and third log, and 0 logs between the thir
 fourth log
 
 |Time Period
-|The constraint on the value the time attribute of a log in the group, in relation to
-each other, can take
+|The constraint on the value of the time attribute of a log in the group.
 |
 * timePeriod
 ** type
@@ -163,34 +190,34 @@ each other, can take
 *** The end time must be after the start time
 
 |Descriptions
-|The range of values the description attribute of a log in the group can take.
+|The value range of the description attribute of a log in the group.
 |
 * descriptions
-** Options: an array of non-empty strings
+** Options: a non-empty array of non-empty strings
 ** Default: none
 ** Each string represents a description
 
 |Types
-|The range of values the type attribute of a log in the group can take.
+|The value range of the type attribute of a log in the group.
 |
 * types
-** Options: an array of non-empty strings
+** Options: a non-empty array of non-empty strings
 ** Default: none
 ** Each string represents a type
 
 |Subjects
-|The range of values the subject attribute of a log in the group can take.
+|The value rang of the subject attribute of a log in the group.
 |
 * subjects
-** Options: an array of non-empty strings
+** Options: a non-empty array of non-empty strings
 ** Default: none
 ** Each string represents a subject
 
 |Remarks
-|The range of values the remark attribute of a log in the group can take.
+|The value range of the remark attribute of a log in the group.
 |
 * remarks
-** Options: an array of non-empty strings
+** Options: a non-empty array of non-empty strings
 ** Default: none
 ** Each string represents a remark
 
@@ -200,13 +227,16 @@ each other, can take
 * frequency
 ** type
 *** Options: ANY, CUSTOM
-*** Default: ANY
+*** Default: none
 ** count (if type is CUSTOM)
 *** Options: Any positive integer
 *** Default: none
 |===
 
 ==== Local
+Attributes defined at the local level take precedence over the same attributes (singular
+or plural) defined at the global and group levels.
+
 [cols="2, 5, 5a"]
 .Local Scenario Attributes
 |===
@@ -216,7 +246,7 @@ each other, can take
 |The value of the description attribute of the log.
 |
 * description
-** Options: any string
+** Options: any non-empty string
 ** Default: none
 
 |Type
@@ -237,7 +267,7 @@ each other, can take
 |The value of the remark attribute of the log.
 |
 * remark
-** Options: any string
+** Options: any non-empty string
 ** Default: none
 
 |Frequency
