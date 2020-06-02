@@ -2,20 +2,17 @@
   "minLogCount": 0,
   "headers": [],
   "timePeriod": {
-    "type": "WEEKDAY",
     "startTime": "",
-    "endTime": "",
-    "specifics": [
-      {
-        "day": "",
-        "startTime": "",
-        "endTime": ""
-      }
-    ]
+    "endTime": ""
   },
-  "subjects": [
-
-  ],
+  "descriptions": [],
+  "subjects": [],
+  "types": [],
+  "remarks": [],
+  "frequency": {
+    "type": "",
+    "count": 0
+  },
   "groups": [
     {
       "ordering": {
@@ -27,7 +24,7 @@
         "amount": []
       },
       "timePeriod": {
-        "type": "CUSTOM",
+        "type": "",
         "startTime": "",
         "endTime": ""
       },
@@ -44,9 +41,9 @@
           "description": "",
           "type": "",
           "subject": "",
-          "remarks": "",
+          "remark": "",
           "frequency": {
-            "type": "ANY",
+            "type": "",
             "count": 0
           }
         }
