@@ -12,6 +12,9 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
+
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.MapperFeature;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import com.fasterxml.jackson.core.JsonParser;
@@ -107,7 +110,10 @@ public class UserInputHandler {
 
     private static Scenario readScenario(String scenarioFileName) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+        objectMapper
+                .configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, true)
+                .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true)
+                .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS, true);
         File scenarioFile = new File(SCENARIO_DIR_PATH + scenarioFileName + SCENARIO_FILE_EXTENSION);
         return objectMapper.readValue(scenarioFile, Scenario.class);
     }
