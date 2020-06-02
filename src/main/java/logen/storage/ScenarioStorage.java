@@ -1,14 +1,14 @@
-package logen;
+package logen.storage;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import logen.scenario.Scenario;
-import logen.util.PathUtil;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.DirectoryStream;
 import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
@@ -20,9 +20,12 @@ import java.util.List;
 import static logen.Config.SCENARIO_DIR_PATH;
 import static logen.Config.SCENARIO_DIR_PATH_JAR;
 import static logen.Config.SCENARIO_FILE_EXTENSION;
-import static logen.util.PathUtil.SCENARIO_FILE_FILTER;
+import static logen.Config.SCENARIO_FILE_PREFIX;
 
 public class ScenarioStorage {
+    public static final DirectoryStream.Filter<Path> SCENARIO_FILE_FILTER =
+            path -> path.getFileName().toString().startsWith(SCENARIO_FILE_PREFIX);
+
     private ScenarioStorage() {
 
     }
@@ -44,8 +47,13 @@ public class ScenarioStorage {
         List<String> scenarios = new ArrayList<>();
         Path scenarioDirPath = new File(scenarioDirectoryPath).toPath();
         Files.newDirectoryStream(scenarioDirPath, SCENARIO_FILE_FILTER)
-                .forEach(p -> scenarios.add(PathUtil.toFileNameWithoutExtension(p)));
+                .forEach(path -> scenarios.add(toFileNameWithoutExtension(path)));
         return scenarios;
+    }
+
+    public static String toFileNameWithoutExtension(Path absolutePath) {
+        String fileNameWithExtension = absolutePath.getFileName().toString();
+        return fileNameWithExtension.substring(0, fileNameWithExtension.length() - SCENARIO_FILE_EXTENSION.length());
     }
 
     private static void createEmptyScenariosFolder() throws IOException {

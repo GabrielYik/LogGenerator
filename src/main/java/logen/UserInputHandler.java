@@ -8,6 +8,8 @@ import java.util.Scanner;
 import logen.generation.LogGenerator;
 import logen.log.Log;
 import logen.scenario.Scenario;
+import logen.storage.LogStorage;
+import logen.storage.ScenarioStorage;
 
 public class UserInputHandler {
     private static final String USER_OPTIONS_MESSAGE =

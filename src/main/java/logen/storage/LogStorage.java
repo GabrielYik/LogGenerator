@@ -1,4 +1,4 @@
-package logen;
+package logen.storage;
 
 import logen.log.Log;
 import org.apache.commons.csv.CSVFormat;
