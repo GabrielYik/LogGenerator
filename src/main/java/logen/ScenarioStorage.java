@@ -23,6 +23,10 @@ import static logen.Config.SCENARIO_FILE_EXTENSION;
 import static logen.util.PathUtil.SCENARIO_FILE_FILTER;
 
 public class ScenarioStorage {
+    private ScenarioStorage() {
+
+    }
+
     public static List<String> fetchScenariosFileNames() throws IOException {
         try {
             return fetchScenariosFileNames(SCENARIO_DIR_PATH);

@@ -16,6 +16,10 @@ import static logen.Config.LOG_FILE_PREFIX;
 import static logen.Config.SCENARIO_FILE_PREFIX;
 
 public class LogStorage {
+    private LogStorage() {
+
+    }
+
     public static void writeAsCsv(List<String> headers, List<Log> logs, String scenarioFileName)
             throws IOException {
         if (!Files.exists(Paths.get(LOG_DIR_PATH))) {

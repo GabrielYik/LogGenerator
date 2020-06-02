@@ -17,4 +17,8 @@ public class Config {
 
     public static final String SCENARIO_FILE_EXTENSION = ".json";
     public static final String LOG_FILE_EXTENSION = ".csv";
+
+    private Config() {
+
+    }
 }

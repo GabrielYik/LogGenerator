@@ -1,6 +1,7 @@
 package logen;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
 
@@ -10,10 +11,10 @@ import logen.scenario.Scenario;
 
 public class UserInputHandler {
     private static final String USER_OPTIONS_MESSAGE =
-        "Options\n"
-            + "- select a scenario file to use by entering its number\n"
-            + "- select multiple scenario files to use by entering \"all\"\n"
-            + "- exit the program by entering \"exit\"\n";
+            "Options\n"
+                    + "- select a scenario file to use by entering its number\n"
+                    + "- select multiple scenario files to use by entering \"all\"\n"
+                    + "- exit the program by entering \"exit\"\n";
     private static final String USER_PROMPT_MESSAGE = "Enter input: ";
     private static final String EXIT_MESSAGE = "Goodbye";
     private static final String SCENARIO_OUT_OF_BOUNDS_MESSAGE = "Scenario choice does not exist. Pick another.";
@@ -30,40 +31,56 @@ public class UserInputHandler {
 
     private static final int MIN_SCENARIO_CHOICE = 1;
 
-    private UserInputHandler() {
+    private final List<String> scenariosFileNames;
 
+    public UserInputHandler() throws IOException {
+        this.scenariosFileNames = ScenarioStorage.fetchScenariosFileNames();
     }
 
-    public static void handle(List<String> scenariosFileNames) throws IOException {
-        boolean toContinueHandlingInput = true;
+    public void run() throws IOException {
+        displayScenarioChoices();
+        handleUserInputs();
+    }
+
+    private void displayScenarioChoices() {
+        Collections.sort(scenariosFileNames);
+        System.out.println("Scenarios Available");
+        for (int listing = 1; listing <= scenariosFileNames.size(); listing++) {
+            System.out.println("(" + listing + ") " + scenariosFileNames.get(listing - 1));
+        }
+        System.out.println();
+    }
+
+    public void handleUserInputs() throws IOException {
+        boolean toContinueHandling = true;
         do {
             String userInput = getUserInput();
-            int userCommand = handleUserInput(userInput, scenariosFileNames.size());
+            int userInputResult = evaluateUserInput(userInput);
 
-            switch (userCommand) {
-            case EXIT_COMMAND:
-                System.out.println(EXIT_MESSAGE);
-                toContinueHandlingInput = false;
-                break;
-            case ALL_COMMAND:
-                for (String scenarioFileName : scenariosFileNames) {
+            switch (userInputResult) {
+                case EXIT_COMMAND:
+                    System.out.println(EXIT_MESSAGE);
+                    toContinueHandling = false;
+                    break;
+                case ALL_COMMAND:
+                    for (String scenarioFileName : scenariosFileNames) {
+                        generateLogs(scenarioFileName);
+                    }
+                case SCENARIO_OUT_OF_BOUNDS:
+                    System.out.println(SCENARIO_OUT_OF_BOUNDS_MESSAGE);
+                    break;
+                case UNKNOWN_INPUT:
+                    System.out.println(UNKNOWN_INPUT_MESSAGE);
+                    break;
+                default:
+                    int scenarioIndex = mapChoiceToIndex(userInputResult);
+                    String scenarioFileName = scenariosFileNames.get(scenarioIndex);
                     generateLogs(scenarioFileName);
-                }
-            case SCENARIO_OUT_OF_BOUNDS:
-                System.out.println(SCENARIO_OUT_OF_BOUNDS_MESSAGE);
-                break;
-            case UNKNOWN_INPUT:
-                System.out.println(UNKNOWN_INPUT_MESSAGE);
-                break;
-            default:
-                int scenarioIndex = userCommand - 1;
-                String scenarioFileName = scenariosFileNames.get(scenarioIndex);
-                generateLogs(scenarioFileName);
             }
-        } while (toContinueHandlingInput);
+        } while (toContinueHandling);
     }
 
-    private static String getUserInput() {
+    private String getUserInput() {
         System.out.println(USER_OPTIONS_MESSAGE);
         System.out.println(USER_PROMPT_MESSAGE);
 
@@ -71,27 +88,28 @@ public class UserInputHandler {
         return scanner.next();
     }
 
-    private static int handleUserInput(String userInput, int maxScenarioChoice) {
+    private int evaluateUserInput(String userInput) {
         switch (userInput.toLowerCase().trim()) {
-        case EXIT_CHOICE:
-            return EXIT_COMMAND;
-        case ALL_CHOICE:
-            return ALL_COMMAND;
-        default:
-            try {
-                int scenarioChoice = Integer.parseInt(userInput);
-                if (scenarioChoice < MIN_SCENARIO_CHOICE || scenarioChoice > maxScenarioChoice) {
-                    return SCENARIO_OUT_OF_BOUNDS;
-                } else {
-                    return scenarioChoice;
+            case EXIT_CHOICE:
+                return EXIT_COMMAND;
+            case ALL_CHOICE:
+                return ALL_COMMAND;
+            default:
+                try {
+                    int scenarioChoice = Integer.parseInt(userInput);
+                    int maxScenarioChoice = scenariosFileNames.size();
+                    if (scenarioChoice < MIN_SCENARIO_CHOICE || scenarioChoice > maxScenarioChoice) {
+                        return SCENARIO_OUT_OF_BOUNDS;
+                    } else {
+                        return scenarioChoice;
+                    }
+                } catch (NumberFormatException e) {
+                    return UNKNOWN_INPUT;
                 }
-            } catch (NumberFormatException e) {
-                return UNKNOWN_INPUT;
-            }
         }
     }
 
-    private static void generateLogs(String scenarioFileName) throws IOException {
+    private void generateLogs(String scenarioFileName) throws IOException {
         Scenario scenario = ScenarioStorage.readScenario(scenarioFileName);
 
         LogGenerator logGenerator = new LogGenerator(scenario);
@@ -100,5 +118,9 @@ public class UserInputHandler {
 
         LogStorage.writeAsCsv(headers, logs, scenarioFileName);
         System.out.println(FILE_GENERATION_SUCCESS_MESSAGE);
+    }
+
+    private int mapChoiceToIndex(int scenarioChoice) {
+        return scenarioChoice - 1;
     }
 }
