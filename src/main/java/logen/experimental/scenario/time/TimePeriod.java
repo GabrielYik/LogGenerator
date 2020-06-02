@@ -1,9 +1,13 @@
 package logen.experimental.scenario.time;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import logen.experimental.scenario.common.LocalTimeDeserialiser;
 import java.time.LocalTime;
 
 public class TimePeriod {
+    @JsonDeserialize(using = LocalTimeDeserialiser.class)
     private LocalTime startTime;
+    @JsonDeserialize(using = LocalTimeDeserialiser.class)
     private LocalTime endTime;
 
     }
