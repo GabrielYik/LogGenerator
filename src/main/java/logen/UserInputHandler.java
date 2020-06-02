@@ -1,24 +1,9 @@
 package logen;
 
-import static logen.Config.LOG_DIR_PATH;
-import static logen.Config.LOG_FILE_EXTENSION;
-import static logen.Config.SCENARIO_DIR_PATH;
-import static logen.Config.SCENARIO_FILE_EXTENSION;
-import static logen.Config.SCENARIO_FILE_PREFIX;
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
-import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.MapperFeature;
-import org.apache.commons.csv.CSVFormat;
-import org.apache.commons.csv.CSVPrinter;
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import logen.generation.LogGenerator;
 import logen.log.Log;
 import logen.scenario.Scenario;
@@ -44,8 +29,6 @@ public class UserInputHandler {
     private static final int UNKNOWN_INPUT = -4;
 
     private static final int MIN_SCENARIO_CHOICE = 1;
-
-    private static final String LOG_FILE_PREFIX = "log_";
 
     private UserInputHandler() {
 
@@ -108,46 +91,14 @@ public class UserInputHandler {
         }
     }
 
-    private static Scenario readScenario(String scenarioFileName) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper
-                .configure(DeserializationFeature.FAIL_ON_NUMBERS_FOR_ENUMS, true)
-                .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true)
-                .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS, true);
-        File scenarioFile = new File(SCENARIO_DIR_PATH + scenarioFileName + SCENARIO_FILE_EXTENSION);
-        return objectMapper.readValue(scenarioFile, Scenario.class);
-    }
-
     private static void generateLogs(String scenarioFileName) throws IOException {
-        Scenario scenario = readScenario(scenarioFileName);
+        Scenario scenario = ScenarioStorage.readScenario(scenarioFileName);
 
         LogGenerator logGenerator = new LogGenerator(scenario);
         List<Log> logs = logGenerator.generate();
         List<String> headers = scenario.getHeaders();
 
-        writeAsCsv(headers, logs, scenarioFileName);
+        LogStorage.writeAsCsv(headers, logs, scenarioFileName);
         System.out.println(FILE_GENERATION_SUCCESS_MESSAGE);
-    }
-
-    private static void writeAsCsv(List<String> headers, List<Log> logs, String scenarioFileName)
-        throws IOException {
-        if (!Files.exists(Paths.get(LOG_DIR_PATH))) {
-            Files.createDirectory(Paths.get(LOG_DIR_PATH));
-        }
-        FileWriter writer = new FileWriter(LOG_DIR_PATH + toPrettyFileName(scenarioFileName) + LOG_FILE_EXTENSION);
-        CSVPrinter printer = new CSVPrinter(writer, CSVFormat.EXCEL.withHeader(headers.toArray(new String[]{})));
-        logs.forEach(log -> {
-            try {
-                printer.printRecord(log.toArray());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        });
-        printer.flush();
-        printer.close();
-    }
-
-    private static String toPrettyFileName(String fileName) {
-        return LOG_FILE_PREFIX + fileName.substring(SCENARIO_FILE_PREFIX.length() + 1);
     }
 }
