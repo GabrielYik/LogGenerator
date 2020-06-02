@@ -74,7 +74,7 @@ public class Group {
     }
 
     private <E> List<E> setAttributeIfAbsent(List<E> attribute, List<E> newAttribute) {
-        if (attribute.isEmpty()) {
+        if (attribute == null) {
             attribute = newAttribute;
         }
         return attribute;
@@ -88,6 +88,13 @@ public class Group {
                 remarks,
                 frequency
         );
+    }
+
+    public boolean verifyIfRequiredAttributesSet() {
+        return frequency.verifyIfRequiredAttributesSet() &&
+                logSpecs.stream()
+                        .map(LogSpec::verifyIfRequiredAttributesSet)
+                        .reduce(true, (b1, b2) -> b1 && b2);
     }
 
     public GroupOrdering getOrdering() {

@@ -7,8 +7,8 @@ import logen.scenario.common.PropagationContainer;
 import logen.scenario.time.TimePeriod;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Scenario {
     private static final int DEFAULT_LOG_COUNT = 200;
@@ -44,6 +44,9 @@ public class Scenario {
      * Not required.
      */
     private List<String> remarks;
+    /**
+     * Not required.
+     */
     private Frequency frequency;
     /**
      * Not required.
@@ -55,16 +58,15 @@ public class Scenario {
     private List<LogSpec> logSpecs;
 
     /**
-     * Sets the values of missing properties with their default values
-     * and sets the values of properties where it is specified that the
+     * Sets the values of missing attributes with their default values
+     * and sets the values of attributes where it is specified that the
      * values to be set are left to the system to choose.
      *
-     * Missing properties refer to properties which are not present in
-     * the scenario configuration file or properties which are present
-     * in the scenario configuration file but which sub-properties are
-     * not present.
+     * An attribute is missing if it is not present in the scenario
+     * configuration file, either as an attribute in its entirety or as
+     * part of another attribute.
      *
-     * Missing properties with no default values will not be modified.
+     * Missing attributes with no default values will not be modified.
      */
     public void setAttributesIfAbsent() {
         setLogCountIfAbsent();
@@ -86,20 +88,20 @@ public class Scenario {
     }
 
     private void setGroupsAttributesIfAbsent() {
-        if (groups == null) {
-            groups = Collections.emptyList();
-        }
-        groups.forEach(group -> group.setAttributesIfAbsent(timePeriod));
+        Optional.of(groups).ifPresent(gs -> gs.forEach(g -> g.setAttributesIfAbsent(timePeriod)));
     }
 
     /**
-     * Sets the values of missing property values if not specified but
-     * are specified higher up in the chain
+     * Sets the values of missing attributes values if not specified but
+     * are specified in higher levels.
+     *
+     * An level is higher than another if it has a wider scope of effect.
+     * As such, the levels of attributes are: global > group > local.
      */
     public void propagateValuesIfAbsent() {
         PropagationContainer container = toPropagationContainer();
-        groups.forEach(group -> group.propagateValuesIfAbsent(container));
-        logSpecs.forEach(logSpec -> logSpec.propagateValuesIfAbsent(container));
+        Optional.of(groups).ifPresent(gs -> gs.forEach(g -> g.propagateValuesIfAbsent(container)));
+        Optional.of(logSpecs).ifPresent(ls -> ls.forEach(l -> l.propagateValuesIfAbsent(container)));
     }
 
     private PropagationContainer toPropagationContainer() {
@@ -116,14 +118,21 @@ public class Scenario {
      * Verify that all required properties are set.
      * Required properties refer to properties which values must be set.
      */
-    public void verifyRequiredPropertiesPresent() {
-
+    public boolean verifyIfRequiredAttributesPresent() {
+        boolean arePresent = true;
+        if (groups != null) {
+            arePresent &= groups.stream().map(Group::verifyIfRequiredAttributesSet).reduce(true, Boolean::logicalAnd);
+        }
+        if (logSpecs != null) {
+            arePresent &= logSpecs.stream().map(LogSpec::verifyIfRequiredAttributesSet).reduce(true, Boolean::logicalAnd);
+        }
+        return arePresent;
     }
 
     /**
      * Verify that the values of all required properties are set correctly.
      */
-    public void verifyRequiredPropertiesSetCorrectly() {
+    public void verifyIfRequiredAttributesCorrect() {
 
     }
 

@@ -31,7 +31,7 @@ public class GroupTimePeriod {
         handleSystemChoices(timePeriod, globalTimePeriod);
     }
 
-    public static void handleSystemChoices(GroupTimePeriod timePeriod, TimePeriod globalTimePeriod) {
+    private static void handleSystemChoices(GroupTimePeriod timePeriod, TimePeriod globalTimePeriod) {
         LocalTime startTime;
         LocalTime endTime;
         switch(timePeriod.getType()) {

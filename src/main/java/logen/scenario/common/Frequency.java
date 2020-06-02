@@ -4,6 +4,10 @@ public class Frequency {
     private FrequencyType type;
     private int count;
 
+    public boolean verifyIfRequiredAttributesSet() {
+        return type != null && count != 0;
+    }
+
     public FrequencyType getType() {
         return type;
     }

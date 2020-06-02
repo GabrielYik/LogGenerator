@@ -23,10 +23,18 @@ public class LogSpec {
     }
 
     private <E> E setAttributeIfAbsent(E attribute, List<E> valueSource) {
-        if (attribute == null) {
+        if (attribute == null && valueSource != null) {
             attribute = RandomUtil.chooseFrom(valueSource);
         }
         return attribute;
+    }
+
+    public boolean verifyIfRequiredAttributesSet() {
+        return description != null
+                && type != null
+                && subject != null
+                && remark != null
+                && frequency != null;
     }
 
     public String getDescription() {

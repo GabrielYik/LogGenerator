@@ -41,10 +41,6 @@ public class GroupOrdering {
         return positions;
     }
 
-    public boolean isComplete() {
-        return type != null && positions != null;
-    }
-
     public GroupOrderingType getType() {
         return type;
     }
