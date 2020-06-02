@@ -3,16 +3,25 @@ package logen.experimental.scenario.group;
 import java.util.List;
 
 public class GroupSpacing {
+    private static final GroupSpacingType DEFAULT_TYPE = GroupSpacingType.ANY;
+
     private GroupSpacingType type;
     private List<Integer> amounts;
 
-    public GroupSpacing() {
+    public static void setAttributesIfAbsent(GroupSpacing spacing) {
+        if (spacing == null) {
+            spacing = new GroupSpacing();
+            spacing.type = DEFAULT_TYPE;
+        }
 
-    }
+        if (spacing.type == null && spacing.amounts == null) {
+            spacing.type = DEFAULT_TYPE;
+            return;
+        }
 
-    public GroupSpacing(GroupSpacingType type, List<Integer> amounts) {
-        this.type = type;
-        this.amounts = amounts;
+        if (spacing.type == null && spacing.amounts != null) {
+            spacing.type = DEFAULT_TYPE;
+        }
     }
 
     public GroupSpacingType getType() {

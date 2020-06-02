@@ -4,11 +4,6 @@ public class Frequency {
     private FrequencyType type;
     private int count;
 
-    public Frequency(FrequencyType type, int count) {
-        this.type = type;
-        this.count = count;
-    }
-
     public FrequencyType getType() {
         return type;
     }

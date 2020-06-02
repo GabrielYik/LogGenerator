@@ -1,124 +1,93 @@
 package logen.experimental.scenario.group;
 
-import javafx.util.Pair;
 import logen.experimental.scenario.common.Frequency;
 import logen.experimental.scenario.common.LogSpec;
+import logen.experimental.scenario.common.PropagationContainer;
 import logen.experimental.scenario.time.TimePeriod;
-import logen.experimental.util.RandomUtil;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class Group {
-    private String identifier;
+    /**
+     * Not required.
+     */
     private GroupOrdering ordering;
+    /**
+     * Not required.
+     */
     private GroupSpacing spacing;
+    /**
+     * Not required.
+     */
     private GroupTimePeriod timePeriod;
-    private String description;
-    private String type;
-    private String subject;
-    private String remarks;
+    /**
+     * Not required.
+     */
+    private List<String> descriptions;
+    /**
+     * Not required.
+     */
+    private List<String> types;
+    /**
+     * Not required.
+     */
+    private List<String> subjects;
+    /**
+     * Not required.
+     */
+    private List<String> remarks;
+    /**
+     * Not required.
+     */
     private Frequency frequency;
-
+    /**
+     * Required.
+     */
     private List<LogSpec> logSpecs;
 
-    public void preprocess(TimePeriod globalTimePeriod) {
-        preprocessOrder();
-        preprocessTimePeriod(globalTimePeriod);
-        preprocessLogSpecs();
+    public void setAttributesIfAbsent(TimePeriod globalTimePeriod) {
+        GroupOrdering.setAttributesIfAbsent(ordering, logSpecs.size());
+        GroupSpacing.setAttributesIfAbsent(spacing);
+        GroupTimePeriod.setAttributesIfAbsent(timePeriod, globalTimePeriod);
+
+        descriptions = setAttributeIfAbsent(descriptions);
+        types = setAttributeIfAbsent(types);
+        subjects = setAttributeIfAbsent(subjects);
+        remarks = setAttributeIfAbsent(remarks);
     }
 
-    private void preprocessOrder() {
-        switch(ordering.getType()) {
-            case ANY:
-                List<Integer> sequence = new ArrayList<>(logSpecs.size());
-                int counter = 1;
-                for (int i = 0; i < logSpecs.size(); i++) {
-                    sequence.add(counter++);
-                }
-                Collections.shuffle(sequence);
-                ordering.setPositions(sequence);
-                break;
-            case CUSTOM:
-                // do nothing
-                break;
-            default:
-                throw new AssertionError();
+    private List<String> setAttributeIfAbsent(List<String> property) {
+        if (property == null) {
+            property = Collections.emptyList();
         }
+        return property;
     }
 
-    private void preprocessTimePeriod(TimePeriod globalTimePeriod) {
-        LocalTime startTime;
-        LocalTime endTime;
-        switch(timePeriod.getType()) {
-            case ANY:
-                startTime = RandomUtil.chooseBetween(
-                        globalTimePeriod.getStartTime(),
-                        globalTimePeriod.getEndTime().minusHours(2)
-                );
-                endTime = startTime.plusHours(2);
-                timePeriod.setStartEndTime(startTime, endTime);
-                break;
-            case CUSTOM:
-                // do nothing
-                break;
-            case ONE_HOUR:
-                startTime = RandomUtil.chooseBetween(
-                        globalTimePeriod.getStartTime(),
-                        globalTimePeriod.getEndTime().minusHours(1)
-                );
-                endTime = startTime.plusHours(1);
-                timePeriod.setStartEndTime(startTime, endTime);
-                break;
-            case ONE_DAY:
-                startTime = globalTimePeriod.getStartTime();
-                endTime = globalTimePeriod.getEndTime();
-                timePeriod.setStartEndTime(startTime, endTime);
-                break;
-            case AFTER_MIDNIGHT:
-                Pair<LocalTime, LocalTime> startEndTime = GroupTimePeriodType.map(GroupTimePeriodType.AFTER_MIDNIGHT);
-                startTime = startEndTime.getKey();
-                endTime = startEndTime.getValue();
-                timePeriod.setStartEndTime(startTime, endTime);
-                break;
-            default:
-                throw new AssertionError();
+    public void propagateValuesIfAbsent(PropagationContainer scenarioContainer) {
+        descriptions = setAttributeIfAbsent(descriptions, scenarioContainer.getDescriptions());
+        types = setAttributeIfAbsent(types, scenarioContainer.getTypes());
+        subjects = setAttributeIfAbsent(subjects, scenarioContainer.getSubjects());
+        remarks = setAttributeIfAbsent(remarks, scenarioContainer.getRemarks());
+        PropagationContainer groupContainer = toPropagationContainer();
+        logSpecs.forEach(logSpec -> logSpec.propagateValuesIfAbsent(groupContainer));
+    }
+
+    private <E> List<E> setAttributeIfAbsent(List<E> attribute, List<E> newAttribute) {
+        if (attribute.isEmpty()) {
+            attribute = newAttribute;
         }
+        return attribute;
     }
 
-    private void preprocessLogSpecs() {
-        logSpecs.forEach(LogSpec::preprocess);
-        overrideLocalAttributes();
-    }
-
-    private void overrideLocalAttributes() {
-        for (LogSpec logSpec : logSpecs) {
-            if (description != null) {
-                logSpec.setDescriptionIfAbsent(description);
-            }
-            if (type != null) {
-                logSpec.setTypeIfAbsent(type);
-            }
-            if (subject != null) {
-                logSpec.setSubjectIfAbsent(subject);
-            }
-            if (remarks != null) {
-                logSpec.setRemarksIfAbsent(remarks);
-            }
-            if (frequency != null) {
-                logSpec.setFrequencyIfAbsent(frequency);
-            }
-        }
-    }
-
-    public String getIdentifier() {
-        return identifier;
-    }
-
-    public void setIdentifier(String identifier) {
-        this.identifier = identifier;
+    private PropagationContainer toPropagationContainer() {
+        return new PropagationContainer(
+                descriptions,
+                types,
+                subjects,
+                remarks,
+                frequency
+        );
     }
 
     public GroupOrdering getOrdering() {
@@ -145,35 +114,35 @@ public class Group {
         this.timePeriod = timePeriod;
     }
 
-    public String getDescription() {
-        return description;
+    public List<String> getDescriptions() {
+        return descriptions;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDescriptions(List<String> descriptions) {
+        this.descriptions = descriptions;
     }
 
-    public String getType() {
-        return type;
+    public List<String> getTypes() {
+        return types;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTypes(List<String> types) {
+        this.types = types;
     }
 
-    public String getSubject() {
-        return subject;
+    public List<String> getSubjects() {
+        return subjects;
     }
 
-    public void setSubject(String subject) {
-        this.subject = subject;
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
     }
 
-    public String getRemarks() {
+    public List<String> getRemarks() {
         return remarks;
     }
 
-    public void setRemarks(String remarks) {
+    public void setRemarks(List<String> remarks) {
         this.remarks = remarks;
     }
 
