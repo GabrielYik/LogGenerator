@@ -1,5 +1,6 @@
 package logen.scenario;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import logen.scenario.common.Frequency;
 import logen.scenario.common.LogSpec;
 import logen.scenario.group.Group;
@@ -19,6 +20,7 @@ public class Scenario {
     /**
      * Not required.
      */
+    @JsonProperty("minLogCount")
     private int logCount;
     /**
      * Not required.
@@ -56,6 +58,11 @@ public class Scenario {
      * Not required.
      */
     private List<LogSpec> logSpecs;
+
+    public void completeConfiguration() {
+        setAttributesIfAbsent();
+        propagateValuesIfAbsent();
+    }
 
     /**
      * Sets the values of missing attributes with their default values

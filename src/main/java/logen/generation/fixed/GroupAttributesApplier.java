@@ -41,10 +41,10 @@ public class GroupAttributesApplier {
         GroupFixture.Builder groupFixture = new GroupFixture.Builder()
                 .setLogSpecs(group.getLogSpecs());
         return Stream.of(groupFixture)
-                .map(this::applyFrequency)
                 .map(this::applyOrdering)
-                .map(this::applyTimePeriod)
                 .map(this::applySpacing)
+                .map(this::applyTimePeriod)
+                .map(this::applyFrequency)
                 .findFirst()
                 .get()
                 .build();

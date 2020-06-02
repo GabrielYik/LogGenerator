@@ -71,6 +71,8 @@ public class ScenarioStorage {
                 .configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true)
                 .configure(MapperFeature.ACCEPT_CASE_INSENSITIVE_ENUMS, true);
         File scenarioFile = new File(SCENARIO_DIR_PATH + scenarioFileName + SCENARIO_FILE_EXTENSION);
-        return objectMapper.readValue(scenarioFile, Scenario.class);
+        Scenario scenario = objectMapper.readValue(scenarioFile, Scenario.class);
+        scenario.completeConfiguration();
+        return scenario;
     }
 }

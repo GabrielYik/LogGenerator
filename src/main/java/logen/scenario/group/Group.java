@@ -48,7 +48,7 @@ public class Group {
 
     public void setAttributesIfAbsent(TimePeriod globalTimePeriod) {
         GroupOrdering.setAttributesIfAbsent(ordering, logSpecs.size());
-        GroupSpacing.setAttributesIfAbsent(spacing);
+        GroupSpacing.setAttributesIfAbsent(spacing, logSpecs.size());
         GroupTimePeriod.setAttributesIfAbsent(timePeriod, globalTimePeriod);
 
         descriptions = setAttributeIfAbsent(descriptions);

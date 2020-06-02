@@ -1,7 +1,6 @@
 package logen.scenario.group;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import javafx.util.Pair;
 import logen.scenario.common.LocalTimeDeserialiser;
 import logen.scenario.time.TimePeriod;
 import logen.util.RandomUtil;
@@ -60,9 +59,8 @@ public class GroupTimePeriod {
                 timePeriod.setStartEndTime(startTime, endTime);
                 break;
             case AFTER_MIDNIGHT:
-                Pair<LocalTime, LocalTime> startEndTime = GroupTimePeriodType.map(GroupTimePeriodType.AFTER_MIDNIGHT);
-                startTime = startEndTime.getKey();
-                endTime = startEndTime.getValue();
+                startTime = LocalTime.of(0, 0);
+                endTime = LocalTime.of(3, 0);
                 timePeriod.setStartEndTime(startTime, endTime);
                 break;
             default:

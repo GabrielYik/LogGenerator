@@ -93,6 +93,10 @@ public class GroupTimePeriodApplier extends GroupAttributeApplier {
     private int computeLogCount() {
         switch (timePeriod.getType()) {
             case ANY:
+            case EVERY_DAY:
+            case ONE_HOUR:
+            case ONE_DAY:
+            case AFTER_MIDNIGHT:
                 return computeApproxLogCount();
             case CUSTOM:
                 return computeExactLogCount();
