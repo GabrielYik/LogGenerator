@@ -1,20 +1,131 @@
 package logen.scenario;
 
-import logen.log.Activity;
-import logen.generation.suspicious.Trouble;
+import logen.scenario.common.Frequency;
+import logen.scenario.common.LogSpec;
+import logen.scenario.group.Group;
+import logen.scenario.common.PropagationContainer;
+import logen.scenario.time.TimePeriod;
 
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 public class Scenario {
+    private static final int DEFAULT_LOG_COUNT = 200;
+    private static final List<String> DEFAULT_HEADERS = Arrays.asList(
+            "Time", "Description", "Type", "Subject", "Remark"
+    );
+
+    /**
+     * Not required.
+     */
     private int logCount;
+    /**
+     * Not required.
+     */
     private List<String> headers;
-    private Period period;
-
-    private List<Activity> normalActivities;
-    private List<Activity> suspiciousActivities;
+    /**
+     * Not required.
+     */
+    private TimePeriod timePeriod;
+    /**
+     * Not required.
+     */
+    private List<String> descriptions;
+    /**
+     * Not required.
+     */
+    private List<String> types;
+    /**
+     * Not required.
+     */
     private List<String> subjects;
+    /**
+     * Not required.
+     */
+    private List<String> remarks;
+    private Frequency frequency;
+    /**
+     * Not required.
+     */
+    private List<Group> groups;
+    /**
+     * Not required.
+     */
+    private List<LogSpec> logSpecs;
 
-    private List<Trouble> troubles;
+    /**
+     * Sets the values of missing properties with their default values
+     * and sets the values of properties where it is specified that the
+     * values to be set are left to the system to choose.
+     *
+     * Missing properties refer to properties which are not present in
+     * the scenario configuration file or properties which are present
+     * in the scenario configuration file but which sub-properties are
+     * not present.
+     *
+     * Missing properties with no default values will not be modified.
+     */
+    public void setAttributesIfAbsent() {
+        setLogCountIfAbsent();
+        setHeadersIfAbsent();
+        TimePeriod.setAttributesIfAbsent(timePeriod);
+        setGroupsAttributesIfAbsent();
+    }
+
+    private void setLogCountIfAbsent() {
+        if (logCount == 0) {
+            logCount = DEFAULT_LOG_COUNT;
+        }
+    }
+
+    private void setHeadersIfAbsent() {
+        if (headers == null || headers.isEmpty()) {
+            headers = DEFAULT_HEADERS;
+        }
+    }
+
+    private void setGroupsAttributesIfAbsent() {
+        if (groups == null) {
+            groups = Collections.emptyList();
+        }
+        groups.forEach(group -> group.setAttributesIfAbsent(timePeriod));
+    }
+
+    /**
+     * Sets the values of missing property values if not specified but
+     * are specified higher up in the chain
+     */
+    public void propagateValuesIfAbsent() {
+        PropagationContainer container = toPropagationContainer();
+        groups.forEach(group -> group.propagateValuesIfAbsent(container));
+        logSpecs.forEach(logSpec -> logSpec.propagateValuesIfAbsent(container));
+    }
+
+    private PropagationContainer toPropagationContainer() {
+        return new PropagationContainer(
+                descriptions,
+                types,
+                subjects,
+                remarks,
+                frequency
+        );
+    }
+
+    /**
+     * Verify that all required properties are set.
+     * Required properties refer to properties which values must be set.
+     */
+    public void verifyRequiredPropertiesPresent() {
+
+    }
+
+    /**
+     * Verify that the values of all required properties are set correctly.
+     */
+    public void verifyRequiredPropertiesSetCorrectly() {
+
+    }
 
     public int getLogCount() {
         return logCount;
@@ -32,43 +143,47 @@ public class Scenario {
         this.headers = headers;
     }
 
-    public Period getPeriod() {
-        return period;
+    public TimePeriod getTimePeriod() {
+        return timePeriod;
     }
 
-    public void setPeriod(Period period) {
-        this.period = period;
+    public void setTimePeriod(TimePeriod timePeriod) {
+        this.timePeriod = timePeriod;
     }
 
-    public List<Activity> getNormalActivities() {
-        return normalActivities;
+    public List<String> getDescriptions() {
+        return descriptions;
     }
 
-    public void setNormalActivities(List<Activity> normalActivities) {
-        this.normalActivities = normalActivities;
-    }
-
-    public List<Activity> getSuspiciousActivities() {
-        return suspiciousActivities;
-    }
-
-    public void setSuspiciousActivities(List<Activity> suspiciousActivities) {
-        this.suspiciousActivities = suspiciousActivities;
+    public List<String> getTypes() {
+        return types;
     }
 
     public List<String> getSubjects() {
         return subjects;
     }
 
-    public void setSubjects(List<String> subjects) {
-        this.subjects = subjects;
+    public List<String> getRemarks() {
+        return remarks;
     }
 
-    public List<Trouble> getTroubles() {
-        return troubles;
+    public Frequency getFrequency() {
+        return frequency;
     }
 
-    public void setTroubles(List<Trouble> troubles) {
-        this.troubles = troubles;
+    public List<Group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Group> groups) {
+        this.groups = groups;
+    }
+
+    public List<LogSpec> getLogSpecs() {
+        return logSpecs;
+    }
+
+    public void setLogSpecs(List<LogSpec> logSpecs) {
+        this.logSpecs = logSpecs;
     }
 }

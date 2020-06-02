@@ -1,7 +1,7 @@
 package logen;
 
-import static logen.common.Config.SCENARIO_DIR_PATH;
-import static logen.common.Config.SCENARIO_DIR_PATH_JAR;
+import static logen.Config.SCENARIO_DIR_PATH;
+import static logen.Config.SCENARIO_DIR_PATH_JAR;
 import static logen.util.PathUtil.SCENARIO_FILE_FILTER;
 
 import logen.util.PathUtil;

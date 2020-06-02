@@ -1,7 +1,7 @@
 package logen.util;
 
-import static logen.common.Config.SCENARIO_FILE_EXTENSION;
-import static logen.common.Config.SCENARIO_FILE_PREFIX;
+import static logen.Config.SCENARIO_FILE_EXTENSION;
+import static logen.Config.SCENARIO_FILE_PREFIX;
 import java.nio.file.DirectoryStream;
 import java.nio.file.Path;
 

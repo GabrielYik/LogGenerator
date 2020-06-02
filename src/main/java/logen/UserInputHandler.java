@@ -1,10 +1,10 @@
 package logen;
 
-import static logen.common.Config.LOG_DIR_PATH;
-import static logen.common.Config.LOG_FILE_EXTENSION;
-import static logen.common.Config.SCENARIO_DIR_PATH;
-import static logen.common.Config.SCENARIO_FILE_EXTENSION;
-import static logen.common.Config.SCENARIO_FILE_PREFIX;
+import static logen.Config.LOG_DIR_PATH;
+import static logen.Config.LOG_FILE_EXTENSION;
+import static logen.Config.SCENARIO_DIR_PATH;
+import static logen.Config.SCENARIO_FILE_EXTENSION;
+import static logen.Config.SCENARIO_FILE_PREFIX;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
