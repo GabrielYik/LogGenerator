@@ -4,7 +4,6 @@ import logen.scenario.Scenario;
 import logen.util.RandomUtil;
 import logen.util.timegenerators.TimeGenerator;
 import logen.util.timegenerators.UnboundedTimeGenerator;
-import logen.util.RandomChooser;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
