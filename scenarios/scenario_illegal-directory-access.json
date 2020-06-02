@@ -1,98 +1,131 @@
 {
-  "logCount": "150",
+  "minLogCount": 150,
   "headers": [
     "time", "description", "type", "user", "remarks"
   ],
-  "period": {
-    "active": {
-      "days": "weekdays",
-      "startTime": "09:00:00",
-      "endTime": "17:00:00"
-    },
-    "inactive": {
-      "days": "weekends"
-    }
+  "timePeriod": {
+    "startTime": "09:00:00",
+    "endTime": "17:00:00"
   },
-  "normalActivities": [
+  "groups": [
     {
-      "description": "account login",
-      "type": "user access",
-      "subject": "vf3P9Tflis",
-      "remarks": "STATUS success",
-      "complement": {
-        "description": "account logout",
-        "type": "user access",
-        "subject": "vf3P9Tflis",
-        "remarks": "STATUS success"
-      }
+      "ordering": {
+        "type": "CUSTOM",
+        "positions": [
+          1, 2
+        ]
+      },
+      "spacing": {
+        "type": "ANY"
+      },
+      "timePeriod": {
+        "type": "ONE HOUR"
+      },
+      "types": ["user access"],
+      "subjects": ["vf3P9Tflis"],
+      "remarks": ["STATUS success"],
+      "frequency": {
+        "type": "ANY"
+      },
+      "logSpecs": [
+        {
+          "description": "account login"
+        },
+        {
+          "description": "account logout"
+        }
+      ]
     },
+    {
+      "ordering": {
+        "type": "CUSTOM",
+        "positions": [
+          1, 2, 3, 4
+        ]
+      },
+      "spacing": {
+        "type": "ANY"
+      },
+      "timePeriod": {
+        "type": "ONE DAY"
+      },
+      "types": ["terminal input"],
+      "subjects": ["LuUd4WAWVZ"],
+      "frequency": "ONCE",
+      "logSpecs": [
+        {
+          "description": "terminal navigation",
+          "remark": "INPUT \"cd ../..\""
+        },
+        {
+          "description": "file creation",
+          "remark": "INPUT \"vim progress_2020-01-02.txt\""
+        },
+        {
+          "description": "file list",
+          "remark": "INPUT \"ls -a\""
+        },
+        {
+          "description": "directory deletion",
+          "remark": "INPUT \"rm -r .annual_reports\""
+        }
+      ]
+    }
+  ],
+  "logSpecs": [
     {
       "description": "account login",
       "type": "user access",
       "subject": "het5IHLIpv",
-      "remarks": "STATUS failure"
+      "remark": "STATUS failure",
+      "frequency": {
+        "type": "ANY"
+      }
     },
     {
       "description": "directory creation",
       "type": "terminal input",
       "subject": "WZ0il5z1pN",
-      "remarks": "INPUT \"mkdir progress_update\""
+      "remark": "INPUT \"mkdir progress_update\"",
+      "frequency": {
+        "type": "ANY"
+      }
     },
     {
       "description": "directory deletion",
       "type": "terminal input",
       "subject": "7KuUzfMSvL",
-      "remarks": "INPUT \"rmdir test\""
+      "remark": "INPUT \"rmdir test\"",
+      "frequency": {
+        "type": "ANY"
+      }
     },
     {
       "description": "file creation",
       "type": "terminal input",
       "subject": "7KuUzfMSvL",
-      "remarks": "INPUT \"touch test.txt\""
+      "remark": "INPUT \"touch test.txt\"",
+      "frequency": {
+        "type": "ANY"
+      }
     },
     {
       "description": "file creation",
       "type": "terminal input",
       "subject": "Mf8lO0tsRZ",
-      "remarks": "INPUT \"touch progress.txt\""
+      "remark": "INPUT \"touch progress.txt\"",
+      "frequency": {
+        "type": "ANY"
+      }
     },
     {
       "description": "file deletion",
       "type": "terminal input",
       "subject": "OZimr9MYXC",
-      "remarks": "INPUT \"rm progress_2020-01-01.txt\""
-    },
-    {
-      "description": "terminal navigation",
-      "type": "terminal input",
-      "subject": "LuUd4WAWVZ",
-      "remarks": "INPUT \"cd ../..\"",
-      "complement": {
-        "description": "file creation",
-        "type": "terminal input",
-        "subject": "LuUd4WAWVZ",
-        "remarks": "INPUT \"vim progress_2020-01-02.txt\"",
-        "complement": {
-          "description": "file list",
-          "type": "terminal input",
-          "subject": "LuUd4WAWVZ",
-          "remarks": "INPUT \"ls -a\"",
-          "complement": {
-            "description": "directory deletion",
-            "type": "terminal input",
-            "subject": "LuUd4WAWVZ",
-            "remarks": "INPUT \"rm -r .annual_reports\""
-          }
-        }
-      },
-      "persistence": "one time"
-    }
-  ],
-  "suspiciousActivities": [],
-  "subjects": [],
-  "troubles": [
-    {
-      "type": "empty"
+      "remark": "INPUT \"rm progress_2020-01-01.txt\"",
+      "frequency": {
+        "type": "ANY"
+      }
     }
   ]
 }
