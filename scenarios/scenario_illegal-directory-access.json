@@ -51,7 +51,10 @@
       },
       "types": ["terminal input"],
       "subjects": ["LuUd4WAWVZ"],
-      "frequency": "ONCE",
+      "frequency": {
+        "type": "CUSTOM",
+        "count": 1
+      },
       "logSpecs": [
         {
           "description": "terminal navigation",
