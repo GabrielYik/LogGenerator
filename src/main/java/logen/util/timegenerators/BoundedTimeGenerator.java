@@ -63,7 +63,7 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
         List<Long> distribution = distributeEqually(seconds);
         return RandomUtil.randomise(
                 distribution,
-                RandomUtil::chooseBetween,
+                RandomUtil::chooseBetweenInclusive,
                 (a, b) -> a - b,
                 Long::sum
         );

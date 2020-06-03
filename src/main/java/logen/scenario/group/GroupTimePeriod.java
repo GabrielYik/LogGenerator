@@ -35,7 +35,7 @@ public class GroupTimePeriod {
         LocalTime endTime;
         switch(timePeriod.getType()) {
             case ANY:
-                startTime = RandomUtil.chooseBetween(
+                startTime = RandomUtil.chooseBetweenInclusive(
                         globalTimePeriod.getStartTime(),
                         globalTimePeriod.getEndTime().minusHours(2)
                 );
@@ -46,7 +46,7 @@ public class GroupTimePeriod {
                 // do nothing
                 break;
             case ONE_HOUR:
-                startTime = RandomUtil.chooseBetween(
+                startTime = RandomUtil.chooseBetweenInclusive(
                         globalTimePeriod.getStartTime(),
                         globalTimePeriod.getEndTime().minusHours(1)
                 );

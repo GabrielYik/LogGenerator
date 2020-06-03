@@ -139,7 +139,7 @@ public class PlaceholderLogCountSetter {
         List<Integer> distribution = distributeEqually(logCount);
         List<Integer> randomDistribution = RandomUtil.randomise(
                 distribution,
-                RandomUtil::chooseBetween,
+                RandomUtil::chooseBetweenInclusive,
                 (a, b) -> a - b,
                 Integer::sum
         );
