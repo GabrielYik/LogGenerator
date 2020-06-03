@@ -6,7 +6,6 @@ import logen.util.timegenerators.TimeGenerator;
 import logen.util.timegenerators.UnboundedTimeGenerator;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -136,25 +135,10 @@ public class PlaceholderLogCountSetter {
      * @param logCount The number of logs to distribute
      */
     private void distributeOverOuterPlaceholders(int logCount) {
-        List<Integer> distribution = distributeEqually(logCount);
-        List<Integer> randomDistribution = RandomUtil.randomise(
-                distribution,
-                RandomUtil::chooseBetweenInclusive,
-                (a, b) -> a - b,
-                Integer::sum
-        );
+        List<Integer> randomDistribution = RandomUtil.distributeRandomly(logCount, 2);
         Placeholder.Builder firstPlaceholder = placeholders.get(0);
         firstPlaceholder.withLogCount(randomDistribution.get(0));
         Placeholder.Builder lastPlaceholder = placeholders.get(placeholders.size() - 1);
         lastPlaceholder.withLogCount(randomDistribution.get(1));
-    }
-
-    private List<Integer> distributeEqually(int logCount) {
-        int quotient = logCount / 2;
-        int remainder = logCount - quotient;
-        List<Integer> values = new ArrayList<>();
-        values.add(quotient);
-        values.add(remainder);
-        return values;
     }
 }

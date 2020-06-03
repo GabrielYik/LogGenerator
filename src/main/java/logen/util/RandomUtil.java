@@ -1,6 +1,7 @@
 package logen.util;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -86,7 +87,10 @@ public class RandomUtil {
      * @return A random time value between {@code start} and {@code end}
      *   inclusive
      */
-    public static LocalTime chooseBetweenInclusive(LocalTime startTime, LocalTime endTime) {
+    public static LocalTime chooseBetweenInclusive(
+            LocalTime startTime,
+            LocalTime endTime
+    ) {
         Objects.requireNonNull(startTime);
         Objects.requireNonNull(endTime);
         if (startTime.isAfter(endTime)) {
@@ -100,31 +104,59 @@ public class RandomUtil {
     }
 
     /**
+     * Randomly distributes the integer quantity of {@code sum} among the
+     * positions of a list of size {@code count}.
+     *
+     * @param sum The quantity to be distributed
+     * @param count The size of the output list
+     * @return A list of size {@code count} with a random distribution
+     *   of the quantity {@code sum} distributed among its positions
+     */
+    public static List<Integer> distributeRandomly(int sum, int count) {
+        List<Integer> values = distributeUniformly(sum, count);
+        return distributeRandomly(
+                values,
+                RandomUtil::chooseBetweenInclusive,
+                (a, b) -> a - b,
+                Integer::sum
+        );
+    }
+
+    /**
+     * A specialisation of {@link this#distributeRandomly(int, int)} for
+     * a long {@code sum}.
+     */
+    public static List<Long> distributeRandomly(long sum, int count) {
+        List<Long> values = distributeUniformly(sum, count);
+        return distributeRandomly(
+                values,
+                RandomUtil::chooseBetweenInclusive,
+                (a, b) -> a - b,
+                Long::sum
+        );
+    }
+
+    /**
      * Randomises the distribution of quantifiable elements in
      * {@code values}.
      *
-     * Distribution is done by choosing a quantity to be subtracted from
-     * the quantity of an element using {@code choiceStrategy}, subtracting
-     * that quantity from that element using {@code subtractionStrategy}
-     * and adding it to the quantity of the next element using
-     * {@code additionStrategy}.
-     *
-     * The distribution is done in just over one pass, with the last element
-     * transferring a quantity to the first element.
+     * For this method to cater to different instances of the element
+     * type {@code E}, the operations involving choosing an element
+     * from a list, subtracting one value from another, and adding two
+     * values together are abstracted as instances of {@code BiFunction}.
      *
      * @param values The elements which quantity are to be distributed
      *               among each other
      * @param choiceStrategy The algorithm to choose a random quantity
      *                       from between the bounds inclusive of an
      *                       existing quantity of an element
-     * @param subtractionStrategy The algorithm to subtract a quantity
-     *                            from an element
-     * @param additionStrategy The algorithm to add a quantity to an
-     *                         element
+     * @param subtractionStrategy The algorithm to subtract a value
+     *                            from another
+     * @param additionStrategy The algorithm to add two values together
      * @param <E> The element type of {@code values}
      * @return A randomised distribution of {@code values}
      */
-    public static <E> List<E> randomise(
+    public static <E> List<E> distributeRandomly(
             List<E> values,
             BiFunction<Integer, E, E> choiceStrategy,
             BiFunction<E, E, E> subtractionStrategy,
@@ -134,7 +166,7 @@ public class RandomUtil {
         int to = 1;
         int counter = 1;
         while (counter < values.size()) {
-            E randomValue = choiceStrategy.apply(1, values.get(from));
+            E randomValue = choiceStrategy.apply(0, values.get(from));
 
             E fromValue = values.get(from);
             E toValue = values.get(to);
@@ -148,6 +180,76 @@ public class RandomUtil {
             to = (to + 1) % 2;
             counter++;
         }
+        return values;
+    }
+
+    /**
+     * A wrapper around {@link this#distributeUniformly(Object, int, Object, BiFunction, BiFunction, BiFunction)}
+     * for {@code sum} of type integer.
+     */
+    private static List<Integer> distributeUniformly(int sum, int count) {
+        return distributeUniformly(
+                sum,
+                count,
+                0,
+                (a, b) -> a / b,
+                Integer::sum,
+                (a, b) -> a - b
+        );
+    }
+
+    /**
+     * A wrapper around {@link this#distributeUniformly(Object, int, Object, BiFunction, BiFunction, BiFunction)}
+     * for {@code sum} of type long.
+     */
+    private static List<Long> distributeUniformly(long sum, int count) {
+        return distributeUniformly(
+                sum,
+                count,
+                0L,
+                (a, b) -> a / b,
+                Long::sum,
+                (a, b) -> a - b
+        );
+    }
+
+    /**
+     * Uniformly distributes the quantity of {@code sum} among the
+     * positions of a list of size {@code count}.
+     *
+     * In the event that sum % count != 0, the resulting distribution
+     * will be close to uniform.
+     *
+     * @param sum The quantity to be distributed
+     * @param count The size of the output list
+     * @param initialValue The equivalent of the number 0 for the
+     *                     type of {@code E}
+     * @param divisionStrategy The algorithm to divide one value from
+     *                         another
+     * @param additionStrategy The algorithm to add two values together
+     * @param subtractionStrategy The algorithm to subtract a value from
+     *                            another
+     * @param <E> The element type of {@code sum}
+     * @return A list of size {@code count} with a uniform distribution
+     *   of the quantity {@code sum} distributed among its positions
+     */
+    private static <E> List<E> distributeUniformly(
+            E sum,
+            int count,
+            E initialValue,
+            BiFunction<E, Integer, E> divisionStrategy,
+            BiFunction<E, E, E> additionStrategy,
+            BiFunction<E, E, E> subtractionStrategy
+    ) {
+        List<E> values = new ArrayList<>(count);
+        E value = divisionStrategy.apply(sum, count);
+        E sumUsed = initialValue;
+        for (int i = 0; i < count - 1; i++) {
+            values.add(value);
+            sumUsed = additionStrategy.apply(sumUsed, value);
+        }
+        E remainder = subtractionStrategy.apply(sum, sumUsed);
+        values.add(remainder);
         return values;
     }
 }

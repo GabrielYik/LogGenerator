@@ -3,7 +3,6 @@ package logen.util.timegenerators;
 import logen.util.RandomUtil;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -60,24 +59,7 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
     }
 
     private List<Long> distributeRandomly(long seconds) {
-        List<Long> distribution = distributeEqually(seconds);
-        return RandomUtil.randomise(
-                distribution,
-                RandomUtil::chooseBetweenInclusive,
-                (a, b) -> a - b,
-                Long::sum
-        );
-    }
-
-    private List<Long> distributeEqually(long seconds) {
-        List<Long> values = new ArrayList<>(generationCount);
-        long value = seconds / generationCount;
-        for (int i = 0; i < generationCount - 1; i ++) {
-            values.add(value);
-        }
-        long used = values.stream().reduce(0L, Long::sum);
-        values.add(seconds - used);
-        return values;
+        return RandomUtil.distributeRandomly(seconds, generationCount);
     }
 
     /**
