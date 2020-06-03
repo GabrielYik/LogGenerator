@@ -12,7 +12,7 @@ import java.util.List;
  * An applier that acts on a group by applying the spacing attribute
  * defined on the group onto the logs in the group.
  */
-public class GroupSpacingApplier extends GroupAttributeApplier {
+public class GroupSpacingApplier extends AbstractGroupAttributeApplier {
     private final GroupSpacing spacing;
 
     /**

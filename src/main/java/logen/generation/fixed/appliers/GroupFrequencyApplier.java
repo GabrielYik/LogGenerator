@@ -10,7 +10,7 @@ import java.util.List;
  * An applier that acts on a group by applying the frequency attribute
  * defined on the group on logs in the group.
  */
-public class GroupFrequencyApplier extends GroupAttributeApplier {
+public class GroupFrequencyApplier extends AbstractGroupAttributeApplier {
     private final Frequency frequency;
 
     /**

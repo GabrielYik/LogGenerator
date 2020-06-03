@@ -11,7 +11,7 @@ import java.util.List;
  * An applier that acts on a group by applying the ordering attribute
  * defined on the group onto the log specifications in the group.
  */
-public class GroupOrderingApplier extends GroupAttributeApplier {
+public class GroupOrderingApplier extends AbstractGroupAttributeApplier {
     /**
      * The offset needed to convert a one-based index to a zero-based index.
      */

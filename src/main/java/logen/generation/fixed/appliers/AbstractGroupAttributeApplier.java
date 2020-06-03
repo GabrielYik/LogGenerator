@@ -6,7 +6,7 @@ import logen.generation.fixed.GroupFixture;
  * An applier that acts on a group by applying an attribute defined
  * on the group onto the logs in the group.
  */
-public abstract class GroupAttributeApplier {
+public abstract class AbstractGroupAttributeApplier {
     /**
      * The container passed between group attribute appliers.
      * Data can be added or updated as required.
@@ -21,7 +21,7 @@ public abstract class GroupAttributeApplier {
      * @param groupFixture The container passed between group attribute
      *                     appliers
      */
-    protected GroupAttributeApplier(GroupFixture.Builder groupFixture) {
+    protected AbstractGroupAttributeApplier(GroupFixture.Builder groupFixture) {
         this.groupFixture = groupFixture;
     }
 
