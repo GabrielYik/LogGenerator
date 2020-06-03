@@ -1,5 +1,6 @@
 package logen.generation.fixed;
 
+import logen.generation.fixed.appliers.GroupAttributesApplier;
 import logen.log.Log;
 import logen.scenario.Scenario;
 import logen.scenario.group.Group;

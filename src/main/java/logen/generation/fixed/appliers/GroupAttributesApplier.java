@@ -1,9 +1,6 @@
-package logen.generation.fixed;
+package logen.generation.fixed.appliers;
 
-import logen.generation.fixed.appliers.GroupFrequencyApplier;
-import logen.generation.fixed.appliers.GroupOrderingApplier;
-import logen.generation.fixed.appliers.GroupSpacingApplier;
-import logen.generation.fixed.appliers.GroupTimePeriodApplier;
+import logen.generation.fixed.GroupFixture;
 import logen.scenario.group.Group;
 
 import java.util.stream.Stream;
