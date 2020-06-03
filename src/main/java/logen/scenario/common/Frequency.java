@@ -4,6 +4,13 @@ public class Frequency {
     private FrequencyType type;
     private int count;
 
+    public void setAttributesIfMissing() {
+        if (type.equals(FrequencyType.ANY)) {
+            //TODO change dummy value
+            count = 10;
+        }
+    }
+
     public boolean verifyIfRequiredAttributesSet() {
         return type != null && count != 0;
     }

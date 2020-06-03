@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
  * An applier that acts on a group by applying the time period attribute
  * defined on the group onto the logs in the group.
  */
+public class GroupTimePeriodApplier extends AbstractGroupAttributeApplier {
     /**
      * An arbitrary offset based on heuristics to ensure that the
      * non-padding placeholders of the group represent at least one log.

@@ -110,6 +110,10 @@ public class Placeholder {
         }
 
         public static List<Builder> merge(List<Builder> first, List<Builder> second) {
+            if (first.isEmpty()) {
+                return second;
+            }
+            
             List<Builder> copy = new ArrayList<>(first);
             Builder earlierPlaceholder = copy.remove(copy.size() - 1);
             Builder laterPlaceholder = second.get(0);

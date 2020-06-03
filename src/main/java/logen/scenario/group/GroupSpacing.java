@@ -33,7 +33,7 @@ public class GroupSpacing {
 
     private static List<Integer> computeDummyAmounts(int logSpecCount) {
         List<Integer> positions = new ArrayList<>(logSpecCount - 1);
-        for (int i = 0; i < logSpecCount; i++) {
+        for (int i = 0; i < logSpecCount - 1; i++) {
             positions.add(DUMMY_AMOUNT);
         }
         return positions;

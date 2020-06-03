@@ -4,6 +4,7 @@ import logen.log.Log;
 import logen.scenario.common.LogSpec;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -99,7 +100,11 @@ public class GroupFixture {
         }
 
         public static Builder empty() {
-            return new Builder();
+            Builder builder = new Builder();
+            builder.logSpecs = Collections.emptyList();
+            builder.fixedLogs = Collections.emptyList();
+            builder.placeholders = Collections.emptyList();
+            return builder;
         }
 
         public static Builder merge(Builder first, Builder second) {

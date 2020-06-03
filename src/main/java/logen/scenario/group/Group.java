@@ -7,6 +7,7 @@ import logen.scenario.time.TimePeriod;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 public class Group {
     /**
@@ -55,6 +56,7 @@ public class Group {
         types = setAttributeIfAbsent(types);
         subjects = setAttributeIfAbsent(subjects);
         remarks = setAttributeIfAbsent(remarks);
+        Optional.of(frequency).ifPresent(Frequency::setAttributesIfMissing);
     }
 
     private List<String> setAttributeIfAbsent(List<String> property) {

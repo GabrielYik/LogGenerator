@@ -2,6 +2,7 @@ package logen.util;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Random;
@@ -63,6 +64,8 @@ public class RandomUtil {
      * longs {@code start} and {@code end} inclusive, where {@code start}
      * <= {@code end}.
      *
+     * If {@code start} is equal to {@code end}, {@code start} is returned.
+     *
      * @param start The lower bound of the random non-negative long
      * @param end The upper bound of the random non-negative long
      * @return A random non-negative long between {@code start} and
@@ -73,8 +76,12 @@ public class RandomUtil {
             throw new IllegalArgumentException();
         }
 
+        if (start == end) {
+            return start;
+        }
+
         long delta = end - start;
-        return start + rng.nextLong() % delta;
+        return start + Math.abs(rng.nextLong()) % delta;
     }
 
     /**
@@ -107,12 +114,18 @@ public class RandomUtil {
      * Randomly distributes the integer quantity of {@code sum} among the
      * positions of a list of size {@code count}.
      *
+     * If {@code count} is 0, an empty list is returned.
+     *
      * @param sum The quantity to be distributed
      * @param count The size of the output list
      * @return A list of size {@code count} with a random distribution
      *   of the quantity {@code sum} distributed among its positions
      */
     public static List<Integer> distributeRandomly(int sum, int count) {
+        if (count == 0) {
+            return Collections.emptyList();
+        }
+
         List<Integer> values = distributeUniformly(sum, count);
         return distributeRandomly(
                 values,
@@ -127,6 +140,10 @@ public class RandomUtil {
      * a long {@code sum}.
      */
     public static List<Long> distributeRandomly(long sum, int count) {
+        if (count == 0) {
+            return Collections.emptyList();
+        }
+
         List<Long> values = distributeUniformly(sum, count);
         return distributeRandomly(
                 values,

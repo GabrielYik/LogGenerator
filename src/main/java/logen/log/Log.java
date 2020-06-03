@@ -21,6 +21,10 @@ public class Log {
         this.remarks = spec.getSubject();
     }
 
+    public LocalTime getTime() {
+        return time;
+    }
+
     public Object[] toArray() {
         List<String> array = new ArrayList<>();
         array.add(time.toString());
