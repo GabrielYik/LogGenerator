@@ -180,11 +180,11 @@ fourth log
 ** type
 *** Options: ANY, CUSTOM, ONE HOUR, ONE DAY, AFTER MIDNIGHT
 *** Default: ANY
-** startTime (if type is *NOT* ANY)
+** startTime (if type is CUSTOM)
 *** Options: a time between 00:00:00 and 23:59:59
 *** Default: 09:00:00
 *** The start time must be before the end time
-** endTime (if type is *NOT* ANY)
+** endTime (if type is CUSTOM)
 *** Options: a time between 00:00:00 and 23:59:59
 *** Default: 17:00:00
 *** The end time must be after the start time
