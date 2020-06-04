@@ -45,24 +45,12 @@ public class LogSpec {
         this.description = description;
     }
 
-    public void setDescriptionIfAbsent(String description) {
-        if (this.description == null) {
-            this.description = description;
-        }
-    }
-
     public String getType() {
         return type;
     }
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    public void setTypeIfAbsent(String type) {
-        if (this.type == null) {
-            this.type = type;
-        }
     }
 
     public String getSubject() {
@@ -73,13 +61,6 @@ public class LogSpec {
         this.subject = subject;
     }
 
-    public void setSubjectIfAbsent(String subject) {
-        //TODO check if null or empty
-        if (this.subject == null) {
-            this.subject = subject;
-        }
-    }
-
     public String getRemark() {
         return remark;
     }
@@ -88,24 +69,12 @@ public class LogSpec {
         this.remark = remark;
     }
 
-    public void setRemarksIfAbsent(String remarks) {
-        if (this.remark == null) {
-            this.remark = remarks;
-        }
-    }
-
     public Frequency getFrequency() {
         return frequency;
     }
 
     public void setFrequency(Frequency frequency) {
         this.frequency = frequency;
-    }
-
-    public void setFrequencyIfAbsent(Frequency frequency) {
-        if (this.frequency == null) {
-            this.frequency = frequency;
-        }
     }
 
     public void decrementFrequency() {

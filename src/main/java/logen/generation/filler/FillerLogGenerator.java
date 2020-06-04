@@ -41,27 +41,19 @@ public class FillerLogGenerator {
                 LogSpec::decrementFrequency,
                 LogSpec::isExhausted
         );
-        Pool<String> subjectPool = new Pool<>(
-                scenario.getSubjects(),
-                s -> {},
-                s -> false
-        );
         List<Placeholder> placeholders = fixture.getPlaceholders();
 
         List<Log> fillerLogsForFirstPlaceholder = generateLogsForFirstPlaceholder(
                 logSpecPool,
-                subjectPool,
                 placeholders.get(0)
         );
         List<Log> fillerLogsForLastPlaceholder = generateLogsForLastPlaceholder(
                 logSpecPool,
-                subjectPool,
                 placeholders.get(placeholders.size() - 1)
         );
 
         List<List<Log>> fillerLogsForBetweenPlaceholders = generateLogsForBetweenPlaceholders(
                 logSpecPool,
-                subjectPool,
                 placeholders
         );
 
@@ -89,7 +81,6 @@ public class FillerLogGenerator {
 
     private List<Log> generateLogsForFirstPlaceholder(
             Pool<LogSpec> logSpecPool,
-            Pool<String> subjectPool,
             Placeholder placeholder
     ) {
         TimeGenerator timeGenerator = UnboundedTimeGenerator.backward(
@@ -99,7 +90,7 @@ public class FillerLogGenerator {
         );
         List<Log> fillerLogs = new LinkedList<>();
         for (int i = placeholder.getLogCount() - 1; i > -1; i--) {
-            Log fillerLog = constructFillerLog(logSpecPool, subjectPool, timeGenerator);
+            Log fillerLog = constructFillerLog(logSpecPool, timeGenerator);
             fillerLogs.add(0, fillerLog);
         }
         return fillerLogs;
@@ -107,7 +98,6 @@ public class FillerLogGenerator {
 
     private List<Log> generateLogsForLastPlaceholder(
             Pool<LogSpec> logSpecPool,
-            Pool<String> subjectPool,
             Placeholder placeholder
     ) {
         TimeGenerator timeGenerator = UnboundedTimeGenerator.forward(
@@ -117,7 +107,7 @@ public class FillerLogGenerator {
         );
         List<Log> fillerLogs = new ArrayList<>();
         for (int i = 0; i < placeholder.getLogCount(); i++) {
-            Log fillerLog = constructFillerLog(logSpecPool, subjectPool, timeGenerator);
+            Log fillerLog = constructFillerLog(logSpecPool, timeGenerator);
             fillerLogs.add(fillerLog);
         }
         return fillerLogs;
@@ -125,7 +115,6 @@ public class FillerLogGenerator {
 
     private List<List<Log>> generateLogsForBetweenPlaceholders(
             Pool<LogSpec> logSpecPool,
-            Pool<String> subjectPool,
             List<Placeholder> placeholders
     ) {
         List<List<Log>> fillerLogs = new ArrayList<>();
@@ -148,7 +137,7 @@ public class FillerLogGenerator {
 
             List<Log> fillerLogsForPlaceholder = new ArrayList<>(logCount);
             for (int j = 0; j < logCount; j++) {
-                Log fillerLog = constructFillerLog(logSpecPool, subjectPool, timeGenerator);
+                Log fillerLog = constructFillerLog(logSpecPool, timeGenerator);
                 fillerLogsForPlaceholder.add(fillerLog);
             }
             fillerLogs.add(fillerLogsForPlaceholder);
@@ -156,15 +145,9 @@ public class FillerLogGenerator {
         return fillerLogs;
     }
 
-    private Log constructFillerLog(
-            Pool<LogSpec> logSpecPool,
-            Pool<String> subjectPool,
-            TimeGenerator timeGenerator
-    ) {
+    private Log constructFillerLog(Pool<LogSpec> logSpecPool, TimeGenerator timeGenerator) {
         LocalTime time = timeGenerator.generate();
         LogSpec logSpec = logSpecPool.get();
-        String subject = subjectPool.get();
-        logSpec.setSubjectIfAbsent(subject);
         return new Log(time, logSpec);
     }
 }
