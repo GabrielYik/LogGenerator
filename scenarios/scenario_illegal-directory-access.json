@@ -1,7 +1,7 @@
 {
   "minLogCount": 150,
   "headers": [
-    "time", "description", "type", "user", "remarks"
+    "time", "description", "type", "user", "remark"
   ],
   "timePeriod": {
     "startTime": "09:00:00",
