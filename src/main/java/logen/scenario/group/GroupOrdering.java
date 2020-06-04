@@ -10,6 +10,22 @@ public class GroupOrdering {
     private GroupOrderingType type;
     private List<Integer> positions;
 
+    /**
+     * Sets the attribute or sub-attributes of {@code ordering} if any
+     * are missing.
+     *
+     * At this point, there are 3 cases of missing sub-attributes that can
+     * be handled:
+     * <ol>
+     *     <li>Type and positions
+     *     <li>Type
+     *     <li>Given type of {@code ANY}, positions
+     * </ol>
+     *
+     * @param ordering The attribute
+     * @param logSpecCount The number of log specifications for computation
+     *                     of default positions
+     */
     public static void setAttributesIfAbsent(GroupOrdering ordering, int logSpecCount) {
         if (ordering == null) {
             ordering = new GroupOrdering();
@@ -22,7 +38,7 @@ public class GroupOrdering {
         }
 
         if (ordering.type == null && ordering.positions != null) {
-            ordering.type = DEFAULT_TYPE;
+            ordering.type = GroupOrderingType.CUSTOM;
             return;
         }
 
@@ -31,6 +47,13 @@ public class GroupOrdering {
         }
     }
 
+    /**
+     * Computes a randomised list of size {@code logSpecCount} of integers
+     * 1 to {@code logSpecCount}.
+     *
+     * @param logSpecCount The size of the resulting list
+     * @return A randomised list of size {@code logSpecCount}
+     */
     private static List<Integer> computeDefaultPositions(int logSpecCount) {
         List<Integer> positions = new ArrayList<>(logSpecCount);
         int position = 1;

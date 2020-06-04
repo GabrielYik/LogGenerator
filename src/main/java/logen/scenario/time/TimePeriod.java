@@ -19,7 +19,6 @@ public class TimePeriod {
      * and sets property values to their default values if absent.
      *
      * @param timePeriod A time period
-     * @return A completely initialised time period
      */
     public static void setAttributesIfAbsent(TimePeriod timePeriod) {
         if (timePeriod == null) {

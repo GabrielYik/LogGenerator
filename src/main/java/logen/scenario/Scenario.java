@@ -194,7 +194,7 @@ public class Scenario {
     public void setGroups(List<Group> groups) {
         this.groups = groups;
     }
-
+    
     public List<LogSpec> getLogSpecs() {
         return logSpecs;
     }

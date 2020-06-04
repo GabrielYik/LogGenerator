@@ -218,6 +218,7 @@ public class RandomUtil {
             to = (to + 1) % 2;
             counter++;
         }
+        Collections.shuffle(values);
         return values;
     }
 
@@ -288,6 +289,7 @@ public class RandomUtil {
         }
         E remainder = subtractionStrategy.apply(sum, sumUsed);
         values.add(remainder);
+        Collections.shuffle(values);
         return values;
     }
 }
