@@ -85,7 +85,7 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
             LocalTime baseTime
     ) {
         Validation.requireNonNull(fromTime, wrapAroundTime, baseTime);
-        Validation.requireInOrder(baseTime, fromTime, wrapAroundTime);
+        Validation.requireInOrder(wrapAroundTime, fromTime, baseTime);
 
         return new UnboundedTimeGenerator(
                 TimeGenerationDirection.BACKWARD,

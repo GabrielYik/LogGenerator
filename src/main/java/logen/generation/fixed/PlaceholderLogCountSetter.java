@@ -2,8 +2,8 @@ package logen.generation.fixed;
 
 import logen.scenario.Scenario;
 import logen.util.RandomUtil;
+import logen.util.timegenerators.BoundedTimeGenerator;
 import logen.util.timegenerators.TimeGenerator;
-import logen.util.timegenerators.UnboundedTimeGenerator;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -56,23 +56,21 @@ public class PlaceholderLogCountSetter {
                 continue;
             }
 
-            TimeGenerator timeGenerator = UnboundedTimeGenerator.forward(
+            TimeGenerator timeGenerator = BoundedTimeGenerator.between(
                     placeholder.getStartTime(),
+                    placeholder.getEndTime(),
                     scenario.getTimePeriod().getEndTime(),
                     scenario.getTimePeriod().getStartTime()
             );
-            int logCount = computeLogCountForInnerPlaceholder(placeholder, timeGenerator);
+            int logCount = computeLogCountForInnerPlaceholder(timeGenerator);
             placeholder.withLogCount(logCount);
         }
     }
 
-    private int computeLogCountForInnerPlaceholder(
-            Placeholder.Builder placeholder,
-            TimeGenerator timeGenerator
-    ) {
+    private int computeLogCountForInnerPlaceholder(TimeGenerator timeGenerator) {
         int logCount = 0;
         LocalTime time = timeGenerator.generate();
-        while (time.isBefore(placeholder.getEndTime())) {
+        while (time != null) {
             logCount++;
             time = timeGenerator.generate();
         }

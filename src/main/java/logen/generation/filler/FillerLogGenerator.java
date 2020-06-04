@@ -6,13 +6,14 @@ import logen.log.Log;
 import logen.scenario.common.LogSpec;
 import logen.scenario.Scenario;
 import logen.util.Pool;
-import logen.util.timegenerators.BoundedTimeGenerator;
+import logen.util.timegenerators.StrictTimeGenerator;
 import logen.util.timegenerators.TimeGenerator;
 import logen.util.timegenerators.UnboundedTimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -47,12 +48,12 @@ public class FillerLogGenerator {
         );
         List<Placeholder> placeholders = fixture.getPlaceholders();
 
-        List<Log> fluidLogsForFirstPlaceholder = generateLogsForFirstPlaceholder(
+        List<Log> fillerLogsForFirstPlaceholder = generateLogsForFirstPlaceholder(
                 logSpecPool,
                 subjectPool,
                 placeholders.get(0)
         );
-        List<Log> fluidLogsForLastPlaceholder = generateLogsForLastPlaceholder(
+        List<Log> fillerLogsForLastPlaceholder = generateLogsForLastPlaceholder(
                 logSpecPool,
                 subjectPool,
                 placeholders.get(placeholders.size() - 1)
@@ -64,20 +65,20 @@ public class FillerLogGenerator {
                 placeholders
         );
 
-        List<List<Log>> fluidLogs = new ArrayList<>();
-        fluidLogs.add(fluidLogsForFirstPlaceholder);
-        fluidLogs.addAll(fillerLogsForBetweenPlaceholders);
-        fluidLogs.add(fluidLogsForLastPlaceholder);
+        List<List<Log>> fillerLogs = new ArrayList<>();
+        fillerLogs.add(fillerLogsForFirstPlaceholder);
+        fillerLogs.addAll(fillerLogsForBetweenPlaceholders);
+        fillerLogs.add(fillerLogsForLastPlaceholder);
 
         List<Log> fixedLogs = fixture.getFixedLogs();
-        int counter = fixedLogs.size() + fluidLogs.size();
+        int counter = fixedLogs.size() + fillerLogs.size();
         int counterForFixedLogs = 0;
-        int counterForFluidLogs = 0;
+        int counterForFillerLogs = 0;
         List<Log> logs = new ArrayList<>();
         for (int i = 0; i < counter; i++) {
             if (i % 2 == 0) {
-                logs.addAll(fluidLogs.get(counterForFluidLogs));
-                counterForFluidLogs++;
+                logs.addAll(fillerLogs.get(counterForFillerLogs));
+                counterForFillerLogs++;
             } else {
                 logs.add(fixedLogs.get(counterForFixedLogs));
                 counterForFixedLogs++;
@@ -96,12 +97,12 @@ public class FillerLogGenerator {
                 scenario.getTimePeriod().getStartTime(),
                 scenario.getTimePeriod().getEndTime()
         );
-        List<Log> fluidLogs = new ArrayList<>();
+        List<Log> fillerLogs = new LinkedList<>();
         for (int i = placeholder.getLogCount() - 1; i > -1; i--) {
-            Log fluidLog = generateLog(logSpecPool, subjectPool, timeGenerator);
-            fluidLogs.add(fluidLog);
+            Log fillerLog = constructFillerLog(logSpecPool, subjectPool, timeGenerator);
+            fillerLogs.add(0, fillerLog);
         }
-        return fluidLogs;
+        return fillerLogs;
     }
 
     private List<Log> generateLogsForLastPlaceholder(
@@ -114,12 +115,12 @@ public class FillerLogGenerator {
                 scenario.getTimePeriod().getEndTime(),
                 scenario.getTimePeriod().getStartTime()
         );
-        List<Log> fluidLogs = new ArrayList<>();
+        List<Log> fillerLogs = new ArrayList<>();
         for (int i = 0; i < placeholder.getLogCount(); i++) {
-            Log fluidLog = generateLog(logSpecPool, subjectPool, timeGenerator);
-            fluidLogs.add(fluidLog);
+            Log fillerLog = constructFillerLog(logSpecPool, subjectPool, timeGenerator);
+            fillerLogs.add(fillerLog);
         }
-        return fluidLogs;
+        return fillerLogs;
     }
 
     private List<List<Log>> generateLogsForBetweenPlaceholders(
@@ -137,17 +138,17 @@ public class FillerLogGenerator {
                 continue;
             }
 
-            TimeGenerator timeGenerator = BoundedTimeGenerator.wrap(
+            TimeGenerator timeGenerator = StrictTimeGenerator.wrap(
                     placeholder.getStartTime(),
                     placeholder.getEndTime(),
-                    scenario.getTimePeriod().getStartTime(),
                     scenario.getTimePeriod().getEndTime(),
+                    scenario.getTimePeriod().getStartTime(),
                     logCount
             );
 
             List<Log> fillerLogsForPlaceholder = new ArrayList<>(logCount);
             for (int j = 0; j < logCount; j++) {
-                Log fillerLog = generateLog(logSpecPool, subjectPool, timeGenerator);
+                Log fillerLog = constructFillerLog(logSpecPool, subjectPool, timeGenerator);
                 fillerLogsForPlaceholder.add(fillerLog);
             }
             fillerLogs.add(fillerLogsForPlaceholder);
@@ -155,7 +156,7 @@ public class FillerLogGenerator {
         return fillerLogs;
     }
 
-    private Log generateLog(
+    private Log constructFillerLog(
             Pool<LogSpec> logSpecPool,
             Pool<String> subjectPool,
             TimeGenerator timeGenerator

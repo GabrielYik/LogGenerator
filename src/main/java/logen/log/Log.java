@@ -11,14 +11,14 @@ public class Log {
     private final String description;
     private final String type;
     private final String subject;
-    private final String remarks;
+    private final String remark;
 
     public Log(LocalTime time, LogSpec spec) {
         this.time = time;
         this.description = spec.getDescription();
         this.type = spec.getType();
         this.subject = spec.getSubject();
-        this.remarks = spec.getSubject();
+        this.remark = spec.getRemark();
     }
 
     public LocalTime getTime() {
@@ -31,7 +31,7 @@ public class Log {
         array.add(description);
         array.add(type);
         array.add(subject);
-        array.add(remarks);
+        array.add(remark);
         return array.toArray();
     }
 }

@@ -8,7 +8,7 @@ import logen.scenario.common.LogSpec;
 import logen.scenario.group.GroupTimePeriod;
 import logen.util.RandomUtil;
 import logen.util.timegenerators.AbstractTimeGenerator;
-import logen.util.timegenerators.BoundedTimeGenerator;
+import logen.util.timegenerators.StrictTimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -59,7 +59,7 @@ public class GroupTimePeriodApplier extends AbstractGroupAttributeApplier {
     public GroupFixture.Builder apply() {
         setLogCountForNonPaddingPlaceholders();
         int logCount = computeTotalLogCount();
-        BoundedTimeGenerator timeGenerator = BoundedTimeGenerator.linear(
+        StrictTimeGenerator timeGenerator = StrictTimeGenerator.linear(
                 timePeriod.getStartTime(),
                 timePeriod.getEndTime(),
                 logCount
@@ -131,7 +131,7 @@ public class GroupTimePeriodApplier extends AbstractGroupAttributeApplier {
                         .sum();
     }
 
-    private List<Log> constructFixedLogs(BoundedTimeGenerator timeGenerator) {
+    private List<Log> constructFixedLogs(StrictTimeGenerator timeGenerator) {
         List<Log> fixedLogs = new ArrayList<>();
         for (int i = 0; i < logSpecs.size(); i++) {
             LogSpec logSpec = logSpecs.get(i);
