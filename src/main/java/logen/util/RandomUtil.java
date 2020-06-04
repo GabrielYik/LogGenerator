@@ -29,6 +29,8 @@ public class RandomUtil {
      * @param values A non-empty list
      * @param <E> The element type of {@code values}
      * @return A randomly chosen element from {@code values}
+     * @throws NullPointerException if {@code values} is null
+     * @throws IllegalArgumentException if {@code values} is empty
      */
     public static <E> E chooseFrom(List<E> values) {
         Objects.requireNonNull(values);
@@ -49,6 +51,8 @@ public class RandomUtil {
      * @param end The upper bound of the random non-negative integer
      * @return A random non-negative integer between {@code start} and
      *   {@code end} inclusive
+     * @throws IllegalArgumentException if {@code start} or {@code end} is
+     *   negative, or {@code start} > {@code end}
      */
     public static int chooseBetweenInclusive(int start, int end) {
         if (start < 0 || end < 0 || start > end) {
@@ -70,6 +74,8 @@ public class RandomUtil {
      * @param end The upper bound of the random non-negative long
      * @return A random non-negative long between {@code start} and
      *   {@code end} inclusive
+     * @throws IllegalArgumentException if {@code start} or {@code end} is
+     *   negative, or {@code start} > {@code end}
      */
     public static long chooseBetweenInclusive(long start, long end) {
         if (start < 0 || end < 0 || start > end) {
@@ -93,16 +99,17 @@ public class RandomUtil {
      * @param endTime The latest time value
      * @return A random time value between {@code start} and {@code end}
      *   inclusive
+     * @throws NullPointerException if either {@code startTime} or
+     *   {@code endTime} is null
+     * @throws IllegalArgumentException if {@code startTime} is after
+     *   {@code endTime}
      */
     public static LocalTime chooseBetweenInclusive(
             LocalTime startTime,
             LocalTime endTime
     ) {
-        Objects.requireNonNull(startTime);
-        Objects.requireNonNull(endTime);
-        if (startTime.isAfter(endTime)) {
-            throw new IllegalArgumentException();
-        }
+        Validation.requireNonNull(startTime, endTime);
+        Validation.requireInOrder(startTime, endTime);
 
         int startTimeSeconds = startTime.toSecondOfDay();
         int endTimeSeconds = endTime.toSecondOfDay();
@@ -114,14 +121,21 @@ public class RandomUtil {
      * Randomly distributes the integer quantity of {@code sum} among the
      * positions of a list of size {@code count}.
      *
-     * If {@code count} is 0, an empty list is returned.
-     *
      * @param sum The quantity to be distributed
      * @param count The size of the output list
      * @return A list of size {@code count} with a random distribution
      *   of the quantity {@code sum} distributed among its positions
+     * @throws IllegalArgumentException if either {@code sum} or {@code count}
+     *   is negative
      */
     public static List<Integer> distributeRandomly(int sum, int count) {
+        if (sum < 0 || count < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        if (sum == 0) {
+            return new ArrayList<>(Collections.nCopies(count, 0));
+        }
         if (count == 0) {
             return Collections.emptyList();
         }
@@ -140,7 +154,14 @@ public class RandomUtil {
      * a long {@code sum}.
      */
     public static List<Long> distributeRandomly(long sum, int count) {
-        if (count == 0) {
+        if (sum < 0L || count < 0L) {
+            throw new IllegalArgumentException();
+        }
+
+        if (sum == 0L) {
+            return new ArrayList<>(Collections.nCopies(count, 0L));
+        }
+        if (count == 0L) {
             return Collections.emptyList();
         }
 
@@ -173,7 +194,7 @@ public class RandomUtil {
      * @param <E> The element type of {@code values}
      * @return A randomised distribution of {@code values}
      */
-    public static <E> List<E> distributeRandomly(
+    private static <E> List<E> distributeRandomly(
             List<E> values,
             BiFunction<Integer, E, E> choiceStrategy,
             BiFunction<E, E, E> subtractionStrategy,

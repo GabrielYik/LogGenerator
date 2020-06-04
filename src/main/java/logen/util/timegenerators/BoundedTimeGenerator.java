@@ -1,6 +1,7 @@
 package logen.util.timegenerators;
 
 import logen.util.RandomUtil;
+import logen.util.Validation;
 
 import java.time.LocalTime;
 import java.util.List;
@@ -41,21 +42,39 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
         timeValueDeltas = generateTimeValueDeltas();
     }
 
+    /**
+     * Generates the time value deltas that determine how much each time
+     * value generated will differ from the next.
+     * Each time value is a random number of seconds apart from the next.
+     * This pre-emptive generation ensures that the generation quantity
+     * of {@code generationCount} can be fulfilled.
+     *
+     * @return A supplier of the generated time value deltas
+     */
     private Supplier<Long> generateTimeValueDeltas() {
-        long seconds = computeSeconds();
+        long seconds = computeSecondsBudget();
         List<Long> timeValueDeltas = distributeRandomly(seconds);
-        return () -> timeValueDeltas.remove(0);
+        return () -> timeValueDeltas.isEmpty() ? null : timeValueDeltas.remove(0);
     }
 
-    private long computeSeconds() {
-        if (toTime.isBefore(fromTime)) {
-            return wrapAroundTime.toSecondOfDay()
-                    - fromTime.toSecondOfDay()
-                    + toTime.toSecondOfDay()
-                    - baseTime.toSecondOfDay();
+    /**
+     * Computes the number of seconds within which generations of quantity
+     * {@code generationCount} must take place.
+     *
+     * @return The number of seconds
+     */
+    private long computeSecondsBudget() {
+        if (requiresWrapAround()) {
+            long timeBeforeWrapAround = wrapAroundTime.toSecondOfDay() - fromTime.toSecondOfDay();
+            long timeAfterWrapAround = toTime.toSecondOfDay() - baseTime.toSecondOfDay();
+            return timeBeforeWrapAround + timeAfterWrapAround;
         } else {
             return toTime.toSecondOfDay() - fromTime.toSecondOfDay();
         }
+    }
+
+    private boolean requiresWrapAround() {
+        return toTime.isBefore(fromTime);
     }
 
     private List<Long> distributeRandomly(long seconds) {
@@ -87,6 +106,8 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
      *                 wraps around
      * @param generationCount The number of time values to be generated
      * @return A generator of increasing time values
+     * @throws NullPointerException if any of the {@code LocalTime} arguments
+     *   are null
      */
     public static BoundedTimeGenerator wrap(
             LocalTime fromTime,
@@ -95,6 +116,8 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
             LocalTime baseTime,
             int generationCount
     ) {
+        Validation.requireNonNull(fromTime, toTime, wrapAroundTime, baseTime);
+
         return new BoundedTimeGenerator(
                 fromTime,
                 toTime,
@@ -120,12 +143,19 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
      * @param toTime The latest time of a time value generated
      * @param generationCount The number of time values to be generated
      * @return A generator of increasing time values
+     * @throws NullPointerException if any of the {@code LocalTime} arguments
+     *   are null
+     * @throws IllegalArgumentException if {@code fromTime} is not before
+     *   {@code toTime}
      */
     public static BoundedTimeGenerator linear(
             LocalTime fromTime,
             LocalTime toTime,
             int generationCount
     ) {
+        Validation.requireNonNull(fromTime, toTime);
+        Validation.requireInOrder(fromTime, toTime);
+
         return new BoundedTimeGenerator(
                 fromTime,
                 toTime,
@@ -152,8 +182,20 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
         return timeValue;
     }
 
-    public void skip(int generationCount) {
-        for (int i = 0; i < generationCount; i++) {
+    /**
+     * Generates the next time values of quantity {@code skipCount}
+     * and discards them.
+     *
+     * @param skipCount The number of time values to generate and
+     *                  discard
+     * @throws IllegalArgumentException if {@code skipCount} is negative
+     */
+    public void skip(int skipCount) {
+        if (skipCount < 0) {
+            throw new IllegalArgumentException();
+        }
+
+        for (int i = 0; i < skipCount; i++) {
             timeValueDeltas.get();
         }
     }
