@@ -12,6 +12,7 @@ import logen.util.timegenerators.UnboundedTimeGenerator;
 
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -130,26 +131,26 @@ public class FillerLogGenerator {
         for (int i = 1; i < placeholders.size() - 1; i++) {
             Placeholder placeholder = placeholders.get(i);
 
-            switch(placeholder.getType()) {
-                case FLEXIBLE:
-                    break;
-                case CUSTOM:
-                    int logCount = placeholder.getLogCount();
-                    TimeGenerator timeGenerator = BoundedTimeGenerator.wrap(
-                            placeholder.getStartTime(),
-                            placeholder.getEndTime(),
-                            scenario.getTimePeriod().getStartTime(),
-                            scenario.getTimePeriod().getEndTime(),
-                            logCount
-                    );
-
-                    List<Log> fillerLogsForPlaceholder = new ArrayList<>(logCount);
-                    for (int j = 0; j < logCount; j++) {
-                        Log fillerLog = generateLog(logSpecPool, subjectPool, timeGenerator);
-                        fillerLogsForPlaceholder.add(fillerLog);
-                    }
-                    fillerLogs.add(fillerLogsForPlaceholder);
+            int logCount = placeholder.getLogCount();
+            if (logCount == 0) {
+                fillerLogs.add(Collections.emptyList());
+                continue;
             }
+
+            TimeGenerator timeGenerator = BoundedTimeGenerator.wrap(
+                    placeholder.getStartTime(),
+                    placeholder.getEndTime(),
+                    scenario.getTimePeriod().getStartTime(),
+                    scenario.getTimePeriod().getEndTime(),
+                    logCount
+            );
+
+            List<Log> fillerLogsForPlaceholder = new ArrayList<>(logCount);
+            for (int j = 0; j < logCount; j++) {
+                Log fillerLog = generateLog(logSpecPool, subjectPool, timeGenerator);
+                fillerLogsForPlaceholder.add(fillerLog);
+            }
+            fillerLogs.add(fillerLogsForPlaceholder);
         }
         return fillerLogs;
     }
