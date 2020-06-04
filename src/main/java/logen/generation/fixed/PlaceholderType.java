@@ -13,5 +13,5 @@ public enum PlaceholderType {
      * The user determines the number of logs to be generated
      * in the space represented by the placeholder.
      */
-    CUSTOM;
+    CUSTOM
 }

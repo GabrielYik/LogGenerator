@@ -17,13 +17,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import static logen.Config.SCENARIO_DIR_PATH;
-import static logen.Config.SCENARIO_DIR_PATH_JAR;
-import static logen.Config.SCENARIO_FILE_EXTENSION;
-import static logen.Config.SCENARIO_FILE_PREFIX;
-
 public class ScenarioStorage {
-    public static final DirectoryStream.Filter<Path> SCENARIO_FILE_FILTER =
+    private static final String SCENARIO_DIR_NAME = "scenarios";
+    private static final String SCENARIO_DIR_PATH = StorageConfig.ROOT + File.separator + SCENARIO_DIR_NAME + File.separator;
+    private static final String SCENARIO_DIR_PATH_JAR = StorageConfig.ROOT_JAR + File.separator + SCENARIO_DIR_NAME + File.separator;
+
+    public static final String SCENARIO_FILE_PREFIX = "scenario_";
+    public static final String SCENARIO_FILE_EXTENSION = ".json";
+
+    private static final DirectoryStream.Filter<Path> SCENARIO_FILE_FILTER =
             path -> path.getFileName().toString().startsWith(SCENARIO_FILE_PREFIX);
 
     private ScenarioStorage() {

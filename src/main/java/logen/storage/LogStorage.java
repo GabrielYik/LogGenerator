@@ -4,18 +4,19 @@ import logen.log.Log;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static logen.Config.LOG_DIR_PATH;
-import static logen.Config.LOG_FILE_EXTENSION;
-import static logen.Config.LOG_FILE_PREFIX;
-import static logen.Config.SCENARIO_FILE_PREFIX;
-
 public class LogStorage {
+    private static final String LOG_DIR_PATH = StorageConfig.ROOT + File.separator + "logs" + File.separator;
+
+    public static final String LOG_FILE_PREFIX = "log_";
+    public static final String LOG_FILE_EXTENSION = ".csv";
+
     private LogStorage() {
 
     }
@@ -39,6 +40,6 @@ public class LogStorage {
     }
 
     private static String toPrettyFileName(String fileName) {
-        return LOG_FILE_PREFIX + fileName.substring(SCENARIO_FILE_PREFIX.length());
+        return LOG_FILE_PREFIX + fileName.substring(ScenarioStorage.SCENARIO_FILE_PREFIX.length());
     }
 }

@@ -13,5 +13,5 @@ public enum GroupSpacingType {
      * The user determines the amount of spacing between logs
      * in a group.
      */
-    CUSTOM;
+    CUSTOM
 }
