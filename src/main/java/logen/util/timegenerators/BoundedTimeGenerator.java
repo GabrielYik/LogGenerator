@@ -13,9 +13,9 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
             LocalTime fromTime,
             LocalTime toTime,
             LocalTime wrapAroundTime,
-            LocalTime baseTime
+            LocalTime wrapToTime
     ) {
-        super(fromTime, wrapAroundTime, baseTime);
+        super(fromTime, wrapAroundTime, wrapToTime);
         this.toTime = toTime;
         requiresWrapAround = fromTime.isAfter(toTime);
         hasWrappedAround = false;
@@ -25,16 +25,16 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
             LocalTime fromTime,
             LocalTime toTime,
             LocalTime wrapAroundTime,
-            LocalTime baseTime
+            LocalTime wrapToTime
     ) {
-        Validation.requireNonNull(fromTime, toTime, wrapAroundTime, baseTime);
-        Validation.requireInOrder(baseTime, fromTime, wrapAroundTime);
+        Validation.requireNonNull(fromTime, toTime, wrapAroundTime, wrapToTime);
+        Validation.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
 
         return new BoundedTimeGenerator(
                 fromTime,
                 toTime,
                 wrapAroundTime,
-                baseTime
+                wrapToTime
         );
     }
 
@@ -48,7 +48,7 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
                 if (timeValue.isAfter(wrapAroundTime)) {
                     hasWrappedAround = true;
 
-                    timeValue = baseTime;
+                    timeValue = wrapToTime;
                     return generate();
                 }
             } else {

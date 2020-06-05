@@ -19,79 +19,79 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
             TimeGenerationDirection direction,
             LocalTime fromTime,
             LocalTime wrapAroundTime,
-            LocalTime baseTime
+            LocalTime wrapToTime
     ) {
-        super(fromTime, wrapAroundTime, baseTime);
+        super(fromTime, wrapAroundTime, wrapToTime);
         this.direction = direction;
     }
 
     /**
      * Constructs a generator that generates increasing time values from
-     * {@code baseTime} to {@code wrapAroundTime} starting from {@code fromTime}.
+     * {@code wrapToTime} to {@code wrapAroundTime} starting from {@code fromTime}.
      * If a time value generated is after {@code wrapAroundTime},
      * the time value is discarded and generation wraps around
-     * {@code wrapAroundTime} and starts from {@code baseTime}.
+     * {@code wrapAroundTime} and starts from {@code wrapToTime}.
      *
      * @param fromTime The earliest time of the first time value generated
      * @param wrapAroundTime The latest time of a time value generated
      *                       and the time at which generation wraps around
-     * @param baseTime The time which generation starts from after generation
+     * @param wrapToTime The time which generation starts from after generation
      *                 wraps around
      * @return A generator of increasing time values
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
      * @throws IllegalArgumentException if the {@code LocalTime} arguments are
-     *   not in the following order: {@code baseTime} < {@code fromTime} <
+     *   not in the following order: {@code wrapToTime} < {@code fromTime} <
      *   {@code wrapAroundTime}
      */
     public static UnboundedTimeGenerator forward(
             LocalTime fromTime,
             LocalTime wrapAroundTime,
-            LocalTime baseTime
+            LocalTime wrapToTime
     ) {
-        Validation.requireNonNull(fromTime, wrapAroundTime, baseTime);
-        Validation.requireInOrder(baseTime, fromTime, wrapAroundTime);
+        Validation.requireNonNull(fromTime, wrapAroundTime, wrapToTime);
+        Validation.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
 
         return new UnboundedTimeGenerator(
                 TimeGenerationDirection.FORWARD,
                 fromTime,
                 wrapAroundTime,
-                baseTime
+                wrapToTime
         );
     }
 
     /**
      * Constructs a generator that generates decreasing time values from
-     * {@code wrapAroundTime} to {@code baseTime} starting from {@code fromTime}.
+     * {@code wrapAroundTime} to {@code wrapToTime} starting from {@code fromTime}.
      * If a time value generated is before {@code wrapAroundTime},
      * the time value is discarded and generation wraps around
-     * {@code wrapAroundTime} and starts from {@code baseTime}.
+     * {@code wrapAroundTime} and starts from {@code wrapToTime}.
      *
      * @param fromTime The latest time of the first time value generated
      * @param wrapAroundTime The earliest time of a time value generated
      *                       and the time which generation wraps around
-     * @param baseTime The time which generation starts from after generation
+     * @param wrapToTime The time which generation starts from after generation
      *                 wraps around
      * @return A generator of decreasing time values
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
      * @throws IllegalArgumentException if the {@code LocalTime} arguments are
-     *   not in the following order: {@code baseTime} < {@code fromTime} <
+     *   not in the following order: {@code wrapToTime} < {@code fromTime} <
      *   {@code wrapAroundTime}
      */
     public static UnboundedTimeGenerator backward(
             LocalTime fromTime, 
             LocalTime wrapAroundTime,
-            LocalTime baseTime
+            LocalTime wrapToTime
     ) {
-        Validation.requireNonNull(fromTime, wrapAroundTime, baseTime);
-        Validation.requireInOrder(wrapAroundTime, fromTime, baseTime);
+        Validation.requireNonNull(fromTime, wrapAroundTime, wrapToTime);
+        Validation.requireInOrder(wrapAroundTime, fromTime, wrapToTime);
 
         return new UnboundedTimeGenerator(
                 TimeGenerationDirection.BACKWARD,
                 fromTime,
                 wrapAroundTime,
-                baseTime
+                wrapToTime
         );
     }
 
@@ -111,7 +111,7 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
         long seconds = generateRandomSeconds();
         timeValue = timeValue.plusSeconds(seconds);
         if (timeValue.isAfter(wrapAroundTime)) {
-            timeValue = baseTime;
+            timeValue = wrapToTime;
             return generateForward();
         }
         return timeValue;
@@ -121,7 +121,7 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
         long seconds = generateRandomSeconds();
         timeValue = timeValue.minusSeconds(seconds);
         if (timeValue.isBefore(wrapAroundTime)) {
-            timeValue = baseTime;
+            timeValue = wrapToTime;
             return generateBackward();
         }
         return timeValue;

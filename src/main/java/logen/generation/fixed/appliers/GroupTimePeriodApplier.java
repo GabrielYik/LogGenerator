@@ -114,7 +114,7 @@ public class GroupTimePeriodApplier extends AbstractGroupAttributeApplier {
         LocalTime startTime = timePeriod.getStartTime();
         LocalTime endTime = timePeriod.getEndTime();
         int seconds = endTime.toSecondOfDay() - startTime.toSecondOfDay();
-        return ARBITRARY_OFFSET + seconds / AbstractTimeGenerator.computeAverageInterval();
+        return ARBITRARY_OFFSET + seconds / AbstractTimeGenerator.computeInterval();
     }
 
     /**

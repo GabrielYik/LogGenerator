@@ -33,10 +33,10 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
             LocalTime fromTime,
             LocalTime toTime,
             LocalTime wrapAroundTime,
-            LocalTime baseTime,
+            LocalTime wrapToTime,
             int generationCount
     ) {
-        super(fromTime, wrapAroundTime, baseTime);
+        super(fromTime, wrapAroundTime, wrapToTime);
         this.toTime = toTime;
         this.generationCount = generationCount;
         timeValueDeltas = generateTimeValueDeltas();
@@ -66,7 +66,7 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
     private long computeSecondsBudget() {
         if (requiresWrapAround()) {
             long timeBeforeWrapAround = wrapAroundTime.toSecondOfDay() - fromTime.toSecondOfDay();
-            long timeAfterWrapAround = toTime.toSecondOfDay() - baseTime.toSecondOfDay();
+            long timeAfterWrapAround = toTime.toSecondOfDay() - wrapToTime.toSecondOfDay();
             return timeBeforeWrapAround + timeAfterWrapAround;
         } else {
             return toTime.toSecondOfDay() - fromTime.toSecondOfDay();
@@ -83,14 +83,14 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
 
     /**
      * Constructs a generator that generates increasing time values with
-     * quantity {@code generationCount} from {@code baseTime} to
+     * quantity {@code generationCount} from {@code wrapToTime} to
      * {@code wrapAroundTime}.
      *
      * If {@code fromTime} is after {@code toTime}, generation wraps around
-     * {@code wrapAroundTime} and begins again from {@code baseTime}.
+     * {@code wrapAroundTime} and begins again from {@code wrapToTime}.
      *
      * If {@code fromTime} is before {@code toTime}, generation does not wrap
-     * around and {@code wrapAroundTime} and {@code baseTime} are effectively
+     * around and {@code wrapAroundTime} and {@code wrapToTime} are effectively
      * unused.
      *
      * After {@code generationCount} time values are generated,
@@ -102,7 +102,7 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      *               {@code fromTime}
      * @param wrapAroundTime The latest time of a time value generated
      *                       and the time at which generation wraps around
-     * @param baseTime The time which generation starts from after generation
+     * @param wrapToTime The time which generation starts from after generation
      *                 wraps around
      * @param generationCount The number of time values to be generated
      * @return A generator of increasing time values
@@ -113,17 +113,17 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
             LocalTime fromTime,
             LocalTime toTime,
             LocalTime wrapAroundTime,
-            LocalTime baseTime,
+            LocalTime wrapToTime,
             int generationCount
     ) {
-        Validation.requireNonNull(fromTime, toTime, wrapAroundTime, baseTime);
-        Validation.requireInOrder(baseTime, fromTime, wrapAroundTime);
+        Validation.requireNonNull(fromTime, toTime, wrapAroundTime, wrapToTime);
+        Validation.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
 
         return new StrictTimeGenerator(
                 fromTime,
                 toTime,
                 wrapAroundTime,
-                baseTime,
+                wrapToTime,
                 generationCount
         );
     }
@@ -176,7 +176,7 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
         LocalTime newTimeValue = timeValue.plusSeconds(timeValueDelta);
         if (newTimeValue.isAfter(wrapAroundTime)) {
             long secondsBefore = wrapAroundTime.toSecondOfDay() - timeValue.toSecondOfDay();
-            timeValue = baseTime.plusSeconds(timeValueDelta - secondsBefore);
+            timeValue = wrapToTime.plusSeconds(timeValueDelta - secondsBefore);
         } else {
             timeValue = newTimeValue;
         }
