@@ -8,6 +8,7 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
     private final LocalTime toTime;
     private final boolean requiresWrapAround;
     private boolean hasWrappedAround;
+    private boolean hasReachedBound;
 
     private BoundedTimeGenerator(
             LocalTime fromTime,
@@ -19,6 +20,7 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
         this.toTime = toTime;
         requiresWrapAround = fromTime.isAfter(toTime);
         hasWrappedAround = false;
+        hasReachedBound = false;
     }
 
     public static BoundedTimeGenerator between(
@@ -40,6 +42,10 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
 
     @Override
     public LocalTime generate() {
+        if (hasReachedBound) {
+            return null;
+        }
+
         long seconds = generateRandomSeconds();
         timeValue = timeValue.plusSeconds(seconds);
 
@@ -52,12 +58,14 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
                     return generate();
                 }
             } else {
-                if (timeValue.isAfter(toTime)) {
+                if (!hasReachedBound && timeValue.isAfter(toTime)) {
+                    hasReachedBound = true;
                     return null;
                 }
             }
         } else {
-            if (timeValue.isAfter(toTime)) {
+            if (!hasReachedBound && timeValue.isAfter(toTime)) {
+                hasReachedBound = true;
                 return null;
             }
         }
