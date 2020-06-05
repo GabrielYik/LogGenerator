@@ -1,4 +1,4 @@
-package logen.generation.fixed;
+package logen.generation.common;
 
 /**
  * The type of a placeholder.

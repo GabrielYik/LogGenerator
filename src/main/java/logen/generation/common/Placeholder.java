@@ -1,4 +1,4 @@
-package logen.generation.fixed;
+package logen.generation.common;
 
 import java.time.LocalTime;
 import java.util.ArrayList;

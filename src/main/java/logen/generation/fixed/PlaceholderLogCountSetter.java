@@ -1,5 +1,7 @@
 package logen.generation.fixed;
 
+import logen.generation.common.Placeholder;
+import logen.generation.common.PlaceholderType;
 import logen.scenario.Scenario;
 import logen.util.RandomUtil;
 import logen.util.timegenerators.BoundedTimeGenerator;

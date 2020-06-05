@@ -59,23 +59,17 @@ public class RandomUtil {
             throw new IllegalArgumentException();
         }
 
+        if (start == end) {
+            return start;
+        }
+
         int delta = end - start;
         return start + rng.nextInt(delta + 1);
     }
 
     /**
-     * Generates a random non-negative long between two non-negative
-     * longs {@code start} and {@code end} inclusive, where {@code start}
-     * <= {@code end}.
-     *
-     * If {@code start} is equal to {@code end}, {@code start} is returned.
-     *
-     * @param start The lower bound of the random non-negative long
-     * @param end The upper bound of the random non-negative long
-     * @return A random non-negative long between {@code start} and
-     *   {@code end} inclusive
-     * @throws IllegalArgumentException if {@code start} or {@code end} is
-     *   negative, or {@code start} > {@code end}
+     * A variant of {@link RandomUtil#chooseBetweenInclusive(int, int)}
+     * for longs.
      */
     public static long chooseBetweenInclusive(long start, long end) {
         if (start < 0 || end < 0 || start > end) {
@@ -134,7 +128,7 @@ public class RandomUtil {
         }
 
         if (sum == 0) {
-            return new ArrayList<>(Collections.nCopies(count, 0));
+            return Collections.nCopies(count, 0);
         }
         if (count == 0) {
             return Collections.emptyList();
@@ -150,8 +144,8 @@ public class RandomUtil {
     }
 
     /**
-     * A specialisation of {@link this#distributeRandomly(int, int)} for
-     * a long {@code sum}.
+     * A variant of {@link this#distributeRandomly(int, int)} for a long
+     * {@code sum}.
      */
     public static List<Long> distributeRandomly(long sum, int count) {
         if (sum < 0L || count < 0L) {

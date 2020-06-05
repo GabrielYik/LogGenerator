@@ -1,7 +1,7 @@
 package logen.generation;
 
 import logen.generation.fixed.FixedLogGenerator;
-import logen.generation.fixed.Fixture;
+import logen.generation.common.Fixture;
 import logen.generation.filler.FillerLogGenerator;
 import logen.log.Log;
 import logen.scenario.Scenario;

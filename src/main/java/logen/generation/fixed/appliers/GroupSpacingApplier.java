@@ -1,8 +1,8 @@
 package logen.generation.fixed.appliers;
 
 import logen.generation.fixed.GroupFixture;
-import logen.generation.fixed.Placeholder;
-import logen.generation.fixed.PlaceholderType;
+import logen.generation.common.Placeholder;
+import logen.generation.common.PlaceholderType;
 import logen.scenario.group.GroupSpacing;
 
 import java.util.ArrayList;

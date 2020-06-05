@@ -1,7 +1,7 @@
 package logen.generation.filler;
 
-import logen.generation.fixed.Fixture;
-import logen.generation.fixed.Placeholder;
+import logen.generation.common.Fixture;
+import logen.generation.common.Placeholder;
 import logen.log.Log;
 import logen.scenario.common.LogSpec;
 import logen.scenario.Scenario;
