@@ -1,30 +1,23 @@
 package logen.util.timegenerators;
 
 import logen.util.RandomUtil;
-import logen.util.Validation;
+import logen.util.Validations;
 
 import java.time.LocalTime;
 import java.util.List;
 import java.util.function.Supplier;
 
 /**
- * A generator of time values that is bounded by a configurable overriding
- * latest time and generates increasing time values.
- * The overriding latest time only takes effective if it is before the
- * wrap around time. If it is after or equal to the wrap around time,
- * there is no override.
- * This specification of an overriding latest time allows for the constraint
- * of the generation count to a specified quantity.
+ * A variant of {@link BoundedTimeGenerator} with one additional constraint
+ * imposed: the generator has to generate a specified number of time values
+ * before the specified ending time is reached.
  * This constraint is essential in satisfying user-specified spacing amounts
  * between logs.
  */
 public class StrictTimeGenerator extends AbstractTimeGenerator {
-    /**
-     * The overriding latest time.
-     */
     private final LocalTime toTime;
     /**
-     * The exact generations this must provide.
+     * The exact number of time values this must provide.
      */
     private final int generationCount;
     private final Supplier<Long> timeValueDeltas;
@@ -46,8 +39,14 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      * Generates the time value deltas that determine how much each time
      * value generated will differ from the next.
      * Each time value is a random number of seconds apart from the next.
+     *
      * This pre-emptive generation ensures that the generation quantity
      * of {@code generationCount} can be fulfilled.
+     *
+     * {@link AbstractTimeGenerator#generateRandomSeconds()} cannot be used
+     * since use of that method will not guarantee that the specified
+     * number of time values required to be generated {@code generationCount}
+     * can be met.
      *
      * @return A supplier of the generated time value deltas
      */
@@ -83,8 +82,12 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
 
     /**
      * Constructs a generator that generates increasing time values with
-     * quantity {@code generationCount} from {@code wrapToTime} to
-     * {@code wrapAroundTime}.
+     * quantity {@code generationCount} between {@code wrapToTime} and
+     * {@code wrapAroundTime} inclusive starting from {@code fromTime} and
+     * ending at {@code toTime}.
+     * If a time value generated is after {@code wrapAroundTime}, the time
+     * value is discarded and generation wraps around
+     * {@code wrapAroundTime} and starts from {@code wrapToTime}.
      *
      * If {@code fromTime} is after {@code toTime}, generation wraps around
      * {@code wrapAroundTime} and begins again from {@code wrapToTime}.
@@ -93,21 +96,23 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      * around and {@code wrapAroundTime} and {@code wrapToTime} are effectively
      * unused.
      *
-     * After {@code generationCount} time values are generated,
-     * subsequent generations will return null.
+     * After {@code generationCount} time values are generated, subsequent
+     * time values generated will be discarded.
      *
      * @param fromTime The earliest time of the first time value generated
-     * @param toTime The time that overrides {@code wrapAroundTime} as the
-     *               latest time of a time value generated if it is after
-     *               {@code fromTime}
-     * @param wrapAroundTime The latest time of a time value generated
+     * @param toTime The latest time of the last time value generated
+     * @param wrapAroundTime The latest time of all time values generated
      *                       and the time at which generation wraps around
      * @param wrapToTime The time which generation starts from after generation
-     *                 wraps around
+     *                   wraps around
      * @param generationCount The number of time values to be generated
      * @return A generator of increasing time values
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
+     * @throws IllegalArgumentException if the {@code LocalTime} arguments are
+     *   not in the following order: {@code wrapToTime} <= {@code fromTime} <=
+     *   {@code wrapAroundTime} and {@code wrapToTime} <= {@code toTime} <=
+     *   {@code wrapAroundTime}
      */
     public static StrictTimeGenerator wrap(
             LocalTime fromTime,
@@ -116,8 +121,9 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
             LocalTime wrapToTime,
             int generationCount
     ) {
-        Validation.requireNonNull(fromTime, toTime, wrapAroundTime, wrapToTime);
-        Validation.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
+        Validations.requireNonNull(fromTime, toTime, wrapAroundTime, wrapToTime);
+        Validations.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
+        Validations.requireInOrder(wrapToTime, toTime, wrapAroundTime);
 
         return new StrictTimeGenerator(
                 fromTime,
@@ -130,15 +136,20 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
 
     /**
      * Constructs a generator that generates increasing time values with
-     * quantity {@code generationCount} from {@code fromTime}
-     * to {@code toTime}.
+     * quantity {@code generationCount} between {@code wrapToTime} and
+     * {@code wrapAroundTime} inclusive starting at {@code fromTime} and ending
+     * at {@code toTime}.
+     * If a time value generated is after {@code wrapAroundTime}, the time
+     * value is discarded and generation wraps around
+     * {@code wrapAroundTime} and starts from {@code wrapToTime}.
      *
-     * This is the variant of {@link StrictTimeGenerator#wrap(LocalTime, LocalTime, LocalTime, LocalTime, int)}
+     * This is the variant of
+     * {@link StrictTimeGenerator#wrap(LocalTime, LocalTime, LocalTime, LocalTime, int)}
      * which assumes that {@code fromTime} is guaranteed to be before
      * {@code toTime}.
      *
-     * After {@code generationCount} time values are generated,
-     * subsequent generations will return null.
+     * After {@code generationCount} time values are generated, subsequent
+     * time values generated will be discarded.
      *
      * @param fromTime The earliest time of the first time value generated
      * @param toTime The latest time of a time value generated
@@ -146,16 +157,16 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      * @return A generator of increasing time values
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
-     * @throws IllegalArgumentException if {@code fromTime} is not before
-     *   {@code toTime}
+     * @throws IllegalArgumentException if {@code fromTime} is not before or
+     *   equal to {@code toTime}
      */
     public static StrictTimeGenerator linear(
             LocalTime fromTime,
             LocalTime toTime,
             int generationCount
     ) {
-        Validation.requireNonNull(fromTime, toTime);
-        Validation.requireInOrder(fromTime, toTime);
+        Validations.requireNonNull(fromTime, toTime);
+        Validations.requireInOrder(fromTime, toTime);
 
         return new StrictTimeGenerator(
                 fromTime,

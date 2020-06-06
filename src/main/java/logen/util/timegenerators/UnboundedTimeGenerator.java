@@ -1,18 +1,14 @@
 package logen.util.timegenerators;
 
-import logen.util.Validation;
+import logen.util.Validations;
 
 import java.time.LocalTime;
 
 /**
- * A generator of time values that is not bounded by any overriding wrap
- * around time and generates increasing or decreasing time values depending
- * on its configuration.
+ * A generator of either increasing or decreasing time values not bounded
+ * by any ending time.
  */
 public class UnboundedTimeGenerator extends AbstractTimeGenerator {
-    /**
-     * The direction which generation of time values proceeds.
-     */
     private final TimeGenerationDirection direction;
     
     private UnboundedTimeGenerator(
@@ -26,22 +22,23 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
     }
 
     /**
-     * Constructs a generator that generates increasing time values from
-     * {@code wrapToTime} to {@code wrapAroundTime} starting from {@code fromTime}.
-     * If a time value generated is after {@code wrapAroundTime},
-     * the time value is discarded and generation wraps around
+     * Constructs a generator that generates increasing time values between
+     * {@code wrapToTime} and {@code wrapAroundTime} inclusive starting from
+     * {@code fromTime}.
+     * If a time value generated is after {@code wrapAroundTime}, the time
+     * value is discarded and generation wraps around
      * {@code wrapAroundTime} and starts from {@code wrapToTime}.
      *
      * @param fromTime The earliest time of the first time value generated
-     * @param wrapAroundTime The latest time of a time value generated
+     * @param wrapAroundTime The latest time of all time values generated
      *                       and the time at which generation wraps around
      * @param wrapToTime The time which generation starts from after generation
-     *                 wraps around
+     *                   wraps around
      * @return A generator of increasing time values
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
      * @throws IllegalArgumentException if the {@code LocalTime} arguments are
-     *   not in the following order: {@code wrapToTime} < {@code fromTime} <
+     *   not in the following order: {@code wrapToTime} <= {@code fromTime} <=
      *   {@code wrapAroundTime}
      */
     public static UnboundedTimeGenerator forward(
@@ -49,8 +46,8 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
             LocalTime wrapAroundTime,
             LocalTime wrapToTime
     ) {
-        Validation.requireNonNull(fromTime, wrapAroundTime, wrapToTime);
-        Validation.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
+        Validations.requireNonNull(fromTime, wrapAroundTime, wrapToTime);
+        Validations.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
 
         return new UnboundedTimeGenerator(
                 TimeGenerationDirection.FORWARD,
@@ -61,22 +58,23 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
     }
 
     /**
-     * Constructs a generator that generates decreasing time values from
-     * {@code wrapAroundTime} to {@code wrapToTime} starting from {@code fromTime}.
+     * Constructs a generator that generates decreasing time values between
+     * {@code wrapAroundTime} and {@code wrapToTime} inclusive starting from
+     * {@code fromTime}.
      * If a time value generated is before {@code wrapAroundTime},
      * the time value is discarded and generation wraps around
      * {@code wrapAroundTime} and starts from {@code wrapToTime}.
      *
      * @param fromTime The latest time of the first time value generated
-     * @param wrapAroundTime The earliest time of a time value generated
+     * @param wrapAroundTime The earliest time of all time values generated
      *                       and the time which generation wraps around
      * @param wrapToTime The time which generation starts from after generation
-     *                 wraps around
+     *                   wraps around
      * @return A generator of decreasing time values
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
      * @throws IllegalArgumentException if the {@code LocalTime} arguments are
-     *   not in the following order: {@code wrapToTime} < {@code fromTime} <
+     *   not in the following order: {@code wrapToTime} <= {@code fromTime} <=
      *   {@code wrapAroundTime}
      */
     public static UnboundedTimeGenerator backward(
@@ -84,8 +82,8 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
             LocalTime wrapAroundTime,
             LocalTime wrapToTime
     ) {
-        Validation.requireNonNull(fromTime, wrapAroundTime, wrapToTime);
-        Validation.requireInOrder(wrapAroundTime, fromTime, wrapToTime);
+        Validations.requireNonNull(fromTime, wrapAroundTime, wrapToTime);
+        Validations.requireInOrder(wrapAroundTime, fromTime, wrapToTime);
 
         return new UnboundedTimeGenerator(
                 TimeGenerationDirection.BACKWARD,
@@ -127,8 +125,24 @@ public class UnboundedTimeGenerator extends AbstractTimeGenerator {
         return timeValue;
     }
 
+    /**
+     * The direction which generation of time values proceeds, corresponding
+     * to the consecutive change of magnitude in a stream of time values.
+     */
     private enum TimeGenerationDirection {
+        /**
+         * Represents a generation direction where time values of increasing
+         * magnitude are to be generated before experiencing a sharp drop in
+         * magnitude from one time value to the next, after which the pattern
+         * repeats.
+         */
         FORWARD,
+        /**
+         * Represents a generation direction where time values of decreasing
+         * magnitude are to be generated before experiencing a sharp increase
+         * in magnitude from one time value to the next, after which the pattern
+         * repeats.
+         */
         BACKWARD
     }
 }

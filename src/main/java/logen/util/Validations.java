@@ -7,7 +7,7 @@ import java.util.Objects;
  * Provides methods for checking specific conditions on method
  * arguments.
  */
-public class Validation {
+public class Validations {
     /**
      * Requires that all the objects in {@code objects} are not
      * null.

@@ -102,8 +102,8 @@ public class RandomUtil {
             LocalTime startTime,
             LocalTime endTime
     ) {
-        Validation.requireNonNull(startTime, endTime);
-        Validation.requireInOrder(startTime, endTime);
+        Validations.requireNonNull(startTime, endTime);
+        Validations.requireInOrder(startTime, endTime);
 
         int startTimeSeconds = startTime.toSecondOfDay();
         int endTimeSeconds = endTime.toSecondOfDay();

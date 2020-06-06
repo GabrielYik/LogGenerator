@@ -43,7 +43,7 @@ public class Pool<E> {
             Consumer<E> action,
             Predicate<E> removalCondition
     ) {
-        Validation.requireNonNull(action, removalCondition);
+        Validations.requireNonNull(action, removalCondition);
 
         this.entities = entities;
         this.action = action;
