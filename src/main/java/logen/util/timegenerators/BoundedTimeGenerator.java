@@ -55,9 +55,9 @@ public class BoundedTimeGenerator extends AbstractTimeGenerator {
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
      * @throws IllegalArgumentException if the {@code LocalTime} arguments are
-     *   not in the following order: {@code wrapToTime} <= {@code fromTime} <=
-     *   {@code wrapAroundTime} and {@code wrapToTime} <= {@code toTime} <=
-     *   {@code wrapAroundTime}
+     *   not in the following order:
+     *   {@code wrapToTime} <= {@code fromTime} <= {@code wrapAroundTime} and
+     *   {@code wrapToTime} <= {@code toTime} <= {@code wrapAroundTime}
      */
     public static BoundedTimeGenerator between(
             LocalTime fromTime,

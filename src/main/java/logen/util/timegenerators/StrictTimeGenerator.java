@@ -52,7 +52,7 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      */
     private Supplier<Long> generateTimeValueDeltas() {
         long seconds = computeSecondsBudget();
-        List<Long> timeValueDeltas = distributeRandomly(seconds);
+        List<Long> timeValueDeltas = RandomUtil.distributeRandomly(seconds, generationCount);
         return () -> timeValueDeltas.isEmpty() ? null : timeValueDeltas.remove(0);
     }
 
@@ -74,10 +74,6 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
 
     private boolean requiresWrapAround() {
         return toTime.isBefore(fromTime);
-    }
-
-    private List<Long> distributeRandomly(long seconds) {
-        return RandomUtil.distributeRandomly(seconds, generationCount);
     }
 
     /**
@@ -110,9 +106,10 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
      * @throws IllegalArgumentException if the {@code LocalTime} arguments are
-     *   not in the following order: {@code wrapToTime} <= {@code fromTime} <=
-     *   {@code wrapAroundTime} and {@code wrapToTime} <= {@code toTime} <=
-     *   {@code wrapAroundTime}
+     *   not in the following order:
+     *   {@code wrapToTime} <= {@code fromTime} <= {@code wrapAroundTime} and
+     *   {@code wrapToTime} <= {@code toTime} <= {@code wrapAroundTime}, and
+     *   if {@code generationCount} is negative
      */
     public static StrictTimeGenerator wrap(
             LocalTime fromTime,
@@ -124,6 +121,7 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
         Validations.requireNonNull(fromTime, toTime, wrapAroundTime, wrapToTime);
         Validations.requireInOrder(wrapToTime, fromTime, wrapAroundTime);
         Validations.requireInOrder(wrapToTime, toTime, wrapAroundTime);
+        Validations.requireNonNegative(generationCount);
 
         return new StrictTimeGenerator(
                 fromTime,
@@ -158,7 +156,7 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      * @throws NullPointerException if any of the {@code LocalTime} arguments
      *   are null
      * @throws IllegalArgumentException if {@code fromTime} is not before or
-     *   equal to {@code toTime}
+     *   equal to {@code toTime} and if {@code generationCount} is negative
      */
     public static StrictTimeGenerator linear(
             LocalTime fromTime,
@@ -167,6 +165,7 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
     ) {
         Validations.requireNonNull(fromTime, toTime);
         Validations.requireInOrder(fromTime, toTime);
+        Validations.requireNonNegative(generationCount);
 
         return new StrictTimeGenerator(
                 fromTime,
@@ -184,6 +183,10 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
     @Override
     public LocalTime generate() {
         Long timeValueDelta = timeValueDeltas.get();
+        if (timeValueDelta == null) {
+            return null;
+        }
+
         LocalTime newTimeValue = timeValue.plusSeconds(timeValueDelta);
         if (newTimeValue.isAfter(wrapAroundTime)) {
             long secondsBefore = wrapAroundTime.toSecondOfDay() - timeValue.toSecondOfDay();
@@ -203,12 +206,10 @@ public class StrictTimeGenerator extends AbstractTimeGenerator {
      * @throws IllegalArgumentException if {@code skipCount} is negative
      */
     public void skip(int skipCount) {
-        if (skipCount < 0) {
-            throw new IllegalArgumentException();
-        }
+        Validations.requireNonNegative(skipCount);
 
         for (int i = 0; i < skipCount; i++) {
-            timeValueDeltas.get();
+            generate();
         }
     }
 }

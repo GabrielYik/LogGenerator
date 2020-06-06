@@ -123,9 +123,7 @@ public class RandomUtil {
      *   is negative
      */
     public static List<Integer> distributeRandomly(int sum, int count) {
-        if (sum < 0 || count < 0) {
-            throw new IllegalArgumentException();
-        }
+        Validations.requireNonNegative(sum, count);
 
         if (sum == 0) {
             return Collections.nCopies(count, 0);
@@ -148,7 +146,7 @@ public class RandomUtil {
      * {@code sum}.
      */
     public static List<Long> distributeRandomly(long sum, int count) {
-        if (sum < 0L || count < 0L) {
+        if (sum < 0L || count < 0) {
             throw new IllegalArgumentException();
         }
 
