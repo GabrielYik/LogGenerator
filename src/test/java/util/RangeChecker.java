@@ -85,6 +85,13 @@ public class RangeChecker {
         }
 
         public boolean check() {
+            if (fromTime != null) {
+                values.add(0, fromTime);
+            }
+            if (toTime != null) {
+                values.add(toTime);
+            }
+
             if (wrapToTime == null || wrapAroundTime == null) {
                 if (tendency == Tendency.INCREASING) {
                     wrapAroundTime = toTime;
@@ -148,13 +155,6 @@ public class RangeChecker {
         }
 
         private boolean checkInterval() {
-            if (fromTime != null) {
-                values.add(0, fromTime);
-            }
-            if (toTime != null) {
-                values.add(toTime);
-            }
-
             for (int i = 0; i < values.size() - 1; i++) {
                 LocalTime value = values.get(i);
                 LocalTime nextValue = values.get(i + 1);
