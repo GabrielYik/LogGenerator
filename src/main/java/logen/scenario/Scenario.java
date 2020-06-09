@@ -171,20 +171,40 @@ public class Scenario {
         return descriptions;
     }
 
+    public void setDescriptions(List<String> descriptions) {
+        this.descriptions = descriptions;
+    }
+
     public List<String> getTypes() {
         return types;
+    }
+
+    public void setTypes(List<String> types) {
+        this.types = types;
     }
 
     public List<String> getSubjects() {
         return subjects;
     }
 
+    public void setSubjects(List<String> subjects) {
+        this.subjects = subjects;
+    }
+
     public List<String> getRemarks() {
         return remarks;
     }
 
+    public void setRemarks(List<String> remarks) {
+        this.remarks = remarks;
+    }
+
     public Frequency getFrequency() {
         return frequency;
+    }
+
+    public void setFrequency(Frequency frequency) {
+        this.frequency = frequency;
     }
 
     public List<Group> getGroups() {
