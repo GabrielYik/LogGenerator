@@ -39,8 +39,8 @@ class UnboundedTimeGeneratorTest {
         for (int i = 0; i < 1000; i++) {
             values.add(timeGenerator.generate());
         }
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .withInterval(AbstractTimeGenerator.SMALLEST_INTERVAL_DIFFERENCE, AbstractTimeGenerator.LARGEST_INTERVAL_DIFFERENCE)
                 .increasing()
                 .from(fromTime)
@@ -60,8 +60,8 @@ class UnboundedTimeGeneratorTest {
         for (int i = 0; i < 1000; i++) {
             values.add(timeGenerator.generate());
         }
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .withInterval(AbstractTimeGenerator.SMALLEST_INTERVAL_DIFFERENCE, AbstractTimeGenerator.LARGEST_INTERVAL_DIFFERENCE)
                 .increasing()
                 .from(fromTime)
@@ -98,8 +98,8 @@ class UnboundedTimeGeneratorTest {
         for (int i = 0; i < 1000; i++) {
             values.add(timeGenerator.generate());
         }
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .withInterval(AbstractTimeGenerator.SMALLEST_INTERVAL_DIFFERENCE, AbstractTimeGenerator.LARGEST_INTERVAL_DIFFERENCE)
                 .decreasing()
                 .from(fromTime)
@@ -119,8 +119,8 @@ class UnboundedTimeGeneratorTest {
         for (int i = 0; i < 1000; i++) {
             values.add(timeGenerator.generate());
         }
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .withInterval(AbstractTimeGenerator.SMALLEST_INTERVAL_DIFFERENCE, AbstractTimeGenerator.LARGEST_INTERVAL_DIFFERENCE)
                 .decreasing()
                 .from(fromTime)

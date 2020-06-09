@@ -46,8 +46,8 @@ class BoundedTimeGeneratorTest {
             values.add(timeGenerator.generate());
         }
         values = values.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .withInterval(AbstractTimeGenerator.SMALLEST_INTERVAL_DIFFERENCE, AbstractTimeGenerator.LARGEST_INTERVAL_DIFFERENCE)
                 .increasing()
                 .from(fromTime)
@@ -72,8 +72,8 @@ class BoundedTimeGeneratorTest {
             values.add(timeGenerator.generate());
         }
         values = values.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .withInterval(AbstractTimeGenerator.SMALLEST_INTERVAL_DIFFERENCE, AbstractTimeGenerator.LARGEST_INTERVAL_DIFFERENCE)
                 .increasing()
                 .from(fromTime)

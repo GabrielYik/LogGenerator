@@ -62,8 +62,8 @@ class StrictTimeGeneratorTest {
             values.add(timeGenerator.generate());
         }
         values = values.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .increasing()
                 .from(fromTime)
                 .to(toTime)
@@ -88,8 +88,8 @@ class StrictTimeGeneratorTest {
             values.add(timeGenerator.generate());
         }
         values = values.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .increasing()
                 .from(fromTime)
                 .to(toTime)
@@ -178,8 +178,8 @@ class StrictTimeGeneratorTest {
             values.add(timeGenerator.generate());
         }
         values = values.stream().filter(Objects::nonNull).collect(Collectors.toList());
-        assertTrue(RangeChecker.forLocalTimeValues()
-                .of(values)
+        assertTrue(RangeChecker
+                .forLocalTime(values)
                 .increasing()
                 .from(fromTime)
                 .to(toTime)

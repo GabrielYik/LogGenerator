@@ -22,12 +22,12 @@ public class RangeChecker {
                 || value.equals(upperBound);
     }
 
-    public static LocalTimeRangeChecker forLocalTimeValues() {
-        return new LocalTimeRangeChecker();
+    public static LocalTimeRangeChecker forLocalTime(List<LocalTime> values) {
+        return new LocalTimeRangeChecker(values);
     }
 
     public static class LocalTimeRangeChecker {
-        private List<LocalTime> values;
+        private final List<LocalTime> values;
         private LocalTime fromTime;
         private LocalTime toTime;
         private LocalTime wrapAroundTime;
@@ -38,14 +38,8 @@ public class RangeChecker {
 
         private Tendency tendency;
 
-        private LocalTimeRangeChecker() {
-
-        }
-
-        public LocalTimeRangeChecker of(List<LocalTime> values) {
-            LocalTimeRangeChecker rangeChecker = new LocalTimeRangeChecker();
-            rangeChecker.values = values;
-            return rangeChecker;
+        private LocalTimeRangeChecker(List<LocalTime> values) {
+            this.values = values;
         }
 
         public LocalTimeRangeChecker withInterval(long lowerBound, long upperBound) {
