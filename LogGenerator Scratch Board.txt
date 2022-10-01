@@ -1,0 +1,73 @@
+﻿Types of Data Logged
+* Account logon events
+* Account management
+* Directory service access
+* Logon events
+* Object access
+* Policy change
+* Privilege use
+* Process tracking
+* System events
+
+
+Possible Scenarios
+
+
+Strange User Patterns
+* Spikes in log data
+* Failed Log-In Attempts
+* Remote access
+* Odd hours access
+
+
+Abnormal Database Activities
+* Sudden changes in database user or admin permissions
+* Rapid growth in the size of data contents
+* Unusual database actions
+
+
+User and Device Mismatch
+
+
+Negative File Changes
+* Deleting files
+* Altering File Contents or Configurations
+* Adding or Replacing Files
+
+
+Changes during Scheduled Security Software Updates
+
+
+Privileged Account Abuse
+* Unnecessary access of sensitive information
+* Modifying audit trails
+* Privileged account access sharing
+
+
+End-user Reports
+* "Weird" antivirus warnings
+* Excessive Pop-Ups
+* Unauthorized browser toolbars
+* Slow device performance
+
+
+Unauthorised Port Access
+
+
+Completed Scenarios
+1. Many failed user login attempts
+2. Odd hours user login attempts
+3. Odd-sized file uploads and downloads
+4. Illegal file type uploads and downloads
+5. Protected file access
+
+
+In-progress Scenarios
+1. Port scanning
+
+
+Improvements
+1. Per activity subject
+2. Per activity frequency
+3. Start time
+4. Introduce day of the week awareness
